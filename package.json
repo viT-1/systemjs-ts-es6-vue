@@ -1,0 +1,58 @@
+{
+    "name": "systemjs-ts-es6",
+    "version": "0.0.1",
+    "description": "An examlple how to bundle typescript app to ES5 with SystemJS for IE11 and ES6 modules for other browsers",
+    "keywords": [
+        "typescript",
+        "nobundle",
+        "systemjs",
+        "es6 modules"
+    ],
+    "eslintIgnore": [
+        "dist",
+        "distnode",
+        "node_modules"
+    ],
+    "scripts": {
+        "clean": "rm -rf ./dist",
+        "predeploy": "npm run lint && npm run clean",
+        "deploy": "gulp deploy",
+        "postdeploy": "npm run wwwdeploy",
+        "predeploy.dev": "npm run clean",
+        "deploy.dev": "ttsc --project ./src/tsconfig.dev.json",
+        "postdeploy.dev": "gulp postdeploy.dev && npm run wwwdeploy",
+        "lint": "eslint **/*.{ts,json,js} *.*",
+        "clean.node": "rm -rf ./distnode",
+        "predeploy.node": "npm run clean.node",
+        "deploy.node": "ttsc --project ./src/tsconfig.node.json",
+        "postdeploy.node": "node ./distnode/main.js",
+        "wwwdeploy": "tsc --project ./express.node/tsconfig.json",
+        "www": "node -r esm ./dist/express.node/express.node.js",
+        "www.dev": "node -r esm ./dist/express.node/express.node.js --dev"
+    },
+    "dependencies": {
+        "express": "4.17.1",
+        "systemjs": "5.0.0"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.0",
+        "@types/node": "^12.7.1",
+        "@typescript-eslint/eslint-plugin": "1.13.0",
+        "@typescript-eslint/parser": "1.13.0",
+        "bluebird": "3.5.5",
+        "eslint": "5.16.0",
+        "eslint-config-airbnb-typescript": "4.0.1",
+        "eslint-import-resolver-typescript": "1.1.1",
+        "eslint-plugin-import": "2.18.2",
+        "eslint-plugin-json": "1.4.0",
+        "esm": "3.2.25",
+        "gulp": "4.0.2",
+        "gulp-replace": "1.0.0",
+        "gulp-typescript": "5.0.1",
+        "gulp-uglify-es": "1.0.4",
+        "ts-node": "8.3.0",
+        "typescript": "3.5.3",
+        "ttypescript": "1.5.7",
+        "typescript-transform-paths": "1.1.8"
+    }
+}

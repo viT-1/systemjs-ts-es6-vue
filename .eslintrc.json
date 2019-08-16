@@ -1,0 +1,41 @@
+{
+    "env": {
+        "node": true,
+		"es6": true,
+		"browser": true     
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "airbnb-typescript/base"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+	},
+	"plugins": ["import", "json"],
+    "rules": {
+		"eslint linebreak-style": [0, "error", "windows"],
+        "global-require": 0,
+		"import/no-unresolved": "error",
+		"import/prefer-default-export": 0,
+		"linebreak-style": 0,
+		"no-console": 0,
+		"no-trailing-spaces": "error",
+		"no-tabs": ["warn", { "allowIndentationTabs": true }],
+		"@typescript-eslint/indent": ["error", "tab"]
+    },
+    "settings": {
+		"import/parsers": {
+			"@typescript-eslint/parser": [".ts"]
+		},
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".ts"]
+			},
+			"typescript": {
+				"directory": "./src"
+			}
+        }
+    }
+}

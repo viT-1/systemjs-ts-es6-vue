@@ -1,0 +1,17 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"module": "system",
+		"target": "es5",
+		"baseUrl": ".",
+		"rootDir": ".",
+		"outFile": "../dist/bundle.js"
+	},
+	"include": [
+		"**/*.ts"
+	],
+	"exclude": [
+		"**/node_modules/*",
+		"**/*.spec.ts"
+	]
+}

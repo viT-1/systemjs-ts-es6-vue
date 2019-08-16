@@ -1,0 +1,17 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"module": "es6",
+		"target": "esnext",
+		"baseUrl": ".",
+		"outDir": "../dist",
+		"plugins": [{ "transform": "typescript-transform-paths" }]
+	},
+	"include": [
+		"**/*.ts"
+	],
+	"exclude": [
+		"**/node_modules/*",
+		"**/*.spec.ts"
+	]
+}
