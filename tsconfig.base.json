@@ -10,6 +10,7 @@
 		"sourceMap": true,
 		"strict": true, //noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
 		"paths": {
+			"~/*": ["./*"],
 			"@common/*": ["./common.blocks/*"]
 		}
 	}

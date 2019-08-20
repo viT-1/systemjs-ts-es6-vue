@@ -3,7 +3,10 @@
 	<link rel="icon" href="https://github.com/favicon.ico">
 </head>
 <body>
-	<h1>Test Es6 modules</h1>
-	<p>Just check your console, it's working, hooray!</p>
-	<script type="module" src="./main.js"></script>
+	<div class="js-app">
+		<iam-header>Test Es6 modules & Vue</iam-header>
+	</div>
+	<script type="importmap-shim" src="importmap.dev.json"></script>
+	<script type="module-shim" src="main.js"></script>
+	<script src="es-module-shims.min.js"></script>
 </body>

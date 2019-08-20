@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <head>
-	<script src="bluebird.core.min.js"></script><!--IE 7-11 Promise polyfill -->
-	<script src="systemjs/s.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+	<!--<script src="bluebird.core.min.js"></script>--><!--IE 7-11 Promise polyfill -->
+	<script src="systemjs/system.min.js"></script>
 	<script src="systemjs/named-register.js"></script>
 	<link rel="icon" href="https://github.com/favicon.ico">
 </head>
 <body>
-	<h1>Test SystemJS</h1>
-	<p>Just check your console, it's working, hooray!</p>
+	<div class="js-app">
+		<iam-header>Test SystemJS & Vue</iam-header>
+	</div>
+	<script type="systemjs-importmap" src="importmap.json"></script>
 	<script>
 		System.import('./bundle.js')
 			.then(function () {

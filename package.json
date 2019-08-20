@@ -31,8 +31,10 @@
         "www.dev": "node -r esm ./dist/express.node/express.node.js --dev"
     },
     "dependencies": {
+        "es-module-shims": "0.2.15",
         "express": "4.17.1",
-        "systemjs": "5.0.0"
+        "systemjs": "5.0.0",
+        "vue": "2.6.10"
     },
     "devDependencies": {
         "@types/express": "^4.17.0",

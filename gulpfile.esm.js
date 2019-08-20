@@ -7,8 +7,9 @@ import {
 	dest,
 	task,
 	parallel,
+	series,
 } from 'gulp';
-import uglifyES from 'gulp-uglify-es';
+// import uglifyES from 'gulp-uglify-es';
 
 import appConf from './app.conf';
 
@@ -20,31 +21,25 @@ const absDest = path.resolve(root, appConf.destFolderName);
 // task('clean',
 // done => del([conf.dest], done));
 
-task('transpile',
-	() => {
-		// Transpiling for browser tsconfig
-		const tsApp = typescript.createProject(
-			path.resolve(absSrc, 'tsconfig.json'),
-		);
-		const tsResult = tsApp.src()
-			.pipe(tsApp()).js;
-
-		return tsResult
-			.pipe(uglifyES())
-			.pipe(dest(absDest));
-	});
-
-task('postdeploy.dev:copyEntry',
-	() => src([path.resolve(absSrc, appConf.entryDevFileName)])
+task('postdeploy.dev:copyNonTranspiledFiles',
+	() => src([
+		path.resolve('node_modules', 'es-module-shims', 'dist', 'es-module-shims.min.js'),
+		path.resolve(absSrc, appConf.entryDevFileName),
+		path.resolve(absSrc, 'importmap.dev.json'),
+	])
 		.pipe(dest(absDest)));
+
 
 task('postdeploy.dev:replace-paths-not-index',
 	() => src([
 		`${absDest}/**/!(index).js`,
+		`${absDest}/*.js`,
 	])
 		// typescript-transform-paths replaced alias with doublequoted paths
-		.pipe(replace('";', '/index.js";'))
+		.pipe(replace(/(from "\.)((?:(?!\.js).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(replace('.conf\';', '.conf.js\';'))
+		// @link: fix https://github.com/LeDDGroup/typescript-transform-paths/issues/31
+		.pipe(replace(/(\.\.\/)+(https:)/g, '$2'))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:replace-paths-index',
@@ -55,20 +50,44 @@ task('postdeploy.dev:replace-paths-index',
 		.pipe(replace('\';', '.js\';'))
 		.pipe(dest(absDest)));
 
-task('postdeploy.dev', parallel(
-	'postdeploy.dev:copyEntry',
-	'postdeploy.dev:replace-paths-index',
-	'postdeploy.dev:replace-paths-not-index',
-));
+task('postdeploy.dev',
+	series(
+		'postdeploy.dev:copyNonTranspiledFiles',
+		parallel(
+			'postdeploy.dev:replace-paths-index',
+			'postdeploy.dev:replace-paths-not-index',
+		),
+	));
+
+task('transpile',
+	() => {
+		// Transpiling for browser tsconfig
+		const tsApp = typescript.createProject(
+			path.resolve(absSrc, 'tsconfig.json'),
+		);
+		const tsResult = tsApp.src()
+			.pipe(tsApp()).js;
+
+		return tsResult
+			// .pipe(uglifyES())
+			.pipe(dest(absDest));
+	});
 
 task('copyEntry',
 	() => src([path.resolve(absSrc, appConf.entryFileName)])
 		.pipe(dest(absDest)));
 
+task('copyImportMap',
+	() => src([
+		path.resolve(absSrc, 'importmap.json'),
+	])
+		.pipe(dest(absDest)));
+
 task('copySystemJs',
 	() => src([
-		path.resolve('node_modules', 'systemjs', 'dist', 's.min.js'),
+		path.resolve('node_modules', 'systemjs', 'dist', 'system.min.js'),
 		path.resolve('node_modules', 'systemjs', 'dist', 'extras', 'named-register.js'),
+		// path.resolve('node_modules', 'systemjs-plugin-text', 'text.js'),
 	])
 		.pipe(dest(path.resolve(absDest, 'systemjs'))));
 
@@ -81,6 +100,7 @@ task('iePromisePolyfill',
 task('deploy', parallel(
 	'transpile',
 	'copyEntry',
+	'copyImportMap',
 	'copySystemJs',
 	'iePromisePolyfill',
 ));
