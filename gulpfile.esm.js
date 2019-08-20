@@ -23,9 +23,7 @@ const absDest = path.resolve(root, appConf.destFolderName);
 
 task('postdeploy.dev:copyNonTranspiledFiles',
 	() => src([
-		path.resolve('node_modules', 'es-module-shims', 'dist', 'es-module-shims.min.js'),
 		path.resolve(absSrc, appConf.entryDevFileName),
-		path.resolve(absSrc, 'importmap.dev.json'),
 	])
 		.pipe(dest(absDest)));
 
@@ -38,8 +36,6 @@ task('postdeploy.dev:replace-paths-not-index',
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(replace(/(from "\.)((?:(?!\.js).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(replace('.conf\';', '.conf.js\';'))
-		// @link: fix https://github.com/LeDDGroup/typescript-transform-paths/issues/31
-		.pipe(replace(/(\.\.\/)+(https:)/g, '$2'))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:replace-paths-index',

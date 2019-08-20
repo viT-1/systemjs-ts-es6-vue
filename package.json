@@ -31,7 +31,6 @@
         "www.dev": "node -r esm ./dist/express.node/express.node.js --dev"
     },
     "dependencies": {
-        "es-module-shims": "0.2.15",
         "express": "4.17.1",
         "systemjs": "5.0.0",
         "vue": "2.6.10"
@@ -55,6 +54,6 @@
         "ts-node": "8.3.0",
         "typescript": "3.5.3",
         "ttypescript": "1.5.7",
-        "typescript-transform-paths": "1.1.8"
+        "typescript-transform-paths": "1.1.9"
     }
 }
