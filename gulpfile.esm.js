@@ -80,17 +80,7 @@ task('transpile',
 			.pipe(dest(absDest));
 	});
 
-task('copyEntry',
-	() => src([path.resolve(absSrc, appConf.entryFileName)])
-		.pipe(dest(absDest)));
-
-task('copyImportMap',
-	() => src([
-		path.resolve(absSrc, 'importmap.json'),
-	])
-		.pipe(dest(absDest)));
-
-task('copySystemJs',
+task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 	() => src([
 		path.resolve('node_modules', 'systemjs', 'dist', 'system.min.js'),
 		path.resolve('node_modules', 'systemjs', 'dist', 'extras', 'named-register.js'),
@@ -98,17 +88,18 @@ task('copySystemJs',
 	])
 		.pipe(dest(path.resolve(absDest, 'systemjs'))));
 
-task('iePromisePolyfill',
+task('copyNonTranspiledFiles',
 	() => src([
+		path.resolve(absSrc, appConf.entryFileName), // index.htm
+		path.resolve(absSrc, 'importmap.json'),
 		path.resolve('node_modules', 'bluebird', 'js', 'browser', 'bluebird.core.min.js'),
+		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
 	])
 		.pipe(dest(absDest)));
 
 task('deploy', parallel(
 	'cssbundle',
 	'transpile',
-	'copyEntry',
-	'copyImportMap',
-	'copySystemJs',
-	'iePromisePolyfill',
+	'copyNonTranspiledFiles',
+	'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 ));
