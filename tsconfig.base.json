@@ -11,8 +11,7 @@
 		"strict": true, //noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
 		"paths": {
 			"~/*": ["./*"],
-			"@common/*": ["./common.blocks/*"],
-			"vue": ["https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js"]
+			"@common/*": ["./common.blocks/*"]
 		}
 	}
 }

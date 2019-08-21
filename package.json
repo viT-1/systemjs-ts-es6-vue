@@ -6,7 +6,8 @@
         "typescript",
         "nobundle",
         "systemjs",
-        "es6 modules"
+        "es6 modules",
+        "vue"
     ],
     "eslintIgnore": [
         "dist",
@@ -31,9 +32,11 @@
         "www.dev": "node -r esm ./dist/express.node/express.node.js --dev"
     },
     "dependencies": {
+        "es-module-shims": "0.2.15",
         "express": "4.17.1",
         "systemjs": "5.0.0",
-        "vue": "2.6.10"
+        "vue": "2.6.10",
+        "vue-class-component": "7.1.0"
     },
     "devDependencies": {
         "@types/express": "^4.17.0",

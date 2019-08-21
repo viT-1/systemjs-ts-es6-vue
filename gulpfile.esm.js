@@ -11,7 +11,7 @@ import {
 	parallel,
 	series,
 } from 'gulp';
-import uglifyES from 'gulp-uglify-es';
+// import uglifyES from 'gulp-uglify-es';
 
 import appConf from './app.conf';
 
@@ -31,7 +31,9 @@ task('cssbundle',
 
 task('postdeploy.dev:copyNonTranspiledFiles',
 	() => src([
+		path.resolve('node_modules', 'es-module-shims', 'dist', 'es-module-shims.min.js'),
 		path.resolve(absSrc, appConf.entryDevFileName),
+		path.resolve(absSrc, 'importmap.dev.json'),
 	])
 		.pipe(dest(absDest)));
 
@@ -76,13 +78,13 @@ task('transpile',
 			.pipe(tsApp()).js;
 
 		return tsResult
-			.pipe(uglifyES())
+			// .pipe(uglifyES())
 			.pipe(dest(absDest));
 	});
 
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 	() => src([
-		path.resolve('node_modules', 'systemjs', 'dist', 'system.min.js'),
+		path.resolve('node_modules', 'systemjs', 'dist', 'system.js'),
 		path.resolve('node_modules', 'systemjs', 'dist', 'extras', 'named-register.js'),
 		// path.resolve('node_modules', 'systemjs-plugin-text', 'text.js'),
 	])
