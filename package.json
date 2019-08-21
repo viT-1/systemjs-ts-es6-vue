@@ -48,6 +48,8 @@
         "eslint-plugin-json": "1.4.0",
         "esm": "3.2.25",
         "gulp": "4.0.2",
+        "gulp-clean-css": "4.2.0",
+        "gulp-concat": "2.6.1",
         "gulp-replace": "1.0.0",
         "gulp-typescript": "5.0.1",
         "gulp-uglify-es": "1.0.4",

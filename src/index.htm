@@ -1,18 +1,15 @@
 <!DOCTYPE html>
+
 <head>
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-	<!--<script src="bluebird.core.min.js"></script>--><!--IE 7-11 Promise polyfill -->
+	<!--IE 7-11 Promise polyfill -->
+	<script src="bluebird.core.min.js"></script>
+
 	<script src="systemjs/system.min.js"></script>
 	<script src="systemjs/named-register.js"></script>
 	<link rel="icon" href="https://github.com/favicon.ico">
-	<style>
-		label[iam-header]:after {
-			color:green;
-			content: "\AVue is Ok!";
-			white-space: pre;
-		}
-	</style>
+	<link rel="stylesheet" href="index.css">
 </head>
+
 <body>
 	<div class="js-app">
 		<iam-header>Test SystemJS & Vue</iam-header>
@@ -23,6 +20,6 @@
 			.then(function () {
 				console.log('SystemJs bundle is loaded!');
 				System.import('main');
-			})
+			});
 	</script>
 </body>

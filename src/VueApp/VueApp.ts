@@ -9,6 +9,7 @@ const Vue = VueD || VueN;
 
 export default class VueApp {
 	public static init(): void {
+		Vue.config.devtools = false;
 		Vue.config.productionTip = false;
 
 		// @link: no-new https://gitlab.com/gitlab-org/gitlab-ce/issues/42783
