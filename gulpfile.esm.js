@@ -1,6 +1,6 @@
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
-import gSSI from 'gulp-x-includer';
+import gSSI from 'gulp-ssi';
 import gReplace from 'gulp-replace';
 import path from 'path';
 import typescript from 'gulp-typescript';
@@ -37,23 +37,21 @@ task('tmplbundle',
 
 task('packEntryFile',
 	() => src([
-		path.resolve(absDest, appConf.entryFileName),
+		path.resolve(absSrc, appConf.entryFileName),
 	])
-		.pipe(gSSI())
+		.pipe(gSSI({ root: absDest }))
 		.pipe(dest(absDest)));
 
 task('packEntryFile.dev',
 	() => src([
-		path.resolve(absDest, appConf.entryDevFileName),
+		path.resolve(absSrc, appConf.entryDevFileName),
 	])
-		.pipe(gSSI())
+		.pipe(gSSI({ root: absDest }))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:copyNonTranspiledFiles',
 	() => src([
 		path.resolve('node_modules', 'es-module-shims', 'dist', 'es-module-shims.min.js'),
-		// Сначала копируем index.htm потом в dest SSI relative
-		path.resolve(absSrc, appConf.entryDevFileName),
 		path.resolve(absSrc, 'importmap.dev.json'),
 	])
 		.pipe(dest(absDest)));
@@ -67,7 +65,6 @@ task('postdeploy.dev:replace-paths-not-index',
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(gReplace('.conf\';', '.conf.js\';'))
-		// .pipe(gInjectTmpl())
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:replace-paths-index',
@@ -81,10 +78,9 @@ task('postdeploy.dev:replace-paths-index',
 task('postdeploy.dev',
 	parallel(
 		'cssbundle',
-		// series('tmplbundle', 'packEntryFile.dev'), // index.htm
+		series('tmplbundle', 'packEntryFile.dev'), // index.htm
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
-			'tmplbundle', 'packEntryFile.dev',
 			parallel(
 				'postdeploy.dev:replace-paths-index',
 				'postdeploy.dev:replace-paths-not-index',
@@ -116,8 +112,6 @@ task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 
 task('copyNonTranspiledFiles',
 	() => src([
-		// Сначала копируем index.htm потом в dest SSI relative
-		path.resolve(absSrc, appConf.entryFileName), // index.htm
 		path.resolve(absSrc, 'importmap.json'),
 		path.resolve('node_modules', 'bluebird', 'js', 'browser', 'bluebird.core.min.js'),
 		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
