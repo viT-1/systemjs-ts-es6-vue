@@ -8,7 +8,8 @@
 		"plugins": [{ "transform": "@zerollup/ts-transform-paths" }]
 	},
 	"include": [
-		"**/*.ts"
+		"**/*.ts",
+		"**/*.html"
 	],
 	"exclude": [
 		"**/node_modules/*",

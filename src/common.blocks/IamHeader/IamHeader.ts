@@ -1,13 +1,18 @@
 import Vue from 'vue';
-import Component from 'vue-class-component';
+// import Component from 'vue-class-component';
 
 import { name, template } from './IamHeader.conf';
 
-@Component({
+// @Component({
+// 	name,
+// 	template,
+// })
+// class IamHeader extends Vue {
+// }
+
+const IamHeader = Vue.extend({
 	name,
 	template,
-})
-class IamHeader extends Vue {
-}
+});
 
 export default IamHeader;

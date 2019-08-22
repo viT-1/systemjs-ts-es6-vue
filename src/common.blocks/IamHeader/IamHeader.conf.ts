@@ -2,7 +2,7 @@
 
 const conf = {
 	name: 'iam-header',
-	template: '<label iam-header><slot></slot></label>',
+	template: '#iam-header',
 };
 
 const { name, template } = conf;

@@ -54,6 +54,7 @@
         "gulp": "4.0.2",
         "gulp-clean-css": "4.2.0",
         "gulp-concat": "2.6.1",
+        "gulp-x-includer": "0.1.2",
         "gulp-replace": "1.0.0",
         "gulp-typescript": "5.0.1",
         "gulp-uglify-es": "1.0.4",
