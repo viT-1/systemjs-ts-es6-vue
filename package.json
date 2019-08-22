@@ -43,6 +43,7 @@
         "@types/node": "^12.7.1",
         "@typescript-eslint/eslint-plugin": "1.13.0",
         "@typescript-eslint/parser": "1.13.0",
+        "@zerollup/ts-transform-paths": "1.7.3",
         "bluebird": "3.5.5",
         "eslint": "5.16.0",
         "eslint-config-airbnb-typescript": "4.0.1",

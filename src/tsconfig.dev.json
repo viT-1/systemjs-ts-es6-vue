@@ -5,7 +5,7 @@
 		"target": "esnext",
 		"baseUrl": ".",
 		"outDir": "../dist",
-		"plugins": [{ "transform": "typescript-transform-paths" }]
+		"plugins": [{ "transform": "@zerollup/ts-transform-paths" }]
 	},
 	"include": [
 		"**/*.ts"
