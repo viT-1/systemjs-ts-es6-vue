@@ -2,7 +2,7 @@
 
 <head>
 	<!--IE 7-11 Promise polyfill -->
-	<!-- <script src="bluebird.core.min.js"></script> -->
+	<script src="bluebird.core.min.js"></script>
 	<!--IE 10+ Fetch polyfill-->
 	<script src="fetch.umd.js"></script>
 
@@ -13,11 +13,13 @@
 </head>
 
 <body>
+	<!-- May be there is another way to inject in DOM bundled templates -->
+	<div id="js-fetch-templates"></div>
+	<script src="fetch-templates.js"></script>
+
 	<div class="js-app">
 		<iam-header>Test SystemJS & Vue</iam-header>
 	</div>
-	<!-- May be there is another way to inject in DOM bundled templates -->
-	<!--#include file="templates.htm" -->
 	<script type="systemjs-importmap" src="importmap.json"></script>
 	<script>
 		System.import('./bundle.js')

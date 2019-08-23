@@ -1,6 +1,5 @@
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
-import gSSI from 'gulp-ssi';
 import gReplace from 'gulp-replace';
 import path from 'path';
 import typescript from 'gulp-typescript';
@@ -39,20 +38,19 @@ task('packEntryFile',
 	() => src([
 		path.resolve(absSrc, appConf.entryFileName),
 	])
-		.pipe(gSSI({ root: absDest }))
 		.pipe(dest(absDest)));
 
 task('packEntryFile.dev',
 	() => src([
 		path.resolve(absSrc, appConf.entryDevFileName),
 	])
-		.pipe(gSSI({ root: absDest }))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:copyNonTranspiledFiles',
 	() => src([
 		path.resolve('node_modules', 'es-module-shims', 'dist', 'es-module-shims.min.js'),
 		path.resolve(absSrc, 'importmap.dev.json'),
+		path.resolve(absSrc, 'fetch-templates.js'),
 	])
 		.pipe(dest(absDest)));
 
@@ -78,7 +76,7 @@ task('postdeploy.dev:replace-paths-index',
 task('postdeploy.dev',
 	parallel(
 		'cssbundle',
-		series('tmplbundle', 'packEntryFile.dev'), // index.htm
+		'tmplbundle', 'packEntryFile.dev', // index.htm
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
 			parallel(
@@ -106,7 +104,6 @@ task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 	() => src([
 		path.resolve('node_modules', 'systemjs', 'dist', 'system.js'),
 		path.resolve('node_modules', 'systemjs', 'dist', 'extras', 'named-register.js'),
-		// path.resolve('node_modules', 'systemjs-plugin-text', 'text.js'),
 	])
 		.pipe(dest(path.resolve(absDest, 'systemjs'))));
 
@@ -115,6 +112,7 @@ task('copyNonTranspiledFiles',
 		path.resolve(absSrc, 'importmap.json'),
 		path.resolve('node_modules', 'bluebird', 'js', 'browser', 'bluebird.core.min.js'),
 		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
+		path.resolve(absSrc, 'fetch-templates.js'),
 	])
 		.pipe(dest(absDest)));
 
@@ -122,6 +120,6 @@ task('deploy', parallel(
 	'cssbundle',
 	'transpile',
 	'copyNonTranspiledFiles',
-	series('tmplbundle', 'packEntryFile'), // index.htm
+	'tmplbundle', 'packEntryFile', // index.htm
 	'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 ));
