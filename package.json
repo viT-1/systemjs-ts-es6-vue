@@ -7,7 +7,9 @@
         "nobundle",
         "systemjs",
         "es6 modules",
-        "vue"
+		"vue",
+		"vue 3.0",
+		"vue-class-component"
     ],
     "eslintIgnore": [
         "dist",
