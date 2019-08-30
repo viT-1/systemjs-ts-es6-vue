@@ -1,6 +1,5 @@
 {
 	"imports": {
-		"vue": "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js",
-		"vue-class-component": "https://cdn.jsdelivr.net/npm/vue-class-component@7.1.0/dist/vue-class-component.min.js"
+		"vue": "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"
 	}
 } 

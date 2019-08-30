@@ -12,7 +12,7 @@ import {
 	parallel,
 	series,
 } from 'gulp';
-// import uglifyES from 'gulp-uglify-es';
+import uglifyES from 'gulp-uglify-es';
 
 import appConf from './app.conf';
 
@@ -20,7 +20,7 @@ const root = appConf.rootFolderPath;
 const absSrc = path.resolve(root, appConf.srcFolderName);
 const absDest = path.resolve(root, appConf.destFolderName);
 
-// Вместо этого predeploy rimraf в командной строке (package.json)
+// instead of predeploy rimraf in package.json scripts
 // task('clean',
 // done => del([conf.dest], done));
 
@@ -94,7 +94,6 @@ task('transpile',
 			.pipe(tsApp()).js;
 
 		return tsResult
-			// .pipe(uglifyES())
 			.pipe(dest(absDest));
 	});
 
@@ -104,6 +103,8 @@ task('fixTmplNames',
 		path.resolve(absDest, 'bundle.js'),
 	])
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
+		.pipe(gReplace('"vue", "vue-class-component"', '"vue", "node_modules/vue-class-component/dist/vue-class-component.esm"'))
+		.pipe(uglifyES())
 		.pipe(dest(absDest)));
 
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
