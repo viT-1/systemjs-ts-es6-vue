@@ -13,10 +13,6 @@
 </head>
 
 <body>
-	<!-- May be there is another way to inject in DOM bundled templates -->
-	<div id="js-fetch-templates"></div>
-	<script src="fetch-templates.js"></script>
-
 	<div class="js-app">
 		<iam-header>Test SystemJS & Vue</iam-header>
 	</div>
@@ -25,7 +21,7 @@
 		System.import('./bundle.js')
 			.then(function () {
 				console.log('SystemJs bundle is loaded!');
-				System.import('main');
+				System.import('src/main');
 			});
 	</script>
 </body>

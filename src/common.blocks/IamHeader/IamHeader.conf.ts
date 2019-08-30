@@ -1,8 +1,8 @@
-// import tmpl from './IamHeader.html';
+import tmpl from './IamHeader.html';
 
 const conf = {
 	name: 'iam-header',
-	template: '#iam-header',
+	template: tmpl,
 };
 
 const { name, template } = conf;
