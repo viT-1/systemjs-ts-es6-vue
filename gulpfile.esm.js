@@ -124,7 +124,7 @@ task('deploy',
 		'copyNonTranspiledFiles',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		series(
-			'tmpl2js', // html as commonjs modules
+			'tmpl2js', // html as ES modules
 			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
 			'fixTmplNames', // in bundle.js fix SystemJs template names to be consistent with imports
 		),
