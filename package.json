@@ -7,9 +7,9 @@
         "nobundle",
         "systemjs",
         "es6 modules",
-		"vue",
-		"vue 3.0",
-		"vue-class-component"
+        "vue",
+        "vue 3.0",
+        "vue-class-component"
     ],
     "eslintIgnore": [
         "dist",
@@ -53,6 +53,7 @@
         "eslint-import-resolver-typescript": "1.1.1",
         "eslint-plugin-import": "2.18.2",
         "eslint-plugin-json": "1.4.0",
+        "eslint-plugin-markdown": "1.0.0",
         "esm": "3.2.25",
         "gulp": "4.0.2",
         "gulp-clean-css": "4.2.0",

@@ -13,7 +13,7 @@
         "ecmaVersion": 6,
         "sourceType": "module"
 	},
-	"plugins": ["import", "json"],
+	"plugins": ["import", "json", "markdown"],
     "rules": {
 		"eslint linebreak-style": [0, "error", "windows"],
         "global-require": 0,

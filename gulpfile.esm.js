@@ -12,7 +12,7 @@ import {
 	parallel,
 	series,
 } from 'gulp';
-import uglifyES from 'gulp-uglify-es';
+// import uglifyES from 'gulp-uglify-es';
 
 import appConf from './app.conf';
 
@@ -33,10 +33,6 @@ task('cssbundle',
 task('tmpl2js',
 	() => src([`${absSrc}/**/*.html`])
 		.pipe(gHtml2Js())
-		.pipe(dest(absDest)));
-
-task('tmpl2jsConvertEs6',
-	() => src([`${absDest}/**/*.html.js`])
 		.pipe(gReplace('module.exports =', 'export default'))
 		.pipe(dest(absDest)));
 
@@ -71,16 +67,13 @@ task('postdeploy.dev:fixImportsInIndex',
 task('postdeploy.dev',
 	parallel(
 		'cssbundle',
+		'tmpl2js',
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
 			parallel(
 				'postdeploy.dev:fixImportsInIndex',
 				'postdeploy.dev:fixImportsNotInIndex',
 			),
-		),
-		series(
-			'tmpl2js',
-			'tmpl2jsConvertEs6',
 		),
 	));
 
@@ -102,9 +95,11 @@ task('fixTmplNames',
 	() => src([
 		path.resolve(absDest, 'bundle.js'),
 	])
+		// fix templates as string
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
-		.pipe(gReplace('"vue", "vue-class-component"', '"vue", "node_modules/vue-class-component/dist/vue-class-component.esm"'))
-		.pipe(uglifyES())
+		// fix transpiled node_modules names
+		.pipe(gReplace('node_modules/vue-class-component/dist/vue-class-component.esm', 'vue-class-component'))
+		// .pipe(uglifyES())
 		.pipe(dest(absDest)));
 
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
@@ -130,8 +125,6 @@ task('deploy',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		series(
 			'tmpl2js', // html as commonjs modules
-			'tmpl2jsConvertEs6', // html as es6 modules exported default string
-
 			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
 			'fixTmplNames', // in bundle.js fix SystemJs template names to be consistent with imports
 		),
