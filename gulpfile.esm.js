@@ -39,7 +39,6 @@ task('tmpl2js',
 task('postdeploy.dev:copyNonTranspiledFiles',
 	() => src([
 		path.resolve(absSrc, appConf.entryDevFileName),
-		path.resolve(absSrc, 'importmap.dev.json'),
 	])
 		.pipe(dest(absDest)));
 
