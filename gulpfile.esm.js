@@ -39,21 +39,40 @@ task('tmpl2js',
 task('postdeploy.dev:copyNonTranspiledFiles',
 	() => src([
 		path.resolve(absSrc, appConf.entryDevFileName),
-		path.resolve('node_modules', 'es-module-shims', 'dist', 'es-module-shims.min.js'),
 		path.resolve(absSrc, 'importmap.dev.json'),
 	])
 		.pipe(dest(absDest)));
 
+task('postdeploy.dev:fixVueClassComponent',
+	() => src([
+		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
+	])
+		// ;)
+		.pipe(gReplace('Evan', 'Ivan'))
+		// usually solved by rollup-plugin-replace
+		// https://github.com/vuejs/vue-class-component/issues/356
+		.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
+		// fix to resolve modules without importmap (es-module-shims now not needed!)
+		// can't transform by tsconfig > files outside rootDir
+		// because of paths in dist becomes not the same as src =(((
+		.pipe(gReplace("from 'vue'", "from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'"))
+		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsNotInIndex',
 	() => src([
 		`${absDest}/**/!(index).js`,
 		`${absDest}/*.js`,
+		// exclude file with separate fix-task
+		`!${absDest}/vue-class-component.esm.js`,
 	])
 		// typescript-transform-paths replaced alias with doublequoted paths
-		.pipe(gReplace(/(from "\.)((?:(?!\.js).)*)(";)/g, '$1$2/index.js$3'))
-		.pipe(gReplace('.conf\';', '.conf.js\';'))
-		.pipe(gReplace('.html\';', '.html.js\';'))
+		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
+		.pipe(gReplace('.conf";', '.conf.js";'))
+		.pipe(gReplace('.html";', '.html.js";'))
+		// vue path transformed to cdn but local paths not!
+		// should be replaced by typescript-transform-paths not gulp-replace!
+		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
+		.pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsInIndex',
@@ -61,7 +80,7 @@ task('postdeploy.dev:fixImportsInIndex',
 		`${absDest}/**/index.js`,
 	])
 		// my export with singlequoted paths
-		.pipe(gReplace('\';', '.js\';'))
+		.pipe(gReplace('";', '.js";'))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev',
@@ -70,6 +89,7 @@ task('postdeploy.dev',
 		'tmpl2js',
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
+			'postdeploy.dev:fixVueClassComponent',
 			parallel(
 				'postdeploy.dev:fixImportsInIndex',
 				'postdeploy.dev:fixImportsNotInIndex',

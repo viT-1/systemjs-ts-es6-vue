@@ -8,10 +8,6 @@
 		"noEmitOnError": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true, //noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
-		"paths": {
-			"~/*": ["./*"],
-			"@common/*": ["./common.blocks/*"]
-		}
+		"strict": true //noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
 	}
 }

@@ -4,12 +4,17 @@
 		"module": "commonjs",
 		"baseUrl": ".",
 		"outDir": "../distnode",
-		"plugins": [{ "transform": "typescript-transform-paths" }]
+		"plugins": [{ "transform": "typescript-transform-paths" }],
+		"paths": {
+			"~/*": ["./*"],
+			"@common/*": ["./common.blocks/*"]
+		}
 	},
 	"include": [
 		"**/*.ts"
 	],
 	"exclude": [
+		"**/IamHeader/*",
 		"**/node_modules/*",
 		"**/*.spec.ts"
 	]

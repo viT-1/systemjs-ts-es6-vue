@@ -5,7 +5,11 @@
 		"target": "es5",
 		"baseUrl": ".",
 		"rootDir": ".",
-		"outFile": "../dist/bundle.js"
+		"outFile": "../dist/bundle.js",
+		"paths": {
+			"~/*": ["./*"],
+			"@common/*": ["./common.blocks/*"]
+		}
 	},
 	"files": [
 		"../dist/**/*.html.js",
