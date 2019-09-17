@@ -71,7 +71,7 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		// vue path transformed to cdn but local paths not!
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
-		.pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
+		// .pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsInIndex',
