@@ -8,12 +8,13 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "airbnb-typescript/base"
-    ],
+	],
+	"parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module"
 	},
-	"plugins": ["import", "json", "markdown"],
+	"plugins": ["@typescript-eslint", "import", "json", "markdown"],
     "rules": {
 		"eslint linebreak-style": [0, "error", "windows"],
         "global-require": 0,
@@ -23,7 +24,8 @@
 		"no-console": 0,
 		"no-trailing-spaces": "error",
 		"no-tabs": ["warn", { "allowIndentationTabs": true }],
-		"@typescript-eslint/indent": ["error", "tab"]
+		"@typescript-eslint/indent": ["error", "tab"],
+		"@typescript-eslint/brace-style": ["error", "stroustrup"]
     },
     "settings": {
 		"import/parsers": {

@@ -1,6 +1,6 @@
 {
     "name": "systemjs-ts-es6",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "An examlple how to bundle typescript app to ES5 with SystemJS for IE11 and ES6 modules for other browsers",
     "keywords": [
         "typescript",
@@ -24,7 +24,7 @@
         "predeploy.dev": "npm run clean && gulp predeploy.dev",
         "deploy.dev": "ttsc --project ./src/tsconfig.dev.json",
         "postdeploy.dev": "gulp postdeploy.dev && npm run wwwdeploy",
-        "lint": "eslint **/*.{ts,json,js} *.*",
+        "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.*",
         "clean.node": "rm -rf ./distnode",
         "predeploy.node": "npm run clean.node",
         "deploy.node": "ttsc --project ./src/tsconfig.node.json",
@@ -44,10 +44,11 @@
     "devDependencies": {
         "@types/express": "^4.17.0",
         "@types/node": "^12.7.1",
-        "@typescript-eslint/eslint-plugin": "1.13.0",
-        "@typescript-eslint/parser": "1.13.0",
-        "eslint": "5.16.0",
-        "eslint-config-airbnb-typescript": "4.0.1",
+        "@typescript-eslint/eslint-plugin": "2.3.0",
+        "@typescript-eslint/parser": "2.3.0",
+        "eslint": "6.4.0",
+        "eslint-config-airbnb-base": "14.0.0",
+        "eslint-config-airbnb-typescript": "5.0.0",
         "eslint-import-resolver-typescript": "1.1.1",
         "eslint-plugin-import": "2.18.2",
         "eslint-plugin-json": "1.4.0",
@@ -61,7 +62,7 @@
         "gulp-typescript": "5.0.1",
         "gulp-uglify-es": "1.0.4",
         "ts-node": "8.3.0",
-        "typescript": "3.5.3",
+        "typescript": "3.6.3",
         "typescript-transform-paths": "1.1.10",
         "ttypescript": "1.5.7"
     }
