@@ -21,7 +21,7 @@
         "predeploy": "npm run lint && npm run clean",
         "deploy": "gulp deploy",
         "postdeploy": "npm run wwwdeploy",
-        "predeploy.dev": "npm run clean",
+        "predeploy.dev": "npm run clean && gulp predeploy.dev",
         "deploy.dev": "ttsc --project ./src/tsconfig.dev.json",
         "postdeploy.dev": "gulp postdeploy.dev && npm run wwwdeploy",
         "lint": "eslint **/*.{ts,json,js} *.*",

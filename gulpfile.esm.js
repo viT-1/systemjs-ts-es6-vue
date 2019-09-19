@@ -42,7 +42,7 @@ task('postdeploy.dev:copyNonTranspiledFiles',
 	])
 		.pipe(dest(absDest)));
 
-task('postdeploy.dev:fixVueClassComponent',
+task('predeploy.dev',
 	() => src([
 		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
 	])
@@ -88,7 +88,7 @@ task('postdeploy.dev',
 		'tmpl2js',
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
-			'postdeploy.dev:fixVueClassComponent',
+			// 'postdeploy.dev:fixVueClassComponent',
 			parallel(
 				'postdeploy.dev:fixImportsInIndex',
 				'postdeploy.dev:fixImportsNotInIndex',
