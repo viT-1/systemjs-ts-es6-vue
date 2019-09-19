@@ -4,7 +4,6 @@ import gHtml2Js from 'gulp-html-to-js';
 import gReplace from 'gulp-replace';
 import path from 'path';
 import typescript from 'gulp-typescript';
-// import del from 'del';
 import {
 	src,
 	dest,
@@ -19,10 +18,6 @@ import appConf from './app.conf';
 const root = appConf.rootFolderPath;
 const absSrc = path.resolve(root, appConf.srcFolderName);
 const absDest = path.resolve(root, appConf.destFolderName);
-
-// instead of predeploy rimraf in package.json scripts
-// task('clean',
-// done => del([conf.dest], done));
 
 task('cssbundle',
 	() => src([`${absSrc}/**/*.css`])
@@ -88,7 +83,6 @@ task('postdeploy.dev',
 		'tmpl2js',
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
-			// 'postdeploy.dev:fixVueClassComponent',
 			parallel(
 				'postdeploy.dev:fixImportsInIndex',
 				'postdeploy.dev:fixImportsNotInIndex',
