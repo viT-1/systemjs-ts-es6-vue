@@ -9,7 +9,6 @@
 		"paths": {
 			"~/*": ["./*"],
 			"@common/*": ["./common.blocks/*"],
-			"vue-class-component": ["../dist/vue-class-component.esm.js"],
 			"vue": ["https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js"]
 		}
 	},
