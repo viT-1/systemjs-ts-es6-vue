@@ -1,9 +1,9 @@
-import IamHeader from '@common/IamHeader';
+// import IamHeader from '@common/IamHeader';
 
 export const selector = '.js-app';
 
 export const components = {
-	IamHeader,
+	// IamHeader,
 };
 
 export default {
