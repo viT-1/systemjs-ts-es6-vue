@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 
 <head>
-	<!--IE 7-11 Promise polyfill -->
-	<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,fetch,Promise"></script>
+	<!-- If you need polyfill.io use v3 with 'always', v2 breaks the code -->
+	<!--<script src="https://cdn.polyfill.io/v3/polyfill.min.js?flags=always"></script>-->
+
+	<!-- IE 7-11 Promise polyfill -->
+	<script src="polyfill.min.js"></script>
+	<!-- IE 10+ Fetch polyfill -->
+	<script src="fetch.umd.js"></script>
 
 	<script src="systemjs/system.js"></script>
 	<script src="systemjs/named-register.js"></script>

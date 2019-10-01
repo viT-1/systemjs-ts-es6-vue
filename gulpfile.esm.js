@@ -104,7 +104,7 @@ task('transpile',
 	});
 
 // fix because of names of modules with src includes generated dist
-task('fixTmplNames',
+task('fixBundle',
 	() => src([
 		path.resolve(absDest, 'bundle.js'),
 	])
@@ -126,7 +126,7 @@ task('copyNonTranspiledFiles',
 	() => src([
 		path.resolve(absSrc, appConf.entryFileName),
 		path.resolve(absSrc, 'importmap.json'),
-		path.resolve('node_modules', 'bluebird', 'js', 'browser', 'bluebird.core.min.js'),
+		path.resolve('node_modules', 'promise-polyfill', 'dist', 'polyfill.min.js'),
 		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
 	])
 		.pipe(dest(absDest)));
@@ -139,6 +139,6 @@ task('deploy',
 		series(
 			'tmpl2js', // html as ES modules
 			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
-			'fixTmplNames', // in bundle.js fix SystemJs template names to be consistent with imports
+			'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
 		),
 	));
