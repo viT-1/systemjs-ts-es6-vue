@@ -4,11 +4,7 @@
 		"module": "commonjs",
 		"baseUrl": ".",
 		"outDir": "../distnode",
-		"plugins": [{ "transform": "typescript-transform-paths" }],
-		"paths": {
-			"~/*": ["./*"],
-			"@common/*": ["./common.blocks/*"]
-		}
+		"plugins": [{ "transform": "typescript-transform-paths" }]
 	},
 	"include": [
 		"**/Greeter*/*.ts",
