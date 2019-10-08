@@ -1,6 +1,6 @@
 {
     "name": "systemjs-ts-es6-vue",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/viT-1/systemjs-ts-es6-vue.git"
@@ -34,7 +34,7 @@
         "clean.node": "rm -rf ./distnode",
         "predeploy.node": "npm run clean.node",
         "deploy.node": "ttsc --project ./src/tsconfig.node.json",
-        "postdeploy.node": "node ./distnode/main.js",
+        "postdeploy.node": "node ./distnode/main.node.js",
         "wwwdeploy": "tsc --project ./express.node/tsconfig.json",
         "www": "node -r esm ./dist/express.node/express.node.js",
         "www.dev": "node -r esm ./dist/express.node/express.node.js --dev",

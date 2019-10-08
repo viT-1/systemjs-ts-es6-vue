@@ -1,5 +1,5 @@
 {
-	"extends": "../tsconfig.base.json",
+	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
 		"module": "commonjs",
 		"baseUrl": ".",
@@ -11,11 +11,7 @@
 		}
 	},
 	"include": [
-		"**/*.ts"
-	],
-	"exclude": [
-		"**/IamHeader/*",
-		"**/node_modules/*",
-		"**/*.spec.ts"
+		"**/Greeter*/*.ts",
+		"./main.node.ts"
 	]
 }
