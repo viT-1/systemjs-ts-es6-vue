@@ -3,5 +3,6 @@ distnode/
 node_modules/
 .git/
 .idea/
+.test/
 .vscode/
 *.bat

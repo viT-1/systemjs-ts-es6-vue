@@ -1,26 +1,13 @@
 {
-	"extends": "../tsconfig.base.json",
+	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
 		"module": "system",
 		"target": "es5",
-		"baseUrl": ".",
 		"rootDir": ".",
-		"outFile": "../dist/bundle.js",
-		"paths": {
-			"~/*": ["./*"],
-			"@common/*": ["./common.blocks/*"]
-		}
+		"outFile": "../dist/bundle.js"
 	},
 	"files": [
 		"../dist/**/*.html.js",
 		"../node_modules/vue-class-component/dist/vue-class-component.esm.js"
-	],
-	"include": [
-		"**/*.ts",
-		"**/*.html"
-	],
-	"exclude": [
-		"**/node_modules/*",
-		"**/*.spec.ts"
 	]
 }

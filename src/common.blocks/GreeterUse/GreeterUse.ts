@@ -1,8 +1,8 @@
 import Greeter from '@common/Greeter';
 
 export default class GreeterUse {
-	public static say(): void {
+	public static say(): string {
 		const gr = new Greeter('world');
-		console.log(gr.greet());
+		return gr.greet();
 	}
 }

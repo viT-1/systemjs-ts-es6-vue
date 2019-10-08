@@ -1,9 +1,8 @@
 {
-	"extends": "../tsconfig.base.json",
+	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
 		"module": "es6",
 		"target": "esnext",
-		"baseUrl": ".",
 		"outDir": "../dist",
 		"plugins": [{ "transform": "typescript-transform-paths" }],
 		"paths": {
@@ -11,13 +10,5 @@
 			"@common/*": ["./common.blocks/*"],
 			"vue": ["https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js"]
 		}
-	},
-	"include": [
-		"**/*.ts",
-		"**/*.html"
-	],
-	"exclude": [
-		"**/node_modules/*",
-		"**/*.spec.ts"
-	]
+	}
 }

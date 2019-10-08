@@ -2,6 +2,6 @@ import GreeterUse from '@common/GreeterUse';
 import VueApp from '~/VueApp';
 
 console.log('Main entry file is Ok!');
-GreeterUse.say();
+console.log(GreeterUse.say());
 
 VueApp.init();

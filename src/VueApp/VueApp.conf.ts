@@ -6,7 +6,9 @@ export const components = {
 	IamHeader,
 };
 
-export default {
+export const conf = {
 	components,
 	selector,
 };
+
+export default conf;

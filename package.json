@@ -1,6 +1,10 @@
 {
-    "name": "systemjs-ts-es6",
-    "version": "0.1.0",
+    "name": "systemjs-ts-es6-vue",
+    "version": "0.2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/viT-1/systemjs-ts-es6-vue.git"
+    },
     "description": "An examlple how to bundle typescript app to ES5 with SystemJS for IE11 and ES6 modules for other browsers",
     "keywords": [
         "typescript",
@@ -9,7 +13,9 @@
         "es6 modules",
         "vue",
         "vue 3.0",
-        "vue-class-component"
+        "vue-class-component",
+        "jest",
+        "unittest"
     ],
     "eslintIgnore": [
         "dist",
@@ -18,20 +24,22 @@
     ],
     "scripts": {
         "clean": "rm -rf ./dist",
+        "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.*",
         "predeploy": "npm run lint && npm run clean",
         "deploy": "gulp deploy",
         "postdeploy": "npm run wwwdeploy",
         "predeploy.dev": "npm run clean && gulp predeploy.dev",
         "deploy.dev": "ttsc --project ./src/tsconfig.dev.json",
         "postdeploy.dev": "gulp postdeploy.dev && npm run wwwdeploy",
-        "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.*",
         "clean.node": "rm -rf ./distnode",
         "predeploy.node": "npm run clean.node",
         "deploy.node": "ttsc --project ./src/tsconfig.node.json",
         "postdeploy.node": "node ./distnode/main.js",
         "wwwdeploy": "tsc --project ./express.node/tsconfig.json",
         "www": "node -r esm ./dist/express.node/express.node.js",
-        "www.dev": "node -r esm ./dist/express.node/express.node.js --dev"
+        "www.dev": "node -r esm ./dist/express.node/express.node.js --dev",
+        "pretest": "npm run lint",
+        "test": "jest --no-cache"
     },
     "dependencies": {
         "promise-polyfill": "8.1.3",
@@ -42,15 +50,18 @@
         "whatwg-fetch": "3.0.0"
     },
     "devDependencies": {
-        "@types/express": "^4.17.0",
-        "@types/node": "^12.7.1",
-        "@typescript-eslint/eslint-plugin": "2.3.0",
-        "@typescript-eslint/parser": "2.3.0",
-        "eslint": "6.4.0",
+        "@types/express": "4.17.1",
+        "@types/jest": "24.0.18",
+        "@types/node": "12.7.11",
+        "@typescript-eslint/eslint-plugin": "2.3.2",
+        "@typescript-eslint/parser": "2.3.2",
+        "eslint": "6.5.1",
         "eslint-config-airbnb-base": "14.0.0",
         "eslint-config-airbnb-typescript": "5.0.0",
         "eslint-import-resolver-typescript": "1.1.1",
         "eslint-plugin-import": "2.18.2",
+        "eslint-plugin-jest": "22.17.0",
+        "eslint-plugin-jest-formatting": "1.1.0",
         "eslint-plugin-json": "1.4.0",
         "eslint-plugin-markdown": "1.0.0",
         "esm": "3.2.25",
@@ -61,7 +72,10 @@
         "gulp-replace": "1.0.0",
         "gulp-typescript": "5.0.1",
         "gulp-uglify-es": "1.0.4",
-        "ts-node": "8.3.0",
+        "jest": "24.9.0",
+        "jest-transform-stub": "2.0.0",
+        "ts-jest": "24.1.0",
+        "ts-node": "8.4.1",
         "typescript": "3.6.3",
         "typescript-transform-paths": "1.1.10",
         "ttypescript": "1.5.7"
