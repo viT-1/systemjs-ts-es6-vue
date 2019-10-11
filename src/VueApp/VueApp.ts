@@ -1,15 +1,27 @@
 import Vue from 'vue';
+import { Vue as TypeVue } from 'vue/types/vue';
 
-import { components, selector as el } from './VueApp.conf';
+import {
+	components,
+	el,
+	warnings,
+} from './VueApp.conf';
 
 export default class VueApp {
-	public static init(): void {
+	public static init(): TypeVue | null {
+		// В любом случае отключаем Vue-предупреждения в консоль
 		Vue.config.devtools = false;
 		Vue.config.productionTip = false;
 
-		// @link: no-new https://gitlab.com/gitlab-org/gitlab-ce/issues/42783
+		// Если в DOM нет соответствующего селектора, то инициализировать Vue нет возможности
+		if (!document.querySelector(el)) {
+			console.warn(warnings.WARN_NOT_FOUND_EL);
+			return null;
+		}
+
+		// Инициализация всего vue на DOM-элементе (смотри VueApp.conf)
 		/* eslint-disable no-new */
-		new Vue({
+		return new Vue({
 			el,
 			components,
 		});

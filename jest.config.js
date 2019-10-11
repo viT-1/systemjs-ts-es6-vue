@@ -21,7 +21,7 @@ const conf = {
 		// Корневой index всего лишь прослойка, её не тестируем
 		'!src/**/index.ts',
 		// main.ts не несёт смысловой нагрузки, кроме как вывода в консоль
-		'!src/main.ts',
+		'!src/main.*',
 	],
 	coverageDirectory: './.test/coverage',
 	// Список для resolve импортов в spec-файлы, когда не указан тип файла
@@ -43,7 +43,7 @@ const conf = {
 	testPathIgnorePatterns: [
 	],
 	// Мэппинг по структуре проекта - какие тесты запускать из под jest
-	testRegex: './src/(.*?)/(.*?)\\.(test|spec)\\.ts$',
+	testMatch: ['**/*.*(spec|test).*(ts|js)'],
 	// Через какой интерпретатор прогонять типы файлов
 	transform: {
 		'.*?\\.(ts|js)$': 'ts-jest',

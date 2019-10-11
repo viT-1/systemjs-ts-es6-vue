@@ -1,6 +1,10 @@
 import IamHeader from '@common/IamHeader';
 
-export const selector = '.js-app';
+export const el = '.js-app';
+
+export const warnings = {
+	WARN_NOT_FOUND_EL: `${el} is not found, VueApp.init() failed!`,
+};
 
 export const components = {
 	IamHeader,
@@ -8,7 +12,8 @@ export const components = {
 
 export const conf = {
 	components,
-	selector,
+	el,
+	warnings,
 };
 
 export default conf;
