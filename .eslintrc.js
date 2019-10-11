@@ -7,6 +7,7 @@ const rules = {
 	],
 	'import/no-unresolved': 'error',
 	'import/prefer-default-export': 'off',
+	'import/no-default-export': 'error',
 	'linebreak-style': 'off',
 	'no-console': 'off',
 	'no-trailing-spaces': 'error',
@@ -76,6 +77,17 @@ const conf = {
 				'airbnb-typescript/base',
 			],
 			rules
+		},
+		{
+			'files': ['**/*.d.ts'],
+			'extends': [
+				'plugin:@typescript-eslint/recommended',
+				'airbnb-typescript/base',
+			],
+			'rules': {
+				...rules,
+				'import/no-default-export': 'off',
+			}
 		},
 		{
 			'files': ['**/*.spec.ts'],

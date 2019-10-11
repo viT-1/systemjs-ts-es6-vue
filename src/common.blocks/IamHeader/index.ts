@@ -1,2 +1,2 @@
-export { default as conf } from './IamHeader.conf';
-export { default } from './IamHeader';
+export { conf } from './IamHeader.conf';
+export { IamHeader } from './IamHeader';

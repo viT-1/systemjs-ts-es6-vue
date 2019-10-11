@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { name, template } from './IamHeader.conf';
+import { conf } from './IamHeader.conf';
+
+const { name, template } = conf;
 
 @Component({
 	name,
 	template,
 })
-class IamHeader extends Vue {
+export class IamHeader extends Vue {
 }
-
-export default IamHeader;

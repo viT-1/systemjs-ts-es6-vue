@@ -1,1 +1,1 @@
-export { default } from './GreeterUse';
+export { GreeterUse } from './GreeterUse';

@@ -7,5 +7,3 @@ export const conf = {
 	entryDevFileName: 'index.dev.htm',
 	rootFolderPath: path.resolve(path.dirname('')),
 };
-
-export default conf;

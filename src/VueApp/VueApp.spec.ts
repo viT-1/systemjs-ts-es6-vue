@@ -1,4 +1,4 @@
-import VueApp, { conf } from './index';
+import { VueApp, conf } from './index';
 
 describe('conf VueApp.ts', () => {
 	// like DTD - @todo: needs d.ts for config objects

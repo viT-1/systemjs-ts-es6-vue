@@ -13,7 +13,7 @@ import {
 } from 'gulp';
 // import uglifyES from 'gulp-uglify-es';
 
-import appConf from './app.conf';
+import { conf as appConf } from './app.conf';
 
 const root = appConf.rootFolderPath;
 const absSrc = path.resolve(root, appConf.srcFolderName);

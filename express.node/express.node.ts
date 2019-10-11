@@ -4,7 +4,7 @@ import path from 'path';
 import { conf } from './express.node.conf';
 
 // Не выдаёт ошибок, если в tsconfig указано, что соберём commonjs
-import appConf from '../app.conf';
+import { conf as appConf } from '../app.conf';
 
 const { port } = conf;
 const app = express();

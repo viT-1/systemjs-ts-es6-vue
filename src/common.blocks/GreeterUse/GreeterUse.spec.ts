@@ -1,4 +1,4 @@
-import GreeterUse from './GreeterUse';
+import { GreeterUse } from './GreeterUse';
 
 describe('module GreeterUse.ts', () => {
 	it('says "world"', () => {

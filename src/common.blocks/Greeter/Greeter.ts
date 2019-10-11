@@ -1,6 +1,6 @@
 import { conf } from './Greeter.conf';
 
-class Greeter {
+export class Greeter {
 	private greeting: string;
 
 	public constructor(message: string) {
@@ -11,5 +11,3 @@ class Greeter {
 		return `${conf.greetText}, ${this.greeting}`;
 	}
 }
-
-export default Greeter;

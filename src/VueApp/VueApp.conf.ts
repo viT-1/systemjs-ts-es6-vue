@@ -1,4 +1,4 @@
-import IamHeader from '@common/IamHeader';
+import { IamHeader } from '@common/IamHeader';
 
 export const el = '.js-app';
 
@@ -15,5 +15,3 @@ export const conf = {
 	el,
 	warnings,
 };
-
-export default conf;

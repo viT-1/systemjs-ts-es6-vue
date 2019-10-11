@@ -7,7 +7,7 @@ import {
 	warnings,
 } from './VueApp.conf';
 
-export default class VueApp {
+export class VueApp {
 	public static init(): TypeVue | null {
 		// В любом случае отключаем Vue-предупреждения в консоль
 		Vue.config.devtools = false;

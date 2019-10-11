@@ -1,6 +1,6 @@
-import Greeter from '@common/Greeter';
+import { Greeter } from '@common/Greeter';
 
-export default class GreeterUse {
+export class GreeterUse {
 	public static say(): string {
 		const gr = new Greeter('world');
 		return gr.greet();
