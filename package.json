@@ -24,7 +24,7 @@
     ],
     "scripts": {
         "clean": "rm -rf ./dist",
-        "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.*",
+        "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint **/*.{ts,json,js} *.* .*.js",
         "predeploy": "npm run lint && npm run clean",
         "deploy": "gulp deploy",
         "postdeploy": "npm run wwwdeploy",
