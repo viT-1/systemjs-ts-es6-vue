@@ -1,7 +1,13 @@
 {
 	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
-		// allow importing files without export (*.html) - needs to turn off Jest errors
 		"esModuleInterop": true
-	}
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.vue"
+	],
+	"exclude": [
+		"**/node_modules/*"
+	]
 }

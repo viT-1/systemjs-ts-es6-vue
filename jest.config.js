@@ -1,11 +1,17 @@
+const tsConfig = './src/tsconfig.jest.json';
+
 const conf = {
 	// Базовую настройку jest под ts взять из рекомендованных
 	preset: 'ts-jest',
 	globals: {
 		'ts-jest': {
 			// Возможно использовать (исключены не сгенерённые ещё файлы *.html.js)
-			tsConfig: './src/tsconfig.jest.json',
+			tsConfig,
 		},
+		'vue-jest': {
+			babelConfig: false,
+			tsConfig,
+		}
 	},
 	// Чтобы jest не смущали глобальные переменные браузера (console, window...)
 	browser: true,
@@ -17,7 +23,7 @@ const conf = {
 	collectCoverageFrom: [
 		'src/**/*.ts',
 		'!src/**/*.d.ts',
-		// '!src/**/*.conf.ts',
+		'!src/**/*.conf.ts',
 		// Корневой index всего лишь прослойка, её не тестируем
 		'!src/**/index.ts',
 		// main.ts не несёт смысловой нагрузки, кроме как вывода в консоль
@@ -47,7 +53,9 @@ const conf = {
 	// Через какой интерпретатор прогонять типы файлов
 	transform: {
 		'.*?\\.(ts|js)$': 'ts-jest',
-		'.*?\\.html$': 'jest-transform-stub',
+		// using html-loader-jest not 'jest-transform-stub' for true template importing of non-.vue components
+		'.*?\\.html$': 'html-loader-jest',
+		'.*?\\.vue$': 'vue-jest',
 	},
 	// Исключаем нетранспилированный код ??? наш ts тоже нетранспилированный
 	transformIgnorePatterns: [
