@@ -19,10 +19,10 @@ and almost nothing about actual 5.0 version! If you want to use older one, just 
 ## Why Typescript & vue-class-component?
 Because I want to write code which will be easy to migrate to Vue 3.0
 
-## With Typescript You don't need overengineering .vue files and special loaders!
+## With Typescript You don't need overengineering .vue files and special loaders (even with Jest)! 
 ...
 
-## Aliases problem
+## Aliases problem solved
 Relative paths are like a hell!
 
 ## Articles
