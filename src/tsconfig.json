@@ -8,6 +8,7 @@
 	},
 	"files": [
 		"../dist/**/*.html.js",
-		"../node_modules/vue-class-component/dist/vue-class-component.esm.js"
+		"../node_modules/vue-class-component/dist/vue-class-component.esm.js",
+		"../node_modules/vue-property-decorator/lib/vue-property-decorator.js"
 	]
 }

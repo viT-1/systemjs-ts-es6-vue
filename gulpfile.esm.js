@@ -39,17 +39,19 @@ task('postdeploy.dev:copyNonTranspiledFiles',
 
 task('predeploy.dev',
 	() => src([
+		path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
 		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
 	])
-		// ;)
-		.pipe(gReplace('Evan', 'Ivan'))
 		// usually solved by rollup-plugin-replace
 		// https://github.com/vuejs/vue-class-component/issues/356
 		.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
+		.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
 		// fix to resolve modules without importmap (es-module-shims now not needed!)
 		// can't transform by tsconfig > files outside rootDir
 		// because of paths in dist becomes not the same as src =(((
 		.pipe(gReplace("from 'vue'", "from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'"))
+		// used local file because of custom vue resolving by src replacement
+		.pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsNotInIndex',
@@ -58,15 +60,16 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		`${absDest}/*.js`,
 		// exclude file with separate fix-task
 		`!${absDest}/vue-class-component.esm.js`,
+		`!${absDest}/vue-property-decorator.js`,
 	])
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(gReplace('.conf";', '.conf.js";'))
 		.pipe(gReplace('.html";', '.html.js";'))
-		// vue path transformed to cdn but local paths not!
+		// vue path transformed to cdn (vue doesn'have another dependencies) but local paths not!
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
-		.pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
+		.pipe(gReplace("from 'vue-property-decorator'", "from '/vue-property-decorator.js'"))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsInIndex',
@@ -110,8 +113,10 @@ task('fixBundle',
 	])
 		// fix templates as string
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
-		// fix transpiled node_modules names
+		// fix transpiled node_modules names to included SystemJS module
+		// for module resolving instead of bugs with systemjs-importmap
 		.pipe(gReplace('node_modules/vue-class-component/dist/vue-class-component.esm', 'vue-class-component'))
+		.pipe(gReplace('node_modules/vue-property-decorator/lib/vue-property-decorator', 'vue-property-decorator'))
 		// .pipe(uglifyES())
 		.pipe(dest(absDest)));
 
