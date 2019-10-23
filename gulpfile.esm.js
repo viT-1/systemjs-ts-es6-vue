@@ -1,3 +1,4 @@
+import del from 'del';
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
 import gHtml2Js from 'gulp-html-to-js';
@@ -11,7 +12,7 @@ import {
 	parallel,
 	series,
 } from 'gulp';
-// import uglifyES from 'gulp-uglify-es';
+import uglifyES from 'gulp-uglify-es';
 
 import { conf as appConf } from './app.conf';
 
@@ -52,6 +53,16 @@ task('predeploy.dev',
 		.pipe(gReplace("from 'vue'", "from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'"))
 		// used local file because of custom vue resolving by src replacement
 		.pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
+		.pipe(dest(absDest)));
+
+task('pretranspileNModules',
+	() => src([
+		path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
+		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
+	])
+		.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
+		.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
+		// changing 'from' as variant above not needed cause of including to bundle
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsNotInIndex',
@@ -106,6 +117,12 @@ task('transpile',
 			.pipe(dest(absDest));
 	});
 
+task('deleteNModules',
+	() => del([
+		`${absDest}/vue-class-component.esm.js`,
+		`${absDest}/vue-property-decorator.js`,
+	]));
+
 // fix because of names of modules with src includes generated dist
 task('fixBundle',
 	() => src([
@@ -115,9 +132,9 @@ task('fixBundle',
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
 		// fix transpiled node_modules names to included SystemJS module
 		// for module resolving instead of bugs with systemjs-importmap
-		.pipe(gReplace('node_modules/vue-class-component/dist/vue-class-component.esm', 'vue-class-component'))
-		.pipe(gReplace('node_modules/vue-property-decorator/lib/vue-property-decorator', 'vue-property-decorator'))
-		// .pipe(uglifyES())
+		.pipe(gReplace(`${appConf.srcFolderName}/vue-class-component.esm`, 'vue-class-component'))
+		.pipe(gReplace(`${appConf.srcFolderName}/vue-property-decorator`, 'vue-property-decorator'))
+		.pipe(uglifyES())
 		.pipe(dest(absDest)));
 
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
@@ -143,7 +160,11 @@ task('deploy',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		series(
 			'tmpl2js', // html as ES modules
+			'pretranspileNModules', // copy & fix es6 node modules for transpiling to SystemJs
 			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
-			'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
+			parallel(
+				'deleteNModules', // they are not need, because of bundle including
+				'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
+			),
 		),
 	));
