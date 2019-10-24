@@ -1,4 +1,5 @@
 import del from 'del';
+import gBabel from 'gulp-babel';
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
 import gHtml2Js from 'gulp-html-to-js';
@@ -30,6 +31,12 @@ task('tmpl2js',
 	() => src([`${absSrc}/**/*.html`])
 		.pipe(gHtml2Js())
 		.pipe(gReplace('module.exports =', 'export default'))
+		// BUG?! Babel is not transformed string/template literals!
+		.pipe(gBabel({
+			plugins: [
+				['@babel/plugin-transform-template-literals'],
+			],
+		}))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:copyNonTranspiledFiles',
@@ -126,7 +133,7 @@ task('deleteNModules',
 // fix because of names of modules with src includes generated dist
 task('fixBundle',
 	() => src([
-		path.resolve(absDest, 'bundle.js'),
+		path.resolve(absDest, 'bundle.system.js'),
 	])
 		// fix templates as string
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
@@ -147,7 +154,7 @@ task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 task('copyNonTranspiledFiles',
 	() => src([
 		path.resolve(absSrc, appConf.entryFileName),
-		path.resolve(absSrc, 'importmap.json'),
+		path.resolve(absSrc, 'importmap.system.json'),
 		path.resolve('node_modules', 'promise-polyfill', 'dist', 'polyfill.min.js'),
 		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
 	])

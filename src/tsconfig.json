@@ -4,7 +4,7 @@
 		"module": "system",
 		"target": "es5",
 		"rootDir": ".",
-		"outFile": "../dist/bundle.js"
+		"outFile": "../dist/bundle.system.js"
 	},
 	"files": [
 		"../dist/**/*.html.js",

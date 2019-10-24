@@ -13,8 +13,8 @@
         "es6 modules",
         "vue",
         "vue 3.0",
-		"vue-class-component",
-		"vue-property-decorator",
+        "vue-class-component",
+        "vue-property-decorator",
         "jest",
         "unittest"
     ],
@@ -51,6 +51,8 @@
         "whatwg-fetch": "3.0.0"
     },
     "devDependencies": {
+        "@babel/core": "7.4.4",
+        "@babel/plugin-transform-template-literals": "7.4.4",
         "@types/express": "4.17.1",
         "@types/jest": "24.0.19",
         "@types/node": "12.11.5",
@@ -69,6 +71,7 @@
         "eslint-plugin-markdown": "1.0.1",
         "esm": "3.2.25",
         "gulp": "4.0.2",
+        "gulp-babel": "8.0.0",
         "gulp-clean-css": "4.2.0",
         "gulp-concat": "2.6.1",
         "gulp-html-to-js": "0.0.7",
