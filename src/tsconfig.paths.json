@@ -5,7 +5,11 @@
 		"paths": {
 			"~/*": ["./*"],
 			"@common/*": ["./common.blocks/*"]
-		}
+		},
+		"typeRoots": [
+			"typings",
+			"../node_modules/@types"
+		],
 	},
 	"include": [
 		"**/*.ts",

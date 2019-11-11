@@ -7,7 +7,7 @@ const conf = {
 					'**/*.spec.ts',
 					'**/jest.config.js',
 					'gulpfile.esm.js',
-				]
+				],
 			},
 		],
 		'import/no-unresolved': 'error',
