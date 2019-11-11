@@ -1,37 +1,19 @@
-const rules = {
-	'curly': ['error', 'multi', 'consistent'],
-	'import/no-extraneous-dependencies': [
-		'error', {
-			'devDependencies': ['**/*.spec.ts', '**/*.jest.config.js', 'gulpfile.esm.js']
-		},
-	],
-	'import/no-unresolved': 'error',
-	'import/prefer-default-export': 'off',
-	'import/no-default-export': 'error',
-	'linebreak-style': 'off',
-	'no-console': 'off',
-	'no-trailing-spaces': 'error',
-	'no-tabs': ['warn', { 'allowIndentationTabs': true }],
-	'@typescript-eslint/brace-style': ['error', 'stroustrup'],
-	'@typescript-eslint/indent': [
-		'error',
-		'tab', // В airbnb исходно 2
-		{
-			SwitchCase: 1, // Настройка airbnb переопределяющая default
-			// Остальные настройки Airbnb соответствуют default, JSX не волнует
-		},
-	],
-	'@typescript-eslint/no-unused-vars': ['warn'],
-};
+const baseExtends = [
+	'eslint:recommended',
+	'./common.eslintrc.js',
+];
+
+const fullExtends = [
+	'eslint:recommended',
+	'plugin:@typescript-eslint/recommended',
+	'airbnb-typescript/base',
+	'./common.eslintrc.js',
+];
 
 const conf = {
 	'env': {
 		'es6': true,
 	},
-	// Набор правил для всех расширений файлов указанных в package.json > scripts > lint:appvue
-	'extends': [
-		'eslint:recommended',
-	],
 	'parser': '@typescript-eslint/parser',
 	'plugins': [
 		'@typescript-eslint',
@@ -53,10 +35,10 @@ const conf = {
 			'files': [
 				'jest.config.js',
 				'**/*.jest.config.js',
-				'.eslintrc.js',
+				'*.eslintrc.js',
 			],
-			'env': { 'commonjs': true },
-			rules
+			'env': { 'commonjs': true, },
+			extends: baseExtends,
 		},
 		{
 			'files': [
@@ -64,42 +46,32 @@ const conf = {
 				'app.conf.js',
 			],
 			'parserOptions': { 'sourceType': 'module' },
-			rules
+			extends: baseExtends,
 		},
 		{
-			'files': ['**/*.ts'],
+			'files': ['**/*.ts', '*.ts'],
 			'env': { 'browser': true },
 			'parserOptions': {
 				'sourceType': 'module',
 			},
-			'extends': [
-				'plugin:@typescript-eslint/recommended',
-				'airbnb-typescript/base',
-			],
-			rules
+			extends: fullExtends,
 		},
 		{
 			'files': ['**/*.d.ts'],
-			'extends': [
-				'plugin:@typescript-eslint/recommended',
-				'airbnb-typescript/base',
-			],
+			extends: fullExtends,
 			'rules': {
-				...rules,
 				'import/no-default-export': 'off',
-			}
+			},
 		},
 		{
 			'files': ['**/*.spec.ts'],
 			// что есть, что нет env jest, реакции eslint в этих файлах нет?!
 			'env': { 'browser': true, 'jest': true },
-			'extends': [
-				'plugin:@typescript-eslint/recommended',
-				'airbnb-typescript/base',
+			extends: [
+				...fullExtends,
 				'plugin:jest/all',
 				'plugin:jest-formatting/strict',
 			],
-			rules
 		},
 	],
 };
