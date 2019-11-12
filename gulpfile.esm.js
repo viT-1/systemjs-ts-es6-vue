@@ -45,7 +45,7 @@ task('postdeploy.dev:copyNonTranspiledFiles',
 	])
 		.pipe(dest(absDest)));
 
-task('predeploy.dev',
+task('copyNModules',
 	() => src([
 		path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
 		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
@@ -54,13 +54,18 @@ task('predeploy.dev',
 		// https://github.com/vuejs/vue-class-component/issues/356
 		.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
 		.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
-		// fix to resolve modules without importmap (es-module-shims now not needed!)
-		// can't transform by tsconfig > files outside rootDir
-		// because of paths in dist becomes not the same as src =(((
-		.pipe(gReplace("from 'vue'", "from 'https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js'"))
-		// used local file because of custom vue resolving by src replacement
-		.pipe(gReplace("from 'vue-class-component'", "from '/vue-class-component.esm.js'"))
-		.pipe(dest(absDest)));
+
+		// can't use map for es6-modules
+		.pipe(dest(absSrc)));
+
+// to src because of dist/dist incorrect folder structure with "outDir" & "files" options
+task('predeploy.dev', series('copyNModules'));
+
+task('deleteNModules',
+	() => del([
+		path.resolve(absSrc, 'vue-property-decorator.js'),
+		path.resolve(absSrc, 'vue-class-component.esm.js')
+	]));
 
 task('pretranspileNModules',
 	() => src([
@@ -102,6 +107,7 @@ task('postdeploy.dev',
 	parallel(
 		'cssbundle',
 		'tmpl2js',
+		'deleteNModules',
 		series(
 			'postdeploy.dev:copyNonTranspiledFiles',
 			parallel(
@@ -123,12 +129,6 @@ task('transpile',
 		return tsResult
 			.pipe(dest(absDest));
 	});
-
-task('deleteNModules',
-	() => del([
-		`${absDest}/vue-class-component.esm.js`,
-		`${absDest}/vue-property-decorator.js`,
-	]));
 
 // fix because of names of modules with src includes generated dist
 task('fixBundle',
@@ -167,7 +167,7 @@ task('deploy',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		series(
 			'tmpl2js', // html as ES modules
-			'pretranspileNModules', // copy & fix es6 node modules for transpiling to SystemJs
+			'copyNModules', // copy & fix es6 node modules for transpiling to SystemJs
 			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
 			parallel(
 				'deleteNModules', // they are not need, because of bundle including
