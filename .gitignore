@@ -1,8 +1,16 @@
-dist/
-distnode/
 node_modules/
 .git/
 .idea/
-.test/
 .vscode/
 *.bat
+
+# deployed
+dist/
+distnode/
+
+# jest cache & coverage
+.test/
+
+# because of copying/deleting to/from src
+vue-property-decorator.js
+vue-class-component.esm.js
