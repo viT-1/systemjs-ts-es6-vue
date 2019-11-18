@@ -6,6 +6,7 @@ import gHtml2Js from 'gulp-html-to-js';
 import gReplace from 'gulp-replace';
 import path from 'path';
 import typescript from 'gulp-typescript';
+import ttypescript from 'ttypescript';
 import {
 	src,
 	dest,
@@ -122,6 +123,20 @@ task('transpile',
 		// Transpiling for browser tsconfig
 		const tsApp = typescript.createProject(
 			path.resolve(absSrc, 'tsconfig.json'),
+		);
+		const tsResult = tsApp.src()
+			.pipe(tsApp()).js;
+
+		return tsResult
+			.pipe(dest(absDest));
+	});
+
+task('transpile.dev',
+	() => {
+		// Transpiling for browser tsconfig
+		const tsApp = typescript.createProject(
+			path.resolve(absSrc, 'tsconfig.dev.json'),
+			{ typescript: ttypescript },
 		);
 		const tsResult = tsApp.src()
 			.pipe(tsApp()).js;
