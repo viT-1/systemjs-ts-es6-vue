@@ -11,6 +11,8 @@
 
 	<script src="systemjs/system.js"></script>
 	<script src="systemjs/named-register.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-multiselect@2.1.6/dist/vue-multiselect.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-multiselect@2.1.6/dist/vue-multiselect.min.css">
 	<link rel="icon" href="https://github.com/favicon.ico">
 	<link rel="stylesheet" href="index.css">
 </head>
@@ -19,6 +21,8 @@
 	<!--IamHeader.html has string literals, therfore can be render out with empty html comment-->
 	<div class="js-app">
 		<iam-header some="thing">Test SystemJS & Vue</iam-header>
+		<iam-select v-model="mySelected"></iam-select>
+		<p>Selected: {{mySelected}}</p>
 	</div>
 	<script type="systemjs-importmap" src="importmap.system.json"></script>
 	<script>

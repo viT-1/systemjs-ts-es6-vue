@@ -1,7 +1,9 @@
 import { IamHeader } from '@common/IamHeader';
+import { IamSelect } from '@common/IamSelect';
 
 export const components = {
 	IamHeader,
+	IamSelect,
 };
 
 export const el = '.js-app';

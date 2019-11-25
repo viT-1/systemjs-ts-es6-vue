@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 
 <head>
+	<script src="https://cdn.jsdelivr.net/npm/vue-multiselect@2.1.6/dist/vue-multiselect.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-multiselect@2.1.6/dist/vue-multiselect.min.css">
 	<link rel="icon" href="https://github.com/favicon.ico">
 	<link rel="stylesheet" href="index.css">
 </head>
 <body>
 	<div class="js-app">
 		<iam-header some="thing">Test Es6 modules & Vue</iam-header>
+		<iam-select v-model="mySelected"></iam-select>
+		<p>Selected: {{mySelected}}</p>
 	</div>
 	<script type="module" src="main.js"></script>
 </body>

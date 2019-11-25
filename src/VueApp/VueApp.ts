@@ -24,6 +24,9 @@ export class VueApp {
 		return new Vue({
 			el,
 			components,
+			data: {
+				mySelected: null,
+			},
 		});
 	}
 }

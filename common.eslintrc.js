@@ -27,6 +27,8 @@ const conf = {
 			},
 		],
 		'@typescript-eslint/no-unused-vars': ['warn'],
+		// Old school interface class naming
+		'@typescript-eslint/interface-name-prefix': ['error', 'always'],
 	},
 };
 
