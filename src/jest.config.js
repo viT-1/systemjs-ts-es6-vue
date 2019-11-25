@@ -1,11 +1,12 @@
 const path = require('path');
 const rootDir = require('app-root-path').path;
 
-const tsconfigPaths = require('./tsconfig.paths.json');
-const moduleNameMapper = require('tsconfig-paths-jest')(tsconfigPaths);
+// TODO: back to tsconfig-paths-jest falling on json reading =(
+// const tsconfigPaths = require('./tsconfig.paths.json');
+// const moduleNameMapper = require('tsconfig-paths-jest')(tsconfigPaths);
 
 const conf = {
-	// Базовую настройку jest под ts взять из рекомендованных
+	// base es-lint rules for tests
 	preset: 'ts-jest',
 	globals: {
 		'ts-jest': {
@@ -13,11 +14,11 @@ const conf = {
 			tsConfig: path.resolve(rootDir, 'src', 'tsconfig.jest.json'),
 		},
 	},
-	// Чтобы jest не смущали глобальные переменные браузера (console, window...)
+	// For browser global variables (console, window...)
 	browser: true,
-	// Каталоги создаваемые jest должны храниться в node_modules, а не засорять корневой каталог
+	// Cache directory should be set for git ignoring
 	cacheDirectory: path.resolve(rootDir, '.test', 'cache'),
-	// Смотрим на процент покрытия тестами
+	// Tests cover (percent & lines of logic)
 	collectCoverage: true,
 	// Ограничиваемся тестами на модули для реиспользования.
 	collectCoverageFrom: [
@@ -30,37 +31,38 @@ const conf = {
 		'!**/main.*',
 	],
 	coverageDirectory: path.resolve(rootDir, '.test', 'coverage'),
-	// Список для resolve импортов в spec-файлы, когда не указан тип файла
+	// resolving file types with not full filename in spes.ts names
 	moduleFileExtensions: [
 		'ts',
 		'js',
 		'json',
 		'html',
 	],
-	// Resolve ссылок на import в тестируемых модулях (подключённых через import в файл теста)
+	// Resolve imports in spes.ts files
 	moduleNameMapper: {
-		...moduleNameMapper,
+		'~/(.*)$': `${rootDir}/$1`,
+		'@common/(.*)$': `${rootDir}/src/common.blocks/$1`,
+		// ...moduleNameMapper, // TODO: back to tsconfig-paths-jest falling on json reading =(
 		// fix Vue warning about version of Vue
 		'vue$': 'vue/dist/vue.common.dev.js'
 	},
 	// https://jestjs.io/docs/en/configuration#testenvironment-string
 	// testEnvironment: 'node', // 'jsdom',
-	// Выборка тестов для игнора, удовлетворяющих путям testRegex
+	// Ignore some tests from testMatch
 	testPathIgnorePatterns: [
 	],
-	// Мэппинг по структуре проекта - какие тесты запускать из под jest
+	// Mapping which tests to run with jest
 	testMatch: ['**/*.*(spec|test).*(ts|js)'],
-	// Через какой интерпретатор прогонять типы файлов
+	// File types reading
 	transform: {
 		'.*?\\.(ts|js)$': 'ts-jest',
 		// using html-loader-jest not 'jest-transform-stub' for true template importing of non-.vue components
 		'.*?\\.html$': 'html-loader-jest',
 	},
-	// Исключаем нетранспилированный код ??? наш ts тоже нетранспилированный
 	transformIgnorePatterns: [
 		'/node_modules/',
 	],
-	// Чтобы расписывал все тесты по шагам (иначе не показывает шаги, если тестов больше чем 1)
+	// Displays all steps
 	verbose: true,
 };
 
