@@ -1,9 +1,10 @@
-/* eslint nonblock-statement-body-position: off */
+import { BemComponent } from '@common/BemComponent';
+
 import {
 	Component,
 	Prop,
+	Mixins,
 	Watch,
-	Vue,
 } from 'vue-property-decorator';
 
 import { IOption } from './IamSelect.option.i';
@@ -24,16 +25,19 @@ const { name, template } = conf;
 		'vue-multiselect': window.VueMultiselect.default,
 	},
 })
-export class IamSelect extends Vue {
+export class IamSelect extends Mixins(BemComponent) {
 	constructor() {
 		super();
+		this.b = conf.bem;
 
-		if (this.value)
+		if (this.value) {
 			// производительность клонирования
 			// https://habr.com/ru/post/283090/ https://jsfiddle.net/thcu7tjv/26/
 			this.mValue = JSON.parse(JSON.stringify(this.value));
-		else
+		}
+		else {
 			this.mValue = null;
+		}
 	}
 
 	@Prop(Object)

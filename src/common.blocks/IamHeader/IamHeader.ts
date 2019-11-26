@@ -1,4 +1,10 @@
-import { Prop, Component, Vue } from 'vue-property-decorator';
+import {
+	Prop,
+	Component,
+	Mixins,
+} from 'vue-property-decorator';
+
+import { BemComponent } from '@common/BemComponent';
 
 import { conf } from './IamHeader.conf';
 
@@ -8,7 +14,12 @@ const { name, template } = conf;
 	name,
 	template,
 })
-export class IamHeader extends Vue {
+export class IamHeader extends Mixins(BemComponent) {
+	constructor() {
+		super();
+		this.b = conf.bem;
+	}
+
 	@Prop(String) some: string | undefined;
 
 	computeSome = `computed ${this.some}`;

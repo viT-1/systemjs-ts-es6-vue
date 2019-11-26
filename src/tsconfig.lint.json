@@ -1,0 +1,6 @@
+{
+	"extends": "./tsconfig.paths",
+	"compilerOptions": {
+		"target": "esnext"
+	}
+}

@@ -1,6 +1,13 @@
+import { IBem } from '@common/Bem.i';
+
 import tmpl from './IamHeader.html';
 
+const bem: IBem = {
+	block: 'iam-header',
+};
+
 export const conf = {
-	name: 'iam-header',
+	bem,
+	name: bem.block,
 	template: tmpl,
 };

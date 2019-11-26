@@ -1,6 +1,6 @@
 const conf = {
 	rules: {
-		'curly': ['error', 'multi', 'consistent'],
+		// 'curly': ['error', 'all', 'consistent'],
 		'import/no-extraneous-dependencies': [
 			'error', {
 				'devDependencies': [
@@ -29,6 +29,7 @@ const conf = {
 		'@typescript-eslint/no-unused-vars': ['warn'],
 		// Old school interface class naming
 		'@typescript-eslint/interface-name-prefix': ['error', 'always'],
+		'@typescript-eslint/ban-ts-ignore': 'off',
 	},
 };
 

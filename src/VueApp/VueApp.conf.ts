@@ -2,6 +2,8 @@ import { IamHeader } from '@common/IamHeader';
 import { IamSelect } from '@common/IamSelect';
 
 export const components = {
+	// [confIamHeader.name]: IamHeader,
+	// tagName is consistent with class name
 	IamHeader,
 	IamSelect,
 };

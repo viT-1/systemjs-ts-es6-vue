@@ -8,8 +8,8 @@
 </head>
 <body>
 	<div class="js-app">
-		<iam-header some="thing">Test Es6 modules & Vue</iam-header>
-		<iam-select v-model="mySelected"></iam-select>
+		<iam-header some="thing" block-parent="app">Test Es6 modules & Vue</iam-header>
+		<iam-select v-model="mySelected" block-parent="app"></iam-select>
 		<p>Selected: {{mySelected}}</p>
 	</div>
 	<script type="module" src="main.js"></script>

@@ -21,6 +21,7 @@ export class VueApp {
 
 		// Инициализация всего vue на DOM-элементе (смотри VueApp.conf)
 		/* eslint-disable no-new */
+		// @ts-ignore
 		return new Vue({
 			el,
 			components,
