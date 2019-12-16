@@ -29,7 +29,7 @@
         "predeploy": "npm run lint && npm run clean",
         "deploy": "gulp deploy",
         "postdeploy": "npm run wwwdeploy",
-		"predeploy.dev": "npm run clean && gulp predeploy.dev",
+        "predeploy.dev": "npm run clean && gulp predeploy.dev",
         "deploy.dev": "gulp transpile.dev",
         "postdeploy.dev": "gulp postdeploy.dev && npm run wwwdeploy",
         "clean.node": "rm -rf ./distnode",
