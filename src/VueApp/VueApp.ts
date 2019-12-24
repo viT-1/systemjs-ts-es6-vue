@@ -10,7 +10,7 @@ import {
 export class VueApp {
 	public static init(): TypeVue | null {
 		// В любом случае отключаем Vue-предупреждения в консоль
-		Vue.config.devtools = false;
+		Vue.config.devtools = true;
 		Vue.config.productionTip = false;
 
 		// Если в DOM нет соответствующего селектора, то инициализировать Vue нет возможности

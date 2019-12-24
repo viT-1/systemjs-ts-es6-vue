@@ -1,5 +1,4 @@
 import del from 'del';
-import gBabel from 'gulp-babel';
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
 import gHtml2Js from 'gulp-html-to-js';
@@ -32,12 +31,6 @@ task('tmpl2js',
 	() => src([`${absSrc}/**/*.html`])
 		.pipe(gHtml2Js())
 		.pipe(gReplace('module.exports =', 'export default'))
-		// BUG?! Babel is not transformed string/template literals!
-		.pipe(gBabel({
-			plugins: [
-				['@babel/plugin-transform-template-literals'],
-			],
-		}))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:copyNonTranspiledFiles',
