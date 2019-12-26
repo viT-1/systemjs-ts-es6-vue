@@ -9,7 +9,6 @@ import hJson from 'hjson';
 import gMerge from 'merge-stream';
 import path from 'path';
 import typescript from 'gulp-typescript';
-import ttypescript from 'ttypescript';
 import {
 	src,
 	dest,
@@ -115,35 +114,6 @@ task('postdeploy.dev:fixImportsEsm',
 		.pipe(gReplace("'vue-class-component'", `'${esmImportmapPaths['vue-class-component']}'`))
 		.pipe(dest('.')));
 
-// TODO: to npm run
-task('transpile',
-	() => {
-		// Transpiling for browser tsconfig
-		const tsApp = typescript.createProject(
-			path.resolve(absSrc, 'tsconfig.json'),
-		);
-		const tsResult = tsApp.src()
-			.pipe(tsApp()).js;
-
-		return tsResult
-			.pipe(dest(absDest));
-	});
-
-// TODO: to npm run
-task('transpile.dev',
-	() => {
-		// Transpiling for browser tsconfig
-		const tsApp = typescript.createProject(
-			path.resolve(absSrc, 'tsconfig.dev.json'),
-			{ typescript: ttypescript },
-		);
-		const tsResult = tsApp.src()
-			.pipe(tsApp()).js;
-
-		return tsResult
-			.pipe(dest(absDest));
-	});
-
 // fix because of names of modules with src includes generated dist
 task('fixBundle',
 	() => src([
@@ -174,7 +144,7 @@ task('copyNonTranspiledFiles',
 	])
 		.pipe(dest(absDest)));
 
-task('deploy',
+task('predeploy',
 	parallel(
 		'cssbundle',
 		'copyNonTranspiledFiles',
@@ -182,14 +152,44 @@ task('deploy',
 		series(
 			'tmpl2js', // before fixing, html as ES modules
 			'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
-			// All prepared, transpile/bundle now!
-			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
-			parallel(
-				'deleteEsmAssets', // they are not need, because of bundle including
-				'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
-			),
 		),
 	));
+
+task('postdeploy',
+	parallel(
+		'deleteEsmAssets', // they are not need, because of bundle including
+		'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
+	),
+);
+
+task('predeploy',
+	parallel(
+		'cssbundle',
+		'copyNonTranspiledFiles',
+		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
+		series(
+			'tmpl2js', // before fixing, html as ES modules
+			'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
+		),
+	));
+
+// TODO: to npm run
+// needs predeploy with 'tmpl2js'
+task('transpile',
+	() => {
+		// Transpiling for browser tsconfig
+		const tsApp = typescript.createProject(
+			path.resolve(absSrc, 'tsconfig.json'),
+		);
+		const tsResult = tsApp.src()
+			.pipe(tsApp()).js;
+
+		return tsResult
+			.pipe(dest(absDest));
+	});
+
+// strange, but package.json > scripts: npm run tsc --project ./src/tsconfig.json is not working
+task('deploy', series('transpile'));
 
 task('postdeploy.dev',
 	parallel(
