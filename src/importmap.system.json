@@ -1,6 +1,6 @@
 {
 	"imports": {
-		// check comment
-		"vue": "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"
+		"vue": "https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js",
+		"vuex": "https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js"
 	}
 }

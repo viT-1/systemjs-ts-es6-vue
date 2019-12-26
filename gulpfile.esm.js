@@ -1,8 +1,12 @@
 import del from 'del';
+import fs from 'fs';
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
 import gHtml2Js from 'gulp-html-to-js';
+import gRename from 'gulp-rename';
 import gReplace from 'gulp-replace';
+import hJson from 'hjson';
+import gMerge from 'merge-stream';
 import path from 'path';
 import typescript from 'gulp-typescript';
 import ttypescript from 'ttypescript';
@@ -20,6 +24,10 @@ import { conf as appConf } from './app.conf';
 const root = appConf.rootFolderPath;
 const absSrc = path.resolve(root, appConf.srcFolderName);
 const absDest = path.resolve(root, appConf.destFolderName);
+
+const esmImportmap = hJson.parse(
+	fs.readFileSync(path.resolve(absSrc, 'importmap.dev.json'), 'utf8'));
+const esmImportmapPaths = esmImportmap.imports;
 
 task('cssbundle',
 	() => src([`${absSrc}/**/*.css`])
@@ -39,36 +47,41 @@ task('postdeploy.dev:copyNonTranspiledFiles',
 	])
 		.pipe(dest(absDest)));
 
-task('copyNModules',
-	() => src([
-		path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
-		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
-	])
-		// usually solved by rollup-plugin-replace
-		// https://github.com/vuejs/vue-class-component/issues/356
-		.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
-		.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
+task('copyEsmAssets',
+	() => {
+		// TODO: only if not exists on dest folder
+		const vueClass = src([
+			path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
+		])
+			.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
+			.pipe(dest(absDest));
 
-		// can't use map for es6-modules
-		.pipe(dest(absSrc)));
+		// TODO: only if not exists on dest folder
+		const vueProp = src([
+			path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
+		])
+			.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
+			.pipe(gRename({ extname: '.esm.js' }))
+			.pipe(dest(absDest));
 
-// to src because of dist/dist incorrect folder structure with "outDir" & "files" options
-task('predeploy.dev', series('copyNModules'));
+		return gMerge(
+			vueClass,
+			vueProp,
+		);
+	});
 
-task('deleteNModules',
+task('deleteEsmAssets',
 	() => del([
-		path.resolve(absSrc, 'vue-property-decorator.js'),
-		path.resolve(absSrc, 'vue-class-component.esm.js')
+		path.resolve(absDest, 'vue-property-decorator.esm.js'),
+		path.resolve(absDest, 'vue-class-component.esm.js')
 	]));
 
-task('pretranspileNModules',
+task('postdeploy.dev:fixImportsInIndex',
 	() => src([
-		path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
-		path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
+		`${absDest}/**/index.js`,
 	])
-		.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
-		.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
-		// changing 'from' as variant above not needed cause of including to bundle
+		// my export with singlequoted paths
+		.pipe(gReplace(/^(?!.*(\.js|=))(.*)(";)/gm, '$2.js$3'))
 		.pipe(dest(absDest)));
 
 task('postdeploy.dev:fixImportsNotInIndex',
@@ -76,41 +89,33 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		`${absDest}/**/!(index).js`,
 		`${absDest}/*.js`,
 		// exclude file with separate fix-task
-		`!${absDest}/vue-class-component.esm.js`,
-		`!${absDest}/vue-property-decorator.js`,
+		`!${absDest}/*.esm*.js`, // including .esm.min.js
 	])
-		// typescript-transform-paths replaced alias with doublequoted paths
-		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(gReplace('.conf";', '.conf.js";'))
 		.pipe(gReplace('.html";', '.html.js";'))
 		// vue path transformed to cdn (vue doesn'have another dependencies) but local paths not!
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
-		.pipe(gReplace("from 'vue-property-decorator'", "from '/vue-property-decorator.js'"))
+		// TODO: need loop on importmap.
+		.pipe(gReplace("from 'vue'", `from '${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace("from 'vue-property-decorator'", `from '${esmImportmapPaths['vue-property-decorator']}'`))
+		// typescript-transform-paths replaced alias with doublequoted paths
+		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(dest(absDest)));
 
-task('postdeploy.dev:fixImportsInIndex',
+// these replacing are not needed in SystemJS bundle, that's why not in copyEsmAssets task
+task('postdeploy.dev:fixImportsEsm',
 	() => src([
-		`${absDest}/**/index.js`,
-	])
-		// my export with singlequoted paths
-		.pipe(gReplace('";', '.js";'))
-		.pipe(dest(absDest)));
+		`${absDest}/*.esm*.js`,
+	], { base: './' })
+		// TODO: need loop on importmap.
+		// TODO: regexp, all quote types
+		// minimized versions: from'vue' (without space)
+		.pipe(gReplace("'vue'", `'${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace("'vue-class-component'", `'${esmImportmapPaths['vue-class-component']}'`))
+		.pipe(dest('.')));
 
-task('postdeploy.dev',
-	parallel(
-		'cssbundle',
-		'tmpl2js',
-		'deleteNModules',
-		series(
-			'postdeploy.dev:copyNonTranspiledFiles',
-			parallel(
-				'postdeploy.dev:fixImportsInIndex',
-				'postdeploy.dev:fixImportsNotInIndex',
-			),
-		),
-	));
-
+// TODO: to npm run
 task('transpile',
 	() => {
 		// Transpiling for browser tsconfig
@@ -124,6 +129,7 @@ task('transpile',
 			.pipe(dest(absDest));
 	});
 
+// TODO: to npm run
 task('transpile.dev',
 	() => {
 		// Transpiling for browser tsconfig
@@ -141,14 +147,14 @@ task('transpile.dev',
 // fix because of names of modules with src includes generated dist
 task('fixBundle',
 	() => src([
+		// TODO: hJson from tsconfig outFile name
 		path.resolve(absDest, 'bundle.system.js'),
 	])
 		// fix templates as string
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
 		// fix transpiled node_modules names to included SystemJS module
 		// for module resolving instead of bugs with systemjs-importmap
-		.pipe(gReplace(`${appConf.srcFolderName}/vue-class-component.esm`, 'vue-class-component'))
-		.pipe(gReplace(`${appConf.srcFolderName}/vue-property-decorator`, 'vue-property-decorator'))
+		.pipe(gReplace(/("src\/)([a-z|-]*)(\.esm)?(")/g, '"$2"'))
 		.pipe(uglifyES())
 		.pipe(dest(absDest)));
 
@@ -174,12 +180,28 @@ task('deploy',
 		'copyNonTranspiledFiles',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		series(
-			'tmpl2js', // html as ES modules
-			'copyNModules', // copy & fix es6 node modules for transpiling to SystemJs
+			'tmpl2js', // before fixing, html as ES modules
+			'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
+			// All prepared, transpile/bundle now!
 			'transpile', // es6/ts and es6 templates to SystemJs (es5) -> bundle.js
 			parallel(
-				'deleteNModules', // they are not need, because of bundle including
+				'deleteEsmAssets', // they are not need, because of bundle including
 				'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
+			),
+		),
+	));
+
+task('postdeploy.dev',
+	parallel(
+		'cssbundle',
+		'postdeploy.dev:copyNonTranspiledFiles',
+		'tmpl2js', // will not fixed in bundle, that's why in parallel
+		series(
+			'copyEsmAssets', // before fixing
+			parallel(
+				'postdeploy.dev:fixImportsInIndex',
+				'postdeploy.dev:fixImportsNotInIndex',
+				'postdeploy.dev:fixImportsEsm'
 			),
 		),
 	));

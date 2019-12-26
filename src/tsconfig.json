@@ -8,12 +8,14 @@
 	},
 	"files": [
 		"../dist/**/*.html.js",
-		"vue-class-component.esm.js",
-		"vue-property-decorator.js"
+		"../dist/vue-class-component.esm.js",
+		"../dist/vue-property-decorator.esm.js"
 	],
 	"exclude": [
+		"**/*.i.ts", // interfaces
 		"**/*.node.ts",
 		"**/node_modules/*",
-		"**/*.spec.ts"
+		"**/__mocks__/*",
+		"**/*.spec.*ts"
 	]
 }

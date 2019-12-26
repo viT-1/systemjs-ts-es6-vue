@@ -4,17 +4,6 @@
 		"module": "es6",
 		"target": "esnext",
 		"outDir": "../dist",
-		"plugins": [{ "transform": "typescript-transform-paths" }],
-		"paths": {
-			"~/*": ["./*"],
-			"@common/*": ["./common.blocks/*"],
-			"vue": ["https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js"],
-			"vue-class-component": ["./vue-class-component.esm.js"],
-			"vue-property-decorator": ["./vue-property-decorator.js"]
-		}
-	},
-	"files": [
-		"vue-property-decorator.js",
-		"vue-class-component.esm.js"
-	]
+		"plugins": [{ "transform": "typescript-transform-paths" }] // make relative imports
+	}
 }
