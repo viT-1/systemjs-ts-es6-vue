@@ -4,7 +4,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./*"],
-			"@common/*": ["./common.blocks/*"]
+			"@common/*": ["./common.blocks/*"],
+			"@services/*": ["./services/*"],
+			"@unique/*": ["./unique.blocks/*"]
 		},
 		"typeRoots": [
 			"typings",

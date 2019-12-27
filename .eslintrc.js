@@ -65,6 +65,17 @@ const conf = {
 			extends: fullExtends,
 		},
 		{
+			files: ['**/index.ts', '**/*mutations.ts'], // vuex mutations
+			extends: fullExtends,
+			rules: {
+				// https://stackoverflow.com/questions/44657142/vuex-mutations-and-airbnb-eslint
+				'no-param-reassign': ['error', {
+					props: true,
+					ignorePropertyModificationsFor: ['state'],
+				}],
+			},
+		},
+		{
 			'files': ['**/*.d.ts'],
 			extends: fullExtends,
 			'rules': {

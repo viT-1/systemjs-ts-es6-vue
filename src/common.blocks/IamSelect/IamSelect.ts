@@ -4,10 +4,10 @@ import {
 	Component,
 	Prop,
 	Mixins,
-	Watch,
 } from 'vue-property-decorator';
 
 import { IOption } from './IamSelect.option.i';
+import { IData } from './IamSelect.data.i';
 import { conf } from './IamSelect.conf';
 
 const { name, template } = conf;
@@ -29,27 +29,23 @@ export class IamSelect extends Mixins(BemComponent) {
 	constructor() {
 		super();
 		this.b = conf.bem;
-
-		if (this.value) {
-			// производительность клонирования
-			// https://habr.com/ru/post/283090/ https://jsfiddle.net/thcu7tjv/26/
-			this.mValue = JSON.parse(JSON.stringify(this.value));
-		}
-		else {
-			this.mValue = null;
-		}
 	}
 
 	@Prop(Object)
 	// v-model supporting
-	readonly value?: IOption | null;
+	readonly value!: IOption | null;
+
+	@Prop()
+	readonly data?: IData;
 
 	// saving data without mutate restrictions of value
-	mValue: IOption | null;
+	// mValue: IOption | null;
+	get mValue(): IOption | null {
+		return this.value;
+	}
 
-	@Watch('mValue', {})
-	mValueChanged(val: IOption | null): void {
+	set mValue(val: IOption | null) {
 		// v-model supporting
-		this.$emit('input', JSON.parse(JSON.stringify(val)));
+		this.$emit('input', val);
 	}
 }

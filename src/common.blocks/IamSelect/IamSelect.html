@@ -1,6 +1,6 @@
 <vue-multiselect :class="classComponent"
 	v-model="mValue"
-	:options="[{ label:'foo' }, { label:'bar' }, { label:'baz' }]"
+	:options="data && data.options ? data.options : []"
 	label="label"
 	track-by="label">
 	<template #option="item">

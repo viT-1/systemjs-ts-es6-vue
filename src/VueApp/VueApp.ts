@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import { Vue as TypeVue } from 'vue/types/vue';
 
 import {
@@ -6,6 +7,7 @@ import {
 	el,
 	warnings,
 } from './VueApp.conf';
+import { storeConf } from './store';
 
 export class VueApp {
 	public static init(): TypeVue | null {
@@ -19,6 +21,9 @@ export class VueApp {
 			return null;
 		}
 
+		Vue.use(Vuex);
+		const store = new Vuex.Store(storeConf);
+
 		// Инициализация всего vue на DOM-элементе (смотри VueApp.conf)
 		/* eslint-disable no-new */
 		// @ts-ignore
@@ -28,6 +33,21 @@ export class VueApp {
 			data: {
 				mySelected: null,
 			},
+			store,
+		});
+	}
+
+	/**
+	 * Регистрация всех компонент (в точ числе и сторонних с cdn),
+	 * которые перечислены в конфигурации приложения
+	 */
+	public static registerComponents(): void {
+		// Поскольку не создан корневой App.vue как такой же @Сomponent,
+		// все conf.components доступны только на верхнем уровне,
+		// но не в качестве подкомпонент. Регистрируем компоненты глобально.
+		// https://github.com/vuejs/vue-class-component/issues/229#issuecomment-405811287
+		Object.keys(components).forEach((htmlTag) => {
+			Vue.component(htmlTag, components[htmlTag]);
 		});
 	}
 }
