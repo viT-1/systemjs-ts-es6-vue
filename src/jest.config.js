@@ -42,6 +42,8 @@ const conf = {
 	moduleNameMapper: {
 		'~/(.*)$': `${rootDir}/$1`,
 		'@common/(.*)$': `${rootDir}/src/common.blocks/$1`,
+		'@services/(.*)$': `${rootDir}/src/services/$1`,
+		'@unique/(.*)$': `${rootDir}/src/unique.blocks/$1`,
 		// ...moduleNameMapper, // TODO: back to tsconfig-paths-jest falling on json reading =(
 		// fix Vue warning about version of Vue
 		'vue$': 'vue/dist/vue.common.dev.js'

@@ -1,6 +1,6 @@
 {
     "name": "systemjs-ts-es6-vue",
-    "version": "0.5.2",
+    "version": "0.5.3",
     "repository": {
         "type": "git",
         "url": "https://github.com/viT-1/systemjs-ts-es6-vue.git"
@@ -14,8 +14,8 @@
         "vue",
         "vue 3.0",
         "vue-class-component",
-		"vue-property-decorator",
-		"vuex",
+        "vue-property-decorator",
+        "vuex",
         "jest",
         "unittest"
     ],
