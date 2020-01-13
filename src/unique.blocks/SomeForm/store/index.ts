@@ -1,7 +1,6 @@
 import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 
-import { SomeSvc } from '@services/SomeSvc';
-
+import * as actions from './actions';
 import * as mutationTypes from './mutations.conf';
 import { IState } from './state.i';
 
@@ -28,26 +27,6 @@ const mutations = {
 		state.iamSelect.data.options = values;
 		console.log(`vuex mutation ${mutationTypes.SOME_VALUES_SET}`, values);
 	},
-};
-
-const actions = {
-	getSomeValues: (
-		// commit полученных данных выполняется другим (синхронным) action, потому dispatch
-		{ dispatch }: { dispatch: Function },
-		{ label }: ISomeValue,
-	): Promise <Array<ISomeValue> | void> => SomeSvc
-		.fetchData({ label }) // Все опции запроса в одном параметре-объекте (помимо label)
-		.then((resp) => dispatch('setSomeValues', resp)),
-
-	setSomeValues: (
-		{ commit }: { commit: Function },
-		values: Array<ISomeValue>,
-	): void => commit(mutationTypes.SOME_VALUES_SET, values),
-
-	selectSomeValue: (
-		{ commit }: { commit: Function },
-		value: ISomeValue,
-	): void => commit(mutationTypes.SOME_VALUE_SELECT, value),
 };
 
 export const name = 'someForm';

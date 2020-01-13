@@ -97,6 +97,7 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
 		// TODO: need loop on importmap.
 		.pipe(gReplace("from 'vue'", `from '${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace("from 'vuex'", `from '${esmImportmapPaths['vuex']}'`))
 		.pipe(gReplace("from 'vue-property-decorator'", `from '${esmImportmapPaths['vue-property-decorator']}'`))
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
