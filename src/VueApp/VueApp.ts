@@ -21,6 +21,7 @@ export class VueApp {
 			return null;
 		}
 
+		VueApp.registerComponents();
 		Vue.use(Vuex);
 		const store = new Vuex.Store(storeConf);
 

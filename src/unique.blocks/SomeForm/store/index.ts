@@ -53,6 +53,7 @@ const actions = {
 export const name = 'someForm';
 
 export const storeConf = {
+	namespaced: true,
 	actions,
 	getters,
 	mutations,
