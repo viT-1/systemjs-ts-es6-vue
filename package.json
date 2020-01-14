@@ -45,7 +45,7 @@
         "clj": "jest --clearCache"
     },
     "dependencies": {
-        "direct-vuex": "0.9.5",
+        "direct-vuex": "0.9.8",
         "promise-polyfill": "8.1.3",
         "express": "4.17.1",
         "systemjs": "5.0.0",
