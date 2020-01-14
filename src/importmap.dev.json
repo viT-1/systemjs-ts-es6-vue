@@ -1,5 +1,6 @@
 {
 	"imports": {
+		"direct-vuex": [ "/direct-vuex.esm.min.js" ],
 		"vue": [ "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.esm.browser.js" ],
 		"vuex": [ "https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.esm.browser.min.js" ],
 		"vue-class-component": [ "/vue-class-component.esm.js" ],

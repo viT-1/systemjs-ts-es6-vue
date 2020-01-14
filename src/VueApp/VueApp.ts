@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import DirectVuex from 'direct-vuex';
 import { Vue as TypeVue } from 'vue/types/vue';
 
 import {
@@ -23,7 +24,7 @@ export class VueApp {
 
 		VueApp.registerComponents();
 		Vue.use(Vuex);
-		const store = new Vuex.Store(storeConf);
+		const store = DirectVuex.createDirectStore(storeConf).store.original;
 
 		// Инициализация всего vue на DOM-элементе (смотри VueApp.conf)
 		/* eslint-disable no-new */

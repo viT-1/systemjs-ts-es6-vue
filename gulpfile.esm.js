@@ -48,6 +48,12 @@ task('postdeploy.dev:copyNonTranspiledFiles',
 
 task('copyEsmAssets',
 	() => {
+		// simple copying
+		const directVuex = src([
+			path.resolve('node_modules', 'direct-vuex', 'dist', 'direct-vuex.esm.min.js'),
+		])
+			.pipe(dest(absDest));
+
 		// TODO: only if not exists on dest folder
 		const vueClass = src([
 			path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
@@ -64,6 +70,7 @@ task('copyEsmAssets',
 			.pipe(dest(absDest));
 
 		return gMerge(
+			directVuex,
 			vueClass,
 			vueProp,
 		);
@@ -71,6 +78,7 @@ task('copyEsmAssets',
 
 task('deleteEsmAssets',
 	() => del([
+		path.resolve(absDest, 'direct-vuex.esm.min.js'),
 		path.resolve(absDest, 'vue-property-decorator.esm.js'),
 		path.resolve(absDest, 'vue-class-component.esm.js')
 	]));
@@ -96,6 +104,7 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
 		// TODO: need loop on importmap.
+		.pipe(gReplace(/from ['|"]direct-vuex['|"]/g, `from '${esmImportmapPaths['direct-vuex']}'`))
 		.pipe(gReplace("from 'vue'", `from '${esmImportmapPaths['vue']}'`))
 		.pipe(gReplace("from 'vuex'", `from '${esmImportmapPaths['vuex']}'`))
 		.pipe(gReplace("from 'vue-property-decorator'", `from '${esmImportmapPaths['vue-property-decorator']}'`))
@@ -112,6 +121,7 @@ task('postdeploy.dev:fixImportsEsm',
 		// TODO: regexp, all quote types
 		// minimized versions: from'vue' (without space)
 		.pipe(gReplace("'vue'", `'${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace(/['|"]vuex['|"]/g, `'${esmImportmapPaths['vuex']}'`))
 		.pipe(gReplace("'vue-class-component'", `'${esmImportmapPaths['vue-class-component']}'`))
 		.pipe(dest('.')));
 
