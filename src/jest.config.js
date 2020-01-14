@@ -1,9 +1,9 @@
 const path = require('path');
 const rootDir = require('app-root-path').path;
 
-// TODO: back to tsconfig-paths-jest falling on json reading =(
-// const tsconfigPaths = require('./tsconfig.paths.json');
-// const moduleNameMapper = require('tsconfig-paths-jest')(tsconfigPaths);
+// TODO: if comments falling on json reading =( hJson
+const tsconfigPaths = require('./tsconfig.paths.json');
+const moduleNameMapper = require('tsconfig-paths-jest')(tsconfigPaths);
 
 const conf = {
 	// base es-lint rules for tests
@@ -40,12 +40,8 @@ const conf = {
 	],
 	// Resolve imports in spes.ts files
 	moduleNameMapper: {
-		'~/(.*)$': `${rootDir}/$1`,
-		'@common/(.*)$': `${rootDir}/src/common.blocks/$1`,
-		'@services/(.*)$': `${rootDir}/src/services/$1`,
-		'@unique/(.*)$': `${rootDir}/src/unique.blocks/$1`,
-		// ...moduleNameMapper, // TODO: back to tsconfig-paths-jest falling on json reading =(
-		// fix Vue warning about version of Vue
+		...moduleNameMapper,
+		// special fix (not included in tsconfig.paths.json) for Vue warning about version of Vue
 		'vue$': 'vue/dist/vue.common.dev.js'
 	},
 	// https://jestjs.io/docs/en/configuration#testenvironment-string

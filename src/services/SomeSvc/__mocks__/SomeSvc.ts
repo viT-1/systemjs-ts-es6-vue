@@ -1,12 +1,7 @@
 import { IOption as IamSelectOption } from '@common/IamSelect/IamSelect.option.i';
+import { resolvedOptions } from '@services/SomeSvc/SomeSvc.spec.case01';
 
-export const resolvedOptions = [
-	{ label: 'mock-foo' },
-	{ label: 'mock-bar' },
-	{ label: 'mock-baz' },
-];
-
-export class PointSvc {
+export class SomeSvc {
 	// Если params будет более наворочен, чем IamSelectOption, то указать остальные интерфейсы
 	// по соседству с IamSelectOption
 	// - то есть структура всё равно должна соответствовать IamSelectOption

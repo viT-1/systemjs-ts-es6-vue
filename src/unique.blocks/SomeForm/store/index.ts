@@ -21,11 +21,9 @@ const getters = {
 const mutations = {
 	[mutationTypes.SOME_VALUE_SELECT](state: IState, value: ISomeValue): void {
 		state.iamSelect.value = value;
-		console.log(`vuex mutation ${mutationTypes.SOME_VALUE_SELECT}`, value);
 	},
 	[mutationTypes.SOME_VALUES_SET](state: IState, values: Array<ISomeValue>): void {
 		state.iamSelect.data.options = values;
-		console.log(`vuex mutation ${mutationTypes.SOME_VALUES_SET}`, values);
 	},
 };
 
