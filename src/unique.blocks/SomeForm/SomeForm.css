@@ -1,0 +1,4 @@
+.app__some-form {
+	/* Width only with app context */
+	width: 200px;
+}

@@ -104,10 +104,10 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
 		// TODO: need loop on importmap.
-		.pipe(gReplace(/from ['|"]direct-vuex['|"]/g, `from '${esmImportmapPaths['direct-vuex']}'`))
-		.pipe(gReplace(/from ['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
-		.pipe(gReplace(/from ['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
-		.pipe(gReplace(/from ['|"]vue-property-decorator['|"]/g, `from '${esmImportmapPaths['vue-property-decorator']}'`))
+		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g, `from '${esmImportmapPaths['direct-vuex']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vue-property-decorator['|"]/g, `from '${esmImportmapPaths['vue-property-decorator']}'`))
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(dest(absDest)));
@@ -118,10 +118,10 @@ task('postdeploy.dev:fixImportsEsm',
 		`${absDest}/*.esm*.js`,
 	], { base: './' })
 		// TODO: need loop on importmap.
-		// minimized versions: from'vue' (without space)
-		.pipe(gReplace(/from ['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
-		.pipe(gReplace(/from ['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
-		.pipe(gReplace(/from ['|"]vue-class-component['|"]/g, `from '${esmImportmapPaths['vue-class-component']}'`))
+		// minimized versions: from'vue' (without space) therefore [\s]?
+		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vue-class-component['|"]/g, `from '${esmImportmapPaths['vue-class-component']}'`))
 		.pipe(dest('.')));
 
 // fix because of names of modules with src includes generated dist

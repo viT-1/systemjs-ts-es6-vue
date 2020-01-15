@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import DirectVuex from 'direct-vuex';
+import DirectVuex from 'direct-vuex';
 import { Vue as TypeVue } from 'vue/types/vue';
 
 import {
@@ -9,6 +9,10 @@ import {
 	warnings,
 } from './VueApp.conf';
 import { storeConf } from './store';
+
+// Not naming imported cause of SystemJs import only default
+// https://github.com/paleo/direct-vuex/issues/14#issuecomment-568543969
+const { createDirectStore } = DirectVuex;
 
 export class VueApp {
 	public static init(): TypeVue | null {
@@ -24,8 +28,7 @@ export class VueApp {
 
 		VueApp.registerComponents();
 		Vue.use(Vuex);
-		// const store = DirectVuex.createDirectStore(storeConf).store.original;
-		const store = new Vuex.Store(storeConf);
+		const store = createDirectStore(storeConf).store.original;
 
 		// Инициализация всего vue на DOM-элементе (смотри VueApp.conf)
 		/* eslint-disable no-new */
