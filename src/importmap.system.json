@@ -1,6 +1,6 @@
 {
 	"imports": {
-		"direct-vuex": "https://cdn.jsdelivr.net/npm/direct-vuex@0.9.9/dist/direct-vuex.umd.min.js",
+		"direct-vuex": "https://cdn.jsdelivr.net/npm/direct-vuex@0.9.9/dist/direct-vuex.umd.js",
 		"vue": "https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js",
 		"vuex": "https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js"
 	}

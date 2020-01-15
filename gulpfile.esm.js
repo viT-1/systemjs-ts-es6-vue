@@ -98,8 +98,8 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		// exclude file with separate fix-task
 		`!${absDest}/*.esm*.js`, // including .esm.min.js
 	])
-		.pipe(gReplace('.conf";', '.conf.js";'))
-		.pipe(gReplace('.html";', '.html.js";'))
+		.pipe(gReplace(/\.conf['|"];/g, '.conf.js";'))
+		.pipe(gReplace(/\.html['|"];/g, '.html.js";'))
 		// vue path transformed to cdn (vue doesn'have another dependencies) but local paths not!
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
@@ -108,6 +108,7 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
 		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
 		.pipe(gReplace(/from[\s]?['|"]vue-property-decorator['|"]/g, `from '${esmImportmapPaths['vue-property-decorator']}'`))
+		// TODO: replace to foo/index.js, only if folder 'foo' exists, otherwise foo.js!
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(dest(absDest)));

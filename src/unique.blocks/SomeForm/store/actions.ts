@@ -1,5 +1,6 @@
 import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 import { SomeSvc } from '@services/SomeSvc';
+// import { moduleActionContext } from '~/VueApp/store';
 
 import * as mutationTypes from './mutations.conf';
 
@@ -18,5 +19,5 @@ export const setSomeValues = (
 
 export const selectSomeValue = (
 	{ commit }: { commit: Function },
-	value: ISomeValue,
+	value: ISomeValue | null,
 ): void => commit(mutationTypes.SOME_VALUE_SELECT, value);

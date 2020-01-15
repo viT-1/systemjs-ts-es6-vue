@@ -30,9 +30,12 @@ const mutations = {
 export const name = 'someForm';
 
 export const storeConf = {
-	namespaced: true,
+	namespaced: true as true,
 	actions,
 	getters,
 	mutations,
 	state: defaultState,
+	// syntax recommendation https://itnext.io/use-a-vuex-store-with-typing-in-typescript-without-decorators-or-boilerplate-57732d175ff3
+	// but we declare type with const above
+	// state: defaultState as IState,
 } as const;
