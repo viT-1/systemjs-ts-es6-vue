@@ -34,19 +34,19 @@ export class SomeForm extends Mixins(BemComponent) {
 	initDefaultStoreState(): void {
 		// Данные для multiselect привязаны через $store,
 		// потому нет нужды обрабатывать здесь then
-		vueAppStore.dispatch.someForm.getSomeValues({ label: 'Rome' });
+		vueAppStore.dispatch.modSomeForm.getSomeValues({ label: 'Rome' });
 	}
 
 	get iamSelectData(): { options: Array<ISomeValue> } {
-		const options = vueAppStore.getters.someForm.someValues;
+		const options = vueAppStore.getters.modSomeForm.someValues;
 		return { options };
 	}
 
 	get iamSelectValue(): ISomeValue | null {
-		return vueAppStore.getters.someForm.someValue;
+		return vueAppStore.getters.modSomeForm.someValue;
 	}
 
 	set iamSelectValue(val: ISomeValue | null) {
-		vueAppStore.dispatch.someForm.selectSomeValue(val);
+		vueAppStore.dispatch.modSomeForm.selectSomeValue(val);
 	}
 }

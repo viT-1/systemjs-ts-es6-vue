@@ -4,7 +4,7 @@ import { createDirectStore } from 'direct-vuex';
 
 import { IamSelect } from '@common/IamSelect';
 
-import { modSomeForm, name as moduleStoreName } from './store';
+import { modSomeForm } from './store';
 import { SomeForm } from './index';
 // import { resolvedOptions } from '@services/SomeSvc/SomeSvc.spec.case01.ts';
 
@@ -16,7 +16,7 @@ localVue.use(Vuex);
 
 const storeConf = {
 	modules: {
-		[moduleStoreName]: modSomeForm,
+		modSomeForm,
 	},
 };
 

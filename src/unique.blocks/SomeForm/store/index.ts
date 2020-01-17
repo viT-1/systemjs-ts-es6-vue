@@ -16,8 +16,6 @@ const defaultState: IState = {
 	},
 };
 
-export const name = 'someForm';
-
 export const storeConf = {
 	namespaced: true as true,
 	actions,
