@@ -20,14 +20,13 @@ const storeConf = {
 	},
 };
 
-// const store = new Vuex.Store(storeConf);
 const { store } = createDirectStore(storeConf);
 
 describe('@Component SomeForm', () => {
 	it('all mock data are rendered', () => {
 		expect.assertions(1);
 
-		const wrapper = mount(SomeForm, { store, localVue });
+		const wrapper = mount(SomeForm, { store: store.original, localVue });
 
 		wrapper.vm.$nextTick();
 		// console.log(wrapper.html());

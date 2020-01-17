@@ -1,7 +1,7 @@
 import DirectVuex from 'direct-vuex';
 
-/* eslint-disable import/no-cycle */
-import { actions } from './actions';
+/* eslint--disable import/no-cycle */
+import * as actions from './actions';
 
 import * as getters from './getters';
 import { mutations } from './mutations';
@@ -16,9 +16,14 @@ const defaultState: IState = {
 	},
 };
 
+// Not naming imported cause of SystemJs import only default
+// https://github.com/paleo/direct-vuex/issues/14#issuecomment-568543969
+const { createActions, createModule } = DirectVuex;
+
 export const storeConf = {
 	namespaced: true as true,
-	actions,
+	actions: createActions(actions),
+	// getters: createGetters<IState>()(getters),
 	getters,
 	mutations,
 	state: defaultState,
@@ -26,9 +31,5 @@ export const storeConf = {
 	// but we declare type with const above
 	// state: defaultState as IState,
 } as const;
-
-// Not naming imported cause of SystemJs import only default
-// https://github.com/paleo/direct-vuex/issues/14#issuecomment-568543969
-const { createModule } = DirectVuex;
 
 export const modSomeForm = createModule(storeConf);

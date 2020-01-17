@@ -50,7 +50,7 @@ const conf = {
 	testPathIgnorePatterns: [
 	],
 	// Mapping which tests to run with jest
-	testMatch: ['**/SomeForm/*.*(spec|test).*(ts|js)'],
+	testMatch: ['**/SomeForm/**/*.*(spec|test).*(ts|js)'],
 	// File types reading
 	transform: {
 		'.*?\\.(ts|js)$': 'ts-jest',

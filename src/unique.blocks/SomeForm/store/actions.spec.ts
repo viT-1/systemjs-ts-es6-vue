@@ -1,7 +1,12 @@
-import { actions } from './actions';
+// import { createActions } from 'direct-vuex';
+
+import * as vuexActions from './actions';
 import * as confMutations from './mutations.conf';
 
 jest.mock('@services/SomeSvc/SomeSvc.ts');
+
+// const actions = createActions(vuexActions);
+const actions = vuexActions;
 
 // #region @common/IamSelect
 // Пишем простейшие тесты, чтобы при рефакторинге actions, видеть, что не отвалились

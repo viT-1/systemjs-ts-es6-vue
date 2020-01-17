@@ -10,8 +10,9 @@ const { createDirectStore } = DirectVuex;
 
 export const storeConf = {
 	state: {},
-	mutations: {},
 	actions: {},
+	getters: {},
+	mutations: {},
 	modules: modulesConf,
 } as const;
 

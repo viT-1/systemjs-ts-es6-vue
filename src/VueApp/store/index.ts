@@ -1,4 +1,4 @@
-/* eslint-disable import/no-cycle */
+/* eslint--disable import/no-cycle */
 export {
 	moduleActionContext,
 	store,
