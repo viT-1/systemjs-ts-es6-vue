@@ -83,13 +83,32 @@ task('deleteEsmAssets',
 		path.resolve(absDest, 'vue-class-component.esm.js')
 	]));
 
+task('postdeploy.dev:fixImportsFromMap',
+	() => src([
+		`${absDest}/**/*.js`, // resolve node_modules in all files, esm too
+	], {base: './'})
+		// vue path transformed to cdn (vue doesn'have another dependencies) but local paths not!
+		// should be replaced by typescript-transform-paths not gulp-replace!
+		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
+		// TODO: need loop on importmap.
+		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g,
+			`from '${esmImportmapPaths['direct-vuex']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g,
+			`from '${esmImportmapPaths['vue']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g,
+			`from '${esmImportmapPaths['vuex']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vue-class-component['|"]/g,
+			`from '${esmImportmapPaths['vue-class-component']}'`))
+		.pipe(gReplace(/from[\s]?['|"]vue-property-decorator['|"]/g,
+			`from '${esmImportmapPaths['vue-property-decorator']}'`))
+		.pipe(dest('./')));
+
 task('postdeploy.dev:fixImportsInIndex',
 	() => src([
 		`${absDest}/**/index.js`,
 	])
 		// my export with singlequoted paths
 		// TODO: create common regexp for resolving modules
-		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g, `from '${esmImportmapPaths['direct-vuex']}'`))
 		.pipe(gReplace(/^(?!.*(\.js|=))(.*)(";)/gm, '$2.js$3'))
 		.pipe(dest(absDest)));
 
@@ -102,30 +121,10 @@ task('postdeploy.dev:fixImportsNotInIndex',
 	])
 		.pipe(gReplace(/\.conf['|"];/g, '.conf.js";'))
 		.pipe(gReplace(/\.html['|"];/g, '.html.js";'))
-		// vue path transformed to cdn (vue doesn'have another dependencies) but local paths not!
-		// should be replaced by typescript-transform-paths not gulp-replace!
-		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
-		// TODO: need loop on importmap.
-		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g, `from '${esmImportmapPaths['direct-vuex']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vue-property-decorator['|"]/g, `from '${esmImportmapPaths['vue-property-decorator']}'`))
 		// TODO: replace to foo/index.js, only if folder 'foo' exists, otherwise foo.js!
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
 		.pipe(dest(absDest)));
-
-// these replacing are not needed in SystemJS bundle, that's why not in copyEsmAssets task
-task('postdeploy.dev:fixImportsEsm',
-	() => src([
-		`${absDest}/*.esm*.js`,
-	], { base: './' })
-		// TODO: need loop on importmap.
-		// minimized versions: from'vue' (without space) therefore [\s]?
-		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g, `from '${esmImportmapPaths['vue']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g, `from '${esmImportmapPaths['vuex']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vue-class-component['|"]/g, `from '${esmImportmapPaths['vue-class-component']}'`))
-		.pipe(dest('.')));
 
 // fix because of names of modules with src includes generated dist
 task('fixBundle',
@@ -175,17 +174,6 @@ task('postdeploy',
 	),
 );
 
-task('predeploy',
-	parallel(
-		'cssbundle',
-		'copyNonTranspiledFiles',
-		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
-		series(
-			'tmpl2js', // before fixing, html as ES modules
-			'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
-		),
-	));
-
 // TODO: to npm run
 // needs predeploy with 'tmpl2js'
 task('transpile',
@@ -211,10 +199,10 @@ task('postdeploy.dev',
 		'tmpl2js', // will not fixed in bundle, that's why in parallel
 		series(
 			'copyEsmAssets', // before fixing
+			'postdeploy.dev:fixImportsFromMap', // can't modify same files in parallel
 			parallel(
 				'postdeploy.dev:fixImportsInIndex',
 				'postdeploy.dev:fixImportsNotInIndex',
-				'postdeploy.dev:fixImportsEsm'
 			),
 		),
 	));
