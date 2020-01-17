@@ -1,7 +1,10 @@
-import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
+import DirectVuex from 'direct-vuex';
 
-import * as actions from './actions';
-import * as mutationTypes from './mutations.conf';
+/* eslint-disable import/no-cycle */
+import { actions } from './actions';
+
+import * as getters from './getters';
+import { mutations } from './mutations';
 import { IState } from './state.i';
 
 const defaultState: IState = {
@@ -10,20 +13,6 @@ const defaultState: IState = {
 		data: {
 			options: [],
 		},
-	},
-};
-
-const getters = {
-	someValue: (state: IState): ISomeValue | null => state.iamSelect.value,
-	someValues: (state: IState): Array<ISomeValue> => state.iamSelect.data.options,
-};
-
-const mutations = {
-	[mutationTypes.SOME_VALUE_SELECT](state: IState, value: ISomeValue): void {
-		state.iamSelect.value = value;
-	},
-	[mutationTypes.SOME_VALUES_SET](state: IState, values: Array<ISomeValue>): void {
-		state.iamSelect.data.options = values;
 	},
 };
 
@@ -39,3 +28,9 @@ export const storeConf = {
 	// but we declare type with const above
 	// state: defaultState as IState,
 } as const;
+
+// Not naming imported cause of SystemJs import only default
+// https://github.com/paleo/direct-vuex/issues/14#issuecomment-568543969
+const { createModule } = DirectVuex;
+
+export const modSomeForm = createModule(storeConf);

@@ -1,9 +1,10 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
+import { createDirectStore } from 'direct-vuex';
 
 import { IamSelect } from '@common/IamSelect';
 
-import { storeConf as moduleStoreConf, name as moduleStoreName } from './store';
+import { modSomeForm, name as moduleStoreName } from './store';
 import { SomeForm } from './index';
 // import { resolvedOptions } from '@services/SomeSvc/SomeSvc.spec.case01.ts';
 
@@ -15,11 +16,12 @@ localVue.use(Vuex);
 
 const storeConf = {
 	modules: {
-		[moduleStoreName]: moduleStoreConf,
+		[moduleStoreName]: modSomeForm,
 	},
 };
 
-const store = new Vuex.Store(storeConf);
+// const store = new Vuex.Store(storeConf);
+const { store } = createDirectStore(storeConf);
 
 describe('@Component SomeForm', () => {
 	it('all mock data are rendered', () => {

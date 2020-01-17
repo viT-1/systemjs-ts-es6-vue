@@ -1,9 +1,9 @@
-import * as actions from './actions';
+import { actions } from './actions';
 import * as confMutations from './mutations.conf';
 
 jest.mock('@services/SomeSvc/SomeSvc.ts');
 
-// @common/IamSelect >>>
+// #region @common/IamSelect
 // Пишем простейшие тесты, чтобы при рефакторинге actions, видеть, что не отвалились
 describe('vuex SomeForm IamSelect actions', () => {
 	it('getPoints after getting data raise appropriate action', async () => {
@@ -37,4 +37,4 @@ describe('vuex SomeForm IamSelect actions', () => {
 		expect(commit).toHaveBeenCalledWith(confMutations.SOME_VALUE_SELECT, someValue);
 	});
 });
-// <<< @common/IamSelect
+// #endregion

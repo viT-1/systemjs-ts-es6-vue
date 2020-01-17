@@ -88,6 +88,8 @@ task('postdeploy.dev:fixImportsInIndex',
 		`${absDest}/**/index.js`,
 	])
 		// my export with singlequoted paths
+		// TODO: create common regexp for resolving modules
+		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g, `from '${esmImportmapPaths['direct-vuex']}'`))
 		.pipe(gReplace(/^(?!.*(\.js|=))(.*)(";)/gm, '$2.js$3'))
 		.pipe(dest(absDest)));
 
