@@ -118,8 +118,8 @@ task('postdeploy.dev:fixImportsNotInIndex',
 		// exclude file with separate fix-task
 		`!${absDest}/*.esm*.js`, // including .esm.min.js
 	])
-		.pipe(gReplace(/\.conf['|"];/g, '.conf.js";'))
-		.pipe(gReplace(/\.html['|"];/g, '.html.js";'))
+		.pipe(gReplace('.conf";', '.conf.js";'))
+		.pipe(gReplace('.html";', '.html.js";'))
 		// TODO: replace to foo/index.js, only if folder 'foo' exists, otherwise foo.js!
 		// typescript-transform-paths replaced alias with doublequoted paths
 		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
