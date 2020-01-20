@@ -115,7 +115,6 @@ task('postdeploy.dev:fixImportsInIndex',
 task('postdeploy.dev:fixImportsNotInIndex',
 	() => src([
 		`${absDest}/**/!(index).js`,
-		`${absDest}/*.js`,
 		// exclude file with separate fix-task
 		`!${absDest}/*.esm*.js`, // including .esm.min.js
 	])
