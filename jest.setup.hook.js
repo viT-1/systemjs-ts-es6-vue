@@ -1,4 +1,4 @@
-require("ts-node/register");
+// require("ts-node/register");
 // global.testMy = 'And what?!';
 global.VueMultiselect = require('vue-multiselect');
 

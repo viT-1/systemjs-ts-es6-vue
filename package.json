@@ -15,9 +15,9 @@
         "vue 3.0",
         "vue-class-component",
         "vue-property-decorator",
-		"vuex",
-		"direct-vuex",
-		"typescript vuex",
+        "vuex",
+        "direct-vuex",
+        "typescript vuex",
         "jest",
         "unittest"
     ],

@@ -19,7 +19,7 @@ const conf = {
 	// Cache directory should be set for git ignoring
 	cacheDirectory: path.resolve(rootDir, '.test', 'cache'),
 	// Tests cover (percent & lines of logic)
-	collectCoverage: true,
+	collectCoverage: false,
 	// Ограничиваемся тестами на модули для реиспользования.
 	collectCoverageFrom: [
 		'**/*.ts',
@@ -42,7 +42,9 @@ const conf = {
 	moduleNameMapper: {
 		...moduleNameMapper,
 		// special fix (not included in tsconfig.paths.json) for Vue warning about version of Vue
-		'vue$': 'vue/dist/vue.common.dev.js'
+		'vue$': 'vue/dist/vue.common.dev.js',
+		// fix for 'getters' error https://github.com/vuejs/vuex/issues/264#issuecomment-23694847
+		// 'vue': 'vue/dist/vue.js',
 	},
 	// https://jestjs.io/docs/en/configuration#testenvironment-string
 	// testEnvironment: 'node', // 'jsdom',
@@ -50,7 +52,10 @@ const conf = {
 	testPathIgnorePatterns: [
 	],
 	// Mapping which tests to run with jest
-	testMatch: ['**/*.*(spec|test).*(ts|js)'],
+	testMatch: [
+		// '**/*.*(spec|test).*(ts|js)',
+		'**/SomeForm/**/*.*(spec|test).*(ts|js)',
+	],
 	// File types reading
 	transform: {
 		'.*?\\.(ts|js)$': 'ts-jest',
