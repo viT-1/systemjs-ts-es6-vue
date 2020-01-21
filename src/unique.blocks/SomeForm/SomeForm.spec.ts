@@ -5,7 +5,7 @@ import { createDirectStore } from 'direct-vuex';
 import { IamSelect } from '@common/IamSelect';
 
 import { modSomeForm } from './store';
-import { SomeForm } from './index';
+import { SomeForm } from '.';
 // import { resolvedOptions } from '@services/SomeSvc/SomeSvc.spec.case01.ts';
 
 // flush async as sync & stub data

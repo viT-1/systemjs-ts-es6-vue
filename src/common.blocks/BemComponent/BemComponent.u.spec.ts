@@ -5,7 +5,7 @@ import { Component } from 'vue-property-decorator';
 
 import { IBem } from '@common/Bem.i';
 
-import { BemComponent } from './index';
+import { BemComponent } from '.';
 
 const confBem: IBem = {
 	block: 'someBody',

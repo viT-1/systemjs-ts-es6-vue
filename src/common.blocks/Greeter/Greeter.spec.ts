@@ -1,4 +1,4 @@
-import { Greeter, conf } from './index';
+import { Greeter, conf } from '.';
 
 describe('module GreeterUse.ts', () => {
 	it(`greets you like "${conf.greetText}"`, () => {
