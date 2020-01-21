@@ -2,7 +2,8 @@ import { store } from './VueApp.store';
 
 type VueAppStore = typeof store;
 declare module 'vuex' {
-	interface IVueAppStore<S> {
+	/* eslint-disable @typescript-eslint/interface-name-prefix */
+	interface AppStore<S> {
 		direct: VueAppStore;
 	}
 }

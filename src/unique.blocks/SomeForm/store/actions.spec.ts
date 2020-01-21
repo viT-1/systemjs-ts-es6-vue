@@ -1,12 +1,7 @@
-// import { createActions } from 'direct-vuex';
-
-import * as vuexActions from './actions';
+import * as actions from './actions';
 import * as confMutations from './mutations.conf';
 
 jest.mock('@services/SomeSvc/SomeSvc.ts');
-
-// const actions = createActions(vuexActions);
-const actions = vuexActions;
 
 // #region @common/IamSelect
 // Пишем простейшие тесты, чтобы при рефакторинге actions, видеть, что не отвалились
@@ -15,6 +10,8 @@ describe('vuex SomeForm IamSelect actions', () => {
 		expect.assertions(1);
 
 		const dispatch = jest.fn();
+		// TODO: how to pass ActionContext with jest.fn() ?
+		// const ac = new ActionContext({ dispatch });
 		await actions.getSomeValues({ dispatch }, { label: 'Рим' });
 
 		// Без мокирования и выделения данных для response,

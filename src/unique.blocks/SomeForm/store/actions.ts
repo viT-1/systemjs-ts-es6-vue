@@ -1,36 +1,39 @@
+import { ActionContext } from 'vuex';
 import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 import { SomeSvc } from '@services/SomeSvc';
-// import { moduleActionContext } from '~/VueApp/store';
 
+import { IState } from './state.i';
 /* eslint-disable import/no-cycle */
-// import { modSomeForm } from '.';
+import { modSomeForm } from '.';
+import { moduleActionContext } from '~/VueApp/store';
 
-import * as mutationTypes from './mutations.conf';
-
-// Not naming imported cause of SystemJs import only default
-// https://github.com/paleo/direct-vuex/issues/14#issuecomment-568543969
-// const modSomeFormActionContext = (ctx: any) => moduleActionContext(ctx, modSomeForm);
+const getTypedContext = (ctx: any) => moduleActionContext(ctx, modSomeForm);
 
 export const getSomeValues = (
 	// commit полученных данных выполняется другим (синхронным) action, потому dispatch
-	// { dispatch }: { dispatch: Function },
-	context: any,
+	// TODO: How to write tests with ActionContext & jest.fn() for dispatch & commit?
+	// context: ActionContext<IState, {}>,
+	context: ActionContext<IState, {}> | { dispatch: Function },
 	{ label }: ISomeValue,
 ): Promise <Array<ISomeValue> | void> => SomeSvc
 	.fetchData({ label }) // Все опции запроса в одном параметре-объекте (помимо label)
 	.then((resp) => {
-		// const { dispatch } = modSomeFormActionContext(context);
-		// dispatch.setSomeValues(resp);
-		const { dispatch } = context;
-		dispatch('setSomeValues', resp);
+		const { dispatch } = getTypedContext(context);
+		dispatch.setSomeValues(resp);
 	});
 
 export const setSomeValues = (
-	{ commit }: { commit: Function },
+	context: ActionContext<IState, {}> | { commit: Function },
 	values: Array<ISomeValue>,
-): void => commit(mutationTypes.SOME_VALUES_SET, values);
+): void => {
+	const { commit } = getTypedContext(context);
+	commit.SOME_VALUES_SET(values);
+};
 
 export const selectSomeValue = (
-	{ commit }: { commit: Function },
+	context: ActionContext<IState, {}> | { commit: Function },
 	value: ISomeValue | null,
-): void => commit(mutationTypes.SOME_VALUE_SELECT, value);
+): void => {
+	const { commit } = getTypedContext(context);
+	commit.SOME_VALUE_SELECT(value);
+};

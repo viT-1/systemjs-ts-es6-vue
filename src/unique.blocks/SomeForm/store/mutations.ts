@@ -5,7 +5,7 @@ import * as mutationTypes from './mutations.conf';
 
 export const mutations = {
 	// #region iamSelect mutations
-	[mutationTypes.SOME_VALUE_SELECT](state: IState, value: ISomeValue): void {
+	[mutationTypes.SOME_VALUE_SELECT](state: IState, value: ISomeValue | null): void {
 		state.iamSelect.value = value;
 	},
 	[mutationTypes.SOME_VALUES_SET](state: IState, values: Array<ISomeValue>): void {

@@ -5,11 +5,13 @@ import { createDirectStore } from 'direct-vuex';
 import { IamSelect } from '@common/IamSelect';
 
 import { modSomeForm } from './store';
-// import { storeConf } from './store';
 import { SomeForm } from './index';
 // import { resolvedOptions } from '@services/SomeSvc/SomeSvc.spec.case01.ts';
 
+// flush async as sync & stub data
 jest.mock('@services/SomeSvc/SomeSvc.ts');
+// because of 'getters problem' https://github.com/paleo/direct-vuex/issues/25
+jest.mock('./store/actions.ts');
 
 const localVue = createLocalVue();
 localVue.component('iam-select', IamSelect);
@@ -21,7 +23,6 @@ const storeConf = {
 	},
 };
 
-// const store = new Vuex.Store(storeConf);
 const { store: _store } = createDirectStore(storeConf);
 const store = _store.original;
 
