@@ -6,7 +6,10 @@ import {
 	el,
 	warnings,
 } from './VueApp.conf';
-import { store } from './store';
+import { store as _store } from './store';
+
+// https://github.com/paleo/direct-vuex#create-the-store
+const store = _store.original;
 
 export class VueApp {
 	public static init(): TypeVue | null {
