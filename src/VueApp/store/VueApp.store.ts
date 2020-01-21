@@ -18,3 +18,10 @@ export const storeConf = {
 
 Vue.use(Vuex);
 export const { store, moduleActionContext } = createDirectStore(storeConf);
+type VueAppStore = typeof store;
+declare module 'vuex' {
+	/* eslint-disable @typescript-eslint/interface-name-prefix */
+	interface Store<S> {
+		direct: VueAppStore;
+	}
+}

@@ -6,8 +6,6 @@ import { Component, Mixins } from 'vue-property-decorator';
 import { BemComponent } from '@common/BemComponent';
 import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 
-import { store as vueAppStore } from '~/VueApp/store';
-
 import { conf } from './SomeForm.conf';
 
 const {
@@ -34,19 +32,19 @@ export class SomeForm extends Mixins(BemComponent) {
 	initDefaultStoreState(): void {
 		// Данные для multiselect привязаны через $store,
 		// потому нет нужды обрабатывать здесь then
-		vueAppStore.dispatch.modSomeForm.getSomeValues({ label: 'Rome' });
+		this.$store.direct.dispatch.modSomeForm.getSomeValues({ label: 'Rome' });
 	}
 
 	get iamSelectData(): { options: Array<ISomeValue> } {
-		const options = vueAppStore.getters.modSomeForm.someValues;
+		const options = this.$store.direct.getters.modSomeForm.someValues;
 		return { options };
 	}
 
 	get iamSelectValue(): ISomeValue | null {
-		return vueAppStore.getters.modSomeForm.someValue;
+		return this.$store.direct.getters.modSomeForm.someValue;
 	}
 
 	set iamSelectValue(val: ISomeValue | null) {
-		vueAppStore.dispatch.modSomeForm.selectSomeValue(val);
+		this.$store.direct.dispatch.modSomeForm.selectSomeValue(val);
 	}
 }
