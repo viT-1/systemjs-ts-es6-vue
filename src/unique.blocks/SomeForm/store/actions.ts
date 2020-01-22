@@ -5,6 +5,7 @@ import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 import { SomeSvc } from '@services/SomeSvc';
 
 import { IState } from './state.i';
+import * as confMutations from './mutations.conf';
 /* eslint-disable import/no-cycle */
 import { modSomeForm } from '.';
 import { moduleActionContext } from '~/VueApp/store';
@@ -29,7 +30,7 @@ export const setSomeValues = (
 	values: Array<ISomeValue>,
 ): void => {
 	const { commit } = getTypedContext(context);
-	commit.SOME_VALUES_SET(values);
+	commit[confMutations.SOME_VALUES_SET](values);
 };
 
 export const selectSomeValue = (
@@ -37,5 +38,5 @@ export const selectSomeValue = (
 	value: ISomeValue | null,
 ): void => {
 	const { commit } = getTypedContext(context);
-	commit.SOME_VALUE_SELECT(value);
+	commit[confMutations.SOME_VALUE_SELECT](value);
 };

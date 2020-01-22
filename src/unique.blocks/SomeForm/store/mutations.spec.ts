@@ -1,8 +1,9 @@
 import { IState } from './state.i';
 import { mutations } from './mutations';
+import * as confMutations from './mutations.conf';
 
 describe('vuex MainFilter iamSelect mutations', () => {
-	it('after SOME_VALUES_SET mutation state have points & flush value', () => {
+	it(`after ${confMutations.SOME_VALUES_SET} mutation state have points & flush value`, () => {
 		expect.assertions(1);
 
 		const state: IState = {
@@ -14,7 +15,7 @@ describe('vuex MainFilter iamSelect mutations', () => {
 			},
 		};
 		const points = [{ label: 'yabadabadoo!' }, { label: 'foo' }];
-		mutations.SOME_VALUES_SET(state, points);
+		mutations[confMutations.SOME_VALUES_SET](state, points);
 
 		expect(state).toMatchObject({
 			iamSelect: {
@@ -26,7 +27,7 @@ describe('vuex MainFilter iamSelect mutations', () => {
 		});
 	});
 
-	it('after SOME_VALUE_SELECT mutation state show us active value', () => {
+	it(`after ${confMutations.SOME_VALUE_SELECT} mutation state show us active value`, () => {
 		expect.assertions(1);
 
 		// Для атомарности тестов в пределах области видимости свой state и points
@@ -41,7 +42,7 @@ describe('vuex MainFilter iamSelect mutations', () => {
 		};
 
 		const value = { label: 'thing' };
-		mutations.SOME_VALUE_SELECT(state, value);
+		mutations[confMutations.SOME_VALUE_SELECT](state, value);
 
 		expect(state).toMatchObject({
 			iamSelect: { data: { options }, value },

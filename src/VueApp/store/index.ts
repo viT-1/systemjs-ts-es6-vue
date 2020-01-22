@@ -4,7 +4,3 @@ export {
 	store,
 	storeConf,
 } from './VueApp.store';
-
-export {
-	IVueAppStore,
-} from './VueApp.store.i';

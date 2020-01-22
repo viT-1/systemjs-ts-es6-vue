@@ -1,9 +1,9 @@
-/* eslint-disable import/no-cycle */
-import * as actions from './actions';
-
 import * as getters from './getters';
 import { mutations } from './mutations';
 import { IState } from './state.i';
+
+/* eslint-disable import/no-cycle */
+import * as actions from './actions';
 
 const defaultState: IState = {
 	iamSelect: {
@@ -16,11 +16,8 @@ const defaultState: IState = {
 
 export const modSomeForm = {
 	namespaced: true as true,
-	// actions: createActions(actions),
 	actions,
-	// getters: createGetters<IState>()(getters),
 	getters,
-	// mutations: createMutations<IState>()(mutations),
 	mutations,
 	state: defaultState,
 	// syntax recommendation https://itnext.io/use-a-vuex-store-with-typing-in-typescript-without-decorators-or-boilerplate-57732d175ff3
