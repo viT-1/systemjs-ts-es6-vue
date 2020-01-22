@@ -1,8 +1,9 @@
 import { createLocalVue, mount } from '@vue/test-utils';
-import Vuex from 'vuex';
+import Vuex, { Store } from 'vuex';
 import { createDirectStore } from 'direct-vuex';
 
 import { IamSelect } from '@common/IamSelect';
+// import { IVueAppStore } from '~/VueApp/store';
 
 import { modSomeForm } from './store';
 import { SomeForm } from '.';
@@ -17,20 +18,21 @@ const localVue = createLocalVue();
 localVue.component('iam-select', IamSelect);
 localVue.use(Vuex);
 
-const storeConf = {
-	modules: {
-		modSomeForm,
-	},
+const getNewStore = (): Store<any> => {
+// const getNewStore = (): Store<IVueAppStore> => {
+	const { store } = createDirectStore({
+		modules: {
+			modSomeForm,
+		},
+	});
+	return store.original;
 };
-
-const { store: _store } = createDirectStore(storeConf);
-const store = _store.original;
 
 describe('@Component SomeForm', () => {
 	it('all mock data are rendered', () => {
 		expect.assertions(1);
 
-		const wrapper = mount(SomeForm, { store, localVue });
+		const wrapper = mount(SomeForm, { store: getNewStore(), localVue });
 
 		wrapper.vm.$nextTick();
 		// console.log(wrapper.html());
