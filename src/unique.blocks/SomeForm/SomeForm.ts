@@ -1,6 +1,3 @@
-/* eslint-disable class-methods-use-this */
-// because of vueAppStore instead of this.$store
-
 import { Component, Mixins } from 'vue-property-decorator';
 
 import { BemComponent } from '@common/BemComponent';
