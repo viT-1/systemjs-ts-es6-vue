@@ -5,7 +5,7 @@ const conf = {
 			'error', {
 				'devDependencies': [
 					'**/*.spec.ts',
-					'**/jest.config.js',
+					'**/jest.*',
 					'gulpfile.esm.js',
 				],
 			},

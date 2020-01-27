@@ -54,7 +54,7 @@ const conf = {
 	// Mapping which tests to run with jest
 	testMatch: [
 		// '**/*.*(spec|test).*(ts|js)',
-		'**/SomeForm/**/*.*(spec|test).*(ts|js)',
+		'**/SomeSvc/**/*.*(spec|test).*(ts|js)',
 	],
 	// File types reading
 	transform: {
@@ -67,11 +67,9 @@ const conf = {
 	],
 	// https://github.com/facebook/jest/issues/5164#issuecomment-408355554
 	setupFiles: [
-		'../jest.setup.hook.js',
-		// TODO: change jest.setup.hook.js to ts script
 		// https://github.com/kulshekhar/ts-jest/issues/411#issuecomment-461198583
 		// https://medium.com/@mateuszsokola/configuring-react-16-jest-enzyme-typescript-7122e1a1e6e8
-		// './jest.setup.ts',
+		'./jest.setup.ts',
 	],
 	// Displays all steps
 	verbose: true,
