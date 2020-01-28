@@ -1,10 +1,9 @@
-import { FetchMock } from 'jest-fetch-mock';
+import fetchMock from 'fetch-mock';
 import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 
 import { SomeSvc } from './SomeSvc';
 import { IRespSomeOther } from './respSome.other.i';
 
-const fetchMock = fetch as FetchMock;
 const respMock: IRespSomeOther = {
 	imports: {
 		foo: 'some',
@@ -12,18 +11,9 @@ const respMock: IRespSomeOther = {
 	},
 };
 
-fetchMock.mockImplementation((url) => {
-	switch (url) {
-		case '/not-ok':
-			return Promise.reject(
-				new Response(JSON.stringify('not-ok'), { status: 500, statusText: 'NOT OK' }),
-			);
-
-		default:
-			return Promise.resolve(
-				new Response(JSON.stringify(respMock)),
-			);
-	}
+fetchMock.mock({
+	url: '/fetch-resp.json',
+	response: Promise.resolve(JSON.stringify(respMock)),
 });
 
 describe('service SomeSvc', () => {
