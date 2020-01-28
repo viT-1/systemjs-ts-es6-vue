@@ -46,6 +46,13 @@ task('postdeploy.dev:copyNonTranspiledFiles',
 	])
 		.pipe(dest(absDest)));
 
+task('copyRenameFetchResp',
+	() => src([
+		path.resolve(absSrc, 'importmap.dev.json'),
+	])
+		.pipe(gRename('fetch-resp.json'))
+		.pipe(dest(absDest)));
+
 task('copyEsmAssets',
 	() => {
 		// simple copying
@@ -158,6 +165,7 @@ task('copyNonTranspiledFiles',
 task('predeploy',
 	parallel(
 		'cssbundle',
+		'copyRenameFetchResp',
 		'copyNonTranspiledFiles',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		series(
@@ -194,6 +202,7 @@ task('deploy', series('transpile'));
 task('postdeploy.dev',
 	parallel(
 		'cssbundle',
+		'copyRenameFetchResp',
 		'postdeploy.dev:copyNonTranspiledFiles',
 		'tmpl2js', // will not fixed in bundle, that's why in parallel
 		series(

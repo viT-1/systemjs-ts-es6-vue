@@ -1,2 +1,8 @@
+import { GlobalWithFetchMock } from 'jest-fetch-mock';
+
+const customGlobal: GlobalWithFetchMock = global as GlobalWithFetchMock;
+customGlobal.fetch = require('jest-fetch-mock');
+
+customGlobal.fetchMock = customGlobal.fetch;
+
 (global as any).VueMultiselect = require('vue-multiselect');
-require('jest-fetch-mock').enableMocks();
