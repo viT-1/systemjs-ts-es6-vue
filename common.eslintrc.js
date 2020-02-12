@@ -4,6 +4,7 @@ const conf = {
 		'import/no-extraneous-dependencies': [
 			'error', {
 				'devDependencies': [
+					'**/*.d.ts',
 					'**/*.spec.ts',
 					'**/jest.*',
 					'gulpfile.esm.js',
