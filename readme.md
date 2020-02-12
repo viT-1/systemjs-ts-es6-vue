@@ -2,6 +2,9 @@
 Pet project for bundling es-modules for modern browsers and SystemJs-modules for IE10 (and other).
 No Webpack or Rollup using, but warm tube Gulp ;)
 
+Run project: `npm run deploy` && `npm run www` or `npm run deploy.dev` && `npm run www.dev`
+Run jest tests: `npm run test`
+
 ## Without bundlers
 "Without bundlers" idea came from native "outFile" option of tsconfig.json
 But "outFile" option can be used only for SystemJs and  AMD "module".
