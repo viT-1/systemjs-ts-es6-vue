@@ -5,5 +5,13 @@
 		"target": "esnext",
 		"outDir": "../dist",
 		"plugins": [{ "transform": "typescript-transform-paths" }] // make relative imports
-	}
+	},
+	"exclude": [
+		"**/*.i.ts", // interfaces
+		"**/*.node.ts",
+		"**/node_modules/*",
+		"**/__mocks__/*",
+		"**/*.spec.*ts",
+		"**/*jest.*"
+	]
 }
