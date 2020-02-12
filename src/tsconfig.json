@@ -8,7 +8,6 @@
 	},
 	"files": [
 		"../dist/**/*.html.js",
-		"../dist/vue-class-component.esm.js",
 		"../dist/vue-property-decorator.esm.js"
 	],
 	"exclude": [
