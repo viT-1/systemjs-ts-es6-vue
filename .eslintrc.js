@@ -36,10 +36,6 @@ const conf = {
 			extends: [...fullExtends, 'plugin:json/recommended-with-comments'],
 		},
 		{
-			'files': ['**/*.json', '*.json'],
-			extends: fullExtends,
-		},
-		{
 			'files': [
 				'jest.config.js',
 				'**/*.jest.config.js',
