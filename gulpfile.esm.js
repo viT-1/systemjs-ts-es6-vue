@@ -149,7 +149,6 @@ task('fixBundle',
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 	() => src([
 		path.resolve('node_modules', 'systemjs', 'dist', 'system.js'),
-		path.resolve('node_modules', 'systemjs', 'dist', 'extras', 'named-exports.js'),
 		path.resolve('node_modules', 'systemjs', 'dist', 'extras', 'named-register.js'),
 	])
 		.pipe(dest(path.resolve(absDest, 'systemjs'))));
