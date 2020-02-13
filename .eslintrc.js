@@ -61,7 +61,7 @@ const conf = {
 			extends: fullExtends,
 		},
 		{
-			files: ['**/index.ts', '**/*mutations.ts'], // vuex mutations
+			'files': ['**/index.ts', '**/*mutations.ts'], // vuex mutations
 			extends: fullExtends,
 			rules: {
 				// https://stackoverflow.com/questions/44657142/vuex-mutations-and-airbnb-eslint
@@ -89,6 +89,13 @@ const conf = {
 			],
 		},
 	],
+	// preparing for eslint-config-airbnb-typescript v7:
+	// https://github.com/iamturns/eslint-config-airbnb-typescript/pull/63
+	// parserOptions: {
+	// project: './src/tsconfig.lint.json',
+	// extraFileExtensions: ['.json'],
+	// createDefaultProgram: true
+	// },
 };
 
 module.exports = conf;
