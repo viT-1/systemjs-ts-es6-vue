@@ -11,8 +11,6 @@ import { SomeForm } from '.';
 
 // flush async as sync & stub data
 jest.mock('@services/SomeSvc/SomeSvc.ts');
-// because of 'getters problem' https://github.com/paleo/direct-vuex/issues/25
-jest.mock('./store/actions.ts');
 
 const localVue = createLocalVue();
 localVue.component('iam-select', IamSelect);

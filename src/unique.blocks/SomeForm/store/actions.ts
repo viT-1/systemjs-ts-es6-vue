@@ -1,5 +1,7 @@
 import { ActionContext } from 'vuex';
 // import { DirectActionContext } from 'direct-vuex/types/direct-types';
+import directVuex from 'direct-vuex';
+// import { localActionContext } from 'direct-vuex';
 
 import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 import { SomeSvc } from '@services/SomeSvc';
@@ -8,9 +10,11 @@ import { IState } from './state.i';
 import * as confMutations from './mutations.conf';
 /* eslint-disable import/no-cycle */
 import { modSomeForm } from '.';
-import { moduleActionContext } from '~/VueApp/store';
+// import { moduleActionContext } from '~/VueApp/store';
 
-const getTypedContext = (ctx: any) => moduleActionContext(ctx, modSomeForm);
+const { localActionContext } = directVuex;
+
+const getTypedContext = (ctx: any) => localActionContext(ctx, modSomeForm);
 
 export const getSomeValues = (
 	// commit полученных данных выполняется другим (синхронным) action, потому dispatch

@@ -13,4 +13,4 @@ export const storeConf = {
 } as const;
 
 Vue.use(Vuex);
-export const { store, moduleActionContext } = createDirectStore(storeConf);
+export const { store } = createDirectStore(storeConf);

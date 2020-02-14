@@ -54,7 +54,7 @@ const conf = {
 	// Mapping which tests to run with jest
 	testMatch: [
 		// '**/*.*(spec|test).*(ts|js)',
-		'**/SomeSvc/**/*.*(spec|test).*(ts|js)',
+		'**/SomeForm/**/*.*(spec|test).*(ts|js)',
 	],
 	// File types reading
 	transform: {
