@@ -48,3 +48,7 @@ Ttypescript last updated to [1.5.10](https://www.npmjs.com/package/ttypescript/v
 ### Microsoft Typescript on Github
 - [Way to add](https://github.com/microsoft/TypeScript/issues/16577#issuecomment-578729954) the '.js' file extension
 - [.js removed](https://github.com/microsoft/TypeScript/issues/13422#issuecomment-275845062) since SystemJS v0.20 & TSC is outputting invalid ES module code (that's why I need to [fix imports manually](https://github.com/viT-1/systemjs-ts-es6-vue/blob/5a6904ae20a99b684e2540a5a99872c5cd43608a/gulpfile.esm.js#L122))
+
+#Outdated packages
+- eslint-config-airbnb-typescript due to 7.0 is using poor performance [typescript-eslint 2.0](https://github.com/typescript-eslint/typescript-eslint/releases/tag/v2.0.0)
+- systemjs since 6.0 has error [#2016](https://github.com/systemjs/systemjs/issues/2016)
