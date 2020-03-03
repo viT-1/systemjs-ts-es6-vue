@@ -8,6 +8,7 @@
 		"noEmitOnError": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
-		"strict": true //noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
+		"strict": true, //noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
+		"strictPropertyInitialization": false // @Prop() is not initiated in constructor
 	}
 }

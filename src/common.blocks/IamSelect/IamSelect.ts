@@ -33,7 +33,7 @@ export class IamSelect extends Mixins(BemComponent) {
 
 	@Prop(Object)
 	// v-model supporting
-	readonly value!: IOption | null;
+	readonly value: IOption | null;
 
 	@Prop()
 	readonly data?: IData;
