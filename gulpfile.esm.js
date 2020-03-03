@@ -8,7 +8,6 @@ import gReplace from 'gulp-replace';
 import hJson from 'hjson';
 import gMerge from 'merge-stream';
 import path from 'path';
-import typescript from 'gulp-typescript';
 import {
 	src,
 	dest,
@@ -181,24 +180,6 @@ task('postdeploy',
 		'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
 	),
 );
-
-// TODO: to npm run
-// needs predeploy with 'tmpl2js'
-task('transpile',
-	() => {
-		// Transpiling for browser tsconfig
-		const tsApp = typescript.createProject(
-			path.resolve(absSrc, 'tsconfig.json'),
-		);
-		const tsResult = tsApp.src()
-			.pipe(tsApp()).js;
-
-		return tsResult
-			.pipe(dest(absDest));
-	});
-
-// strange, but package.json > scripts: npm run tsc --project ./src/tsconfig.json is not working
-task('deploy', series('transpile'));
 
 task('postdeploy.dev',
 	parallel(
