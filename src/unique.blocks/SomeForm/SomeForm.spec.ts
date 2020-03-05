@@ -3,7 +3,6 @@ import Vuex, { Store } from 'vuex';
 import { createDirectStore } from 'direct-vuex';
 
 import { IamSelect } from '@common/IamSelect';
-// import { IVueAppStore } from '~/VueApp/store';
 
 import { modSomeForm } from './store';
 import { SomeForm } from '.';
@@ -17,6 +16,7 @@ localVue.component('iam-select', IamSelect);
 localVue.use(Vuex);
 
 const getNewStore = (): Store<any> => {
+// IVueAppStore - typeof modSomeForm ?
 // const getNewStore = (): Store<IVueAppStore> => {
 	const { store } = createDirectStore({
 		modules: {
