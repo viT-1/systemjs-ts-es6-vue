@@ -14,6 +14,7 @@ const defaultState: IState = {
 	},
 };
 
+/** store module */
 export const modSomeForm = {
 	namespaced: true as true,
 	actions,
