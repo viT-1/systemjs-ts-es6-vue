@@ -1,4 +1,5 @@
 import { conf as confIamHeader, IamHeader } from '@common/IamHeader';
+import { conf as confIamInput, IamInput } from '@common/IamInput';
 import { conf as confIamSelect, IamSelect } from '@common/IamSelect';
 import { conf as confSomeForm, SomeForm } from '@unique/SomeForm';
 
@@ -6,6 +7,7 @@ export const components = {
 	// [confIamHeader.name]: IamHeader,
 	// tagName is consistent with class name
 	[confIamHeader.name]: IamHeader,
+	[confIamInput.name]: IamInput,
 	[confIamSelect.name]: IamSelect,
 	[confSomeForm.name]: SomeForm,
 };

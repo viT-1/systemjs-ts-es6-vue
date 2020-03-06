@@ -19,7 +19,7 @@ const conf = {
 	// Cache directory should be set for git ignoring
 	cacheDirectory: path.resolve(rootDir, '.test', 'cache'),
 	// Tests cover (percent & lines of logic)
-	collectCoverage: false,
+	collectCoverage: true,
 	// Ограничиваемся тестами на модули для реиспользования.
 	collectCoverageFrom: [
 		'**/*.ts',
@@ -54,7 +54,8 @@ const conf = {
 	// Mapping which tests to run with jest
 	testMatch: [
 		// '**/*.*(spec|test).*(ts|js)',
-		'**/SomeForm/**/*.*(spec|test).*(ts|js)',
+		'**/IamInput/**/*.*(spec|test).*(ts|js)',
+		// '**/SomeForm/**/*.*(spec|test).*(ts|js)',
 	],
 	// File types reading
 	transform: {
