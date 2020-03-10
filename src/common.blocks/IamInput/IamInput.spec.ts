@@ -8,28 +8,27 @@ describe('@Component IamHeader', () => {
 	it('проверка v-model', async () => {
 		expect.assertions(1);
 
-		const outValue = 'hooray!';
+		const scopeValue = 'foo';
 		const wrapper = mount({
-			// нативный vue-компонент, scope данных
+			// native vue-component (no vue-class-component), data scope
 			data: () => ({
-				outValue,
+				scopeValue,
 			}),
-			// Не забываем ограничение - один dom-элемент для слота > нужна обёртка
 			template:
-				`<${conf.name} v-model="outValue" />`,
+				`<${conf.name} v-model="scopeValue" />`,
 			components: {
 				[conf.name]: WrapperClass,
 			},
 		}, localVue);
 
-		const expectedInpValue = 'gghytoo';
+		const expectedInpValue = 'bar';
 		const elInput = wrapper.find('input');
-
 		elInput.setValue(expectedInpValue);
 
-		await wrapper.vm.$nextTick();
-		console.log('После установки вёрстка', wrapper.html());
+		// html is not displayed new value
+		// console.log(wrapper.html());
 
-		expect(outValue).toBe(expectedInpValue);
+		expect(wrapper.vm.$data.scopeValue).toBe(expectedInpValue);
+		// expect((elInput.element as HTMLInputElement).value).toBe(expectedInpValue);
 	});
 });
