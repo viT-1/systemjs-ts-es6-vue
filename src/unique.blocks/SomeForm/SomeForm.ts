@@ -44,4 +44,16 @@ export class SomeForm extends Mixins(BemComponent) {
 	set iamSelectValue(val: ISomeValue | null) {
 		this.$store.direct.dispatch.modSomeForm.selectSomeValue(val);
 	}
+
+	iamInputValue1: string | null = null;
+
+	// iamInputValue2?: string;
+	// wrapper should be defined to be reactive! data object can'be modified on runtime
+	myScope = {};
+
+	onInputValue2(val: string): void {
+		// this.iamInputValue2 = val;
+		// this.$set(this.myScope, 'iamInputValue2', val);
+		this.myScope = { ...this.myScope, iamInputValue2: val };
+	}
 }

@@ -20,13 +20,14 @@ export class IamInput extends Mixins(BemComponent) {
 		this.b = conf.bem;
 	}
 
-	@Prop(String) value?: string;
+	// @Prop(String) value = conf.defValue; // default value is undefined! but mutation!
+	@Prop({ default: conf.defValue }) value: string; // default value if undefined! but no mutation!
 
-	get mValue(): string | undefined {
+	get mValue(): string {
 		return this.value;
 	}
 
-	set mValue(val: string | undefined) {
+	set mValue(val: string) {
 		this.$emit('input', val);
 	}
 }

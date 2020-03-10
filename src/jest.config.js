@@ -19,7 +19,7 @@ const conf = {
 	// Cache directory should be set for git ignoring
 	cacheDirectory: path.resolve(rootDir, '.test', 'cache'),
 	// Tests cover (percent & lines of logic)
-	collectCoverage: true,
+	collectCoverage: false,
 	// Ограничиваемся тестами на модули для реиспользования.
 	collectCoverageFrom: [
 		'**/*.ts',

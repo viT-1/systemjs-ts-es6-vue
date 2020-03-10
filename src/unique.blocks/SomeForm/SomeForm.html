@@ -6,4 +6,9 @@
 		:data="iamSelectData"
 	/>
 	<p>Selected: {{iamSelectValue}}</p>
+
+	<iam-input v-model="iamInputValue1" />
+	<p>input value1: {{iamInputValue1}}</p>
+	<iam-input @input="onInputValue2" />
+	<p>value on @input: {{myScope.iamInputValue2}}</p>
 </form>
