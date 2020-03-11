@@ -47,4 +47,14 @@ describe('@Component IamHeader', () => {
 
 		expect(inputComp.props('value')).toBe(expectedInpValue);
 	});
+
+	it('default value for @Prop "value" is correct by mounting', () => {
+		expect.assertions(1);
+
+		const wrapper = mount(WrapperClass, { localVue, propsData: { value: undefined } });
+		const cmpValue = wrapper.props('value');
+		// const cmpValue = wrapper.vm.value;
+
+		expect(cmpValue).toBe(conf.defValue);
+	});
 });
