@@ -8,6 +8,8 @@ import { modSomeForm } from './store';
 import { SomeForm } from '.';
 // import { resolvedOptions } from '@services/SomeSvc/SomeSvc.spec.case01.ts';
 
+jest.mock('debounce-decorator-ts');
+
 // flush async as sync & stub data
 jest.mock('@services/SomeSvc/SomeSvc.ts');
 

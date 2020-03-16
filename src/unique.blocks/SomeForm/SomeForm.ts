@@ -1,3 +1,5 @@
+
+import { debounceFn as Debounce } from 'debounce-decorator-ts';
 import { Component, Mixins } from 'vue-property-decorator';
 
 import { BemComponent } from '@common/BemComponent';
@@ -51,6 +53,7 @@ export class SomeForm extends Mixins(BemComponent) {
 	// wrapper should be defined to be reactive! data object can'be modified on runtime
 	myScope = {};
 
+	@Debounce(500)
 	onInputValue2(val: string): void {
 		// this.iamInputValue2 = val;
 		// this.$set(this.myScope, 'iamInputValue2', val);

@@ -97,6 +97,8 @@ task('postdeploy.dev:fixImportsFromMap',
 		// should be replaced by typescript-transform-paths not gulp-replace!
 		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
 		// TODO: need loop on importmap.
+		.pipe(gReplace(/from[\s]?['|"]debounce-decorator-ts['|"]/g,
+			`from '${esmImportmapPaths['debounce-decorator-ts']}'`))
 		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g,
 			`from '${esmImportmapPaths['direct-vuex']}'`))
 		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g,
