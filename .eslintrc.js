@@ -11,57 +11,58 @@ const fullExtends = [
 ];
 
 const conf = {
-	'env': {
-		'es6': true,
+	env: {
+		es6: true,
 	},
-	'parser': '@typescript-eslint/parser',
-	'plugins': [
+	parser: '@typescript-eslint/parser',
+	plugins: [
 		'@typescript-eslint',
 		'import',
-		"jest",
-		"jest-formatting",
+		'jest',
+		'jest-formatting',
 		'json',
 		'markdown',
 	],
-	'settings': {
+	root: true,
+	settings: {
 		'import/parsers': { '@typescript-eslint/parser': ['.ts'] },
 		'import/resolver': {
 			'node': { 'extensions': ['.js', '.ts'] },
 			'typescript': { 'directory': './src' },
 		},
 	},
-	'overrides': [
+	overrides: [
 		{
-			'files': ['**/*.json', '*.json'],
+			files: ['**/*.json', '*.json'],
 			extends: [...fullExtends, 'plugin:json/recommended-with-comments'],
 		},
 		{
-			'files': [
+			files: [
 				'jest.config.js',
 				'**/*.jest.config.js',
 				'*.eslintrc.js',
 			],
-			'env': { 'commonjs': true, },
+			env: { 'commonjs': true, },
 			extends: baseExtends,
 		},
 		{
-			'files': [
+			files: [
 				'gulpfile.esm.js',
 				'app.conf.js',
 			],
-			'parserOptions': { 'sourceType': 'module' },
+			parserOptions: { 'sourceType': 'module' },
 			extends: baseExtends,
 		},
 		{
-			'files': ['**/*.ts', '*.ts'],
-			'env': { 'browser': true },
-			'parserOptions': {
+			files: ['**/*.ts', '*.ts'],
+			env: { 'browser': true },
+			parserOptions: {
 				'sourceType': 'module',
 			},
 			extends: fullExtends,
 		},
 		{
-			'files': ['**/index.ts', '**/*mutations.ts'], // vuex mutations
+			files: ['**/index.ts', '**/*mutations.ts'], // vuex mutations
 			extends: fullExtends,
 			rules: {
 				// https://stackoverflow.com/questions/44657142/vuex-mutations-and-airbnb-eslint
@@ -72,16 +73,16 @@ const conf = {
 			},
 		},
 		{
-			'files': ['**/*.d.ts'],
+			files: ['**/*.d.ts'],
 			extends: fullExtends,
-			'rules': {
+			rules: {
 				'import/no-default-export': 'off',
 			},
 		},
 		{
-			'files': ['**/*.spec.ts'],
+			files: ['**/*.spec.ts'],
 			// что есть, что нет env jest, реакции eslint в этих файлах нет?!
-			'env': { 'browser': true, 'jest': true },
+			env: { 'browser': true, 'jest': true },
 			extends: [
 				...fullExtends,
 				'plugin:jest/all',
