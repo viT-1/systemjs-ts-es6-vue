@@ -20,7 +20,7 @@ export class IamHeader extends Mixins(BemComponent) {
 		this.b = conf.bem;
 	}
 
-	@Prop(String) some?: string;
+	@Prop(String) some = '';
 
 	computeSome = `computed ${this.some}`;
 }

@@ -64,14 +64,14 @@ task('copyEsmAssets',
 		const vueClass = src([
 			path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
 		])
-			.pipe(gReplace('process.env.NODE_ENV', "JSON.stringify('production')"))
+			.pipe(gReplace('process.env.NODE_ENV', 'JSON.stringify(\'production\')'))
 			.pipe(dest(absDest));
 
 		// TODO: only if not exists on dest folder
 		const vueProp = src([
 			path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
 		])
-			.pipe(gReplace("/// <reference types='reflect-metadata'/>", ""))
+			.pipe(gReplace('/// <reference types=\'reflect-metadata\'/>', ''))
 			.pipe(gRename({ extname: '.esm.js' }))
 			.pipe(dest(absDest));
 

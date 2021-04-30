@@ -5,6 +5,7 @@ const baseExtends = [
 
 const fullExtends = [
 	'eslint:recommended',
+	'plugin:markdown/recommended',
 	'plugin:@typescript-eslint/recommended',
 	'airbnb-typescript/base',
 	'./common.eslintrc.js',
@@ -14,7 +15,13 @@ const conf = {
 	env: {
 		es6: true,
 	},
+	// ignorePatterns: ['**/tsconfig.*.json'],
 	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		createDefaultProgram: true,
+		extraFileExtensions: ['.json', '.md'],
+		project: 'tsconfig.lint.json',
+	},
 	plugins: [
 		'@typescript-eslint',
 		'import',
@@ -28,10 +35,16 @@ const conf = {
 		'import/parsers': { '@typescript-eslint/parser': ['.ts'] },
 		'import/resolver': {
 			'node': { 'extensions': ['.js', '.ts'] },
-			'typescript': { 'directory': './src' },
+			'typescript': { 'project': './src' },
 		},
 	},
 	overrides: [
+		{
+            // Enable the Markdown processor for all .md files.
+            // Still doesn't work https://github.com/eslint/eslint-plugin-markdown/issues/114#issuecomment-620970670
+            files: ['**/*.md'],
+            processor:'markdown/markdown'
+        },
 		{
 			files: ['**/*.json', '*.json'],
 			extends: [...fullExtends, 'plugin:json/recommended-with-comments'],
@@ -90,13 +103,6 @@ const conf = {
 			],
 		},
 	],
-	// preparing for eslint-config-airbnb-typescript v7:
-	// https://github.com/iamturns/eslint-config-airbnb-typescript/pull/63
-	// parserOptions: {
-	// project: './src/tsconfig.lint.json',
-	// extraFileExtensions: ['.json'],
-	// createDefaultProgram: true
-	// },
 };
 
 module.exports = conf;

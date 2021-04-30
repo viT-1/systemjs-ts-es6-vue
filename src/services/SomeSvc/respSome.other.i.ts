@@ -1,3 +1,3 @@
 export interface IRespSomeOther {
-	imports: object;
+	imports: Record<string, unknown>;
 }

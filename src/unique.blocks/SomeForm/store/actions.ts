@@ -17,7 +17,7 @@ export const getSomeValues = (
 	// commit полученных данных выполняется другим (синхронным) action, потому dispatch
 	// TODO: How to write tests with ActionContext & jest.fn() for dispatch & commit?
 	// context: ActionContext<IState, {}>,
-	context: ActionContext<IState, {}> | { dispatch: Function },
+	context: ActionContext<IState, Record<string, unknown>> | { dispatch: Function },
 	{ label }: ISomeValue,
 ): Promise <Array<ISomeValue> | void> => SomeSvc
 	.fetchData({ label }) // Все опции запроса в одном параметре-объекте (помимо label)
@@ -27,7 +27,7 @@ export const getSomeValues = (
 	});
 
 export const setSomeValues = (
-	context: ActionContext<IState, {}> | { commit: Function },
+	context: ActionContext<IState, Record<string, unknown>> | { commit: Function },
 	values: Array<ISomeValue>,
 ): void => {
 	const { commit } = getTypedContext(context);
@@ -35,7 +35,7 @@ export const setSomeValues = (
 };
 
 export const selectSomeValue = (
-	context: ActionContext<IState, {}> | { commit: Function },
+	context: ActionContext<IState, Record<string, unknown>> | { commit: Function },
 	value: ISomeValue | null,
 ): void => {
 	const { commit } = getTypedContext(context);

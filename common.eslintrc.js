@@ -1,6 +1,7 @@
 const conf = {
 	rules: {
 		// 'curly': ['error', 'all', 'consistent'],
+		'comma-dangle': ['error', 'always-multiline'],
 		'import/no-extraneous-dependencies': [
 			'error', {
 				'devDependencies': [
@@ -18,19 +19,27 @@ const conf = {
 		'no-console': 'off',
 		'no-trailing-spaces': 'error',
 		'no-tabs': ['warn', { 'allowIndentationTabs': true }],
+		'quotes': ['error', 'single'],
+		'@typescript-eslint/ban-types': ['error', {
+			'types': { 'Function': false },
+			'extendDefaults': true
+		}],
 		'@typescript-eslint/brace-style': ['error', 'stroustrup'],
-		'@typescript-eslint/indent': [
-			'error',
-			'tab', // airbnb set 2 spaces
-			{
-				SwitchCase: 1, // Only this from airbnb redefines default
-				// Other Airbnb setting same as default, JSX no matter
-			},
-		],
+		'@typescript-eslint/indent': ['error', 'tab', {
+			SwitchCase: 1, // Only this from airbnb redefines default
+			// Other Airbnb setting same as default, JSX no matter
+		}],
 		'@typescript-eslint/no-unused-vars': ['warn'],
 		// Old school interface class naming
-		'@typescript-eslint/interface-name-prefix': ['error', 'always'],
-		'@typescript-eslint/ban-ts-ignore': 'off',
+		'@typescript-eslint/naming-convention': ['error', {
+			'selector': 'interface',
+			'format': ['PascalCase'],
+			'custom': {
+				'regex': '^I[A-Z]',
+				'match': true
+			}
+		}],
+		'@typescript-eslint/ban-ts-comment': 'off',
 	},
 };
 

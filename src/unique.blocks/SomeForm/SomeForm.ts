@@ -1,4 +1,3 @@
-
 import { debounceFn as Debounce } from 'debounce-decorator-ts';
 import { Component, Mixins } from 'vue-property-decorator';
 

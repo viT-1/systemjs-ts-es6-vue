@@ -12,7 +12,7 @@
 	],
 	"include": [
 		"../dist/**/*.html.js",
-		"**/*.ts",
+		"**/*.ts"
 	],
 	"exclude": [
 		"**/*.i.ts", // interfaces
