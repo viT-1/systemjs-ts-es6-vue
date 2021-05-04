@@ -11,7 +11,7 @@ const conf = {
 	globals: {
 		'ts-jest': {
 			// Возможно использовать (исключены не сгенерённые ещё файлы *.html.js)
-			tsConfig: path.resolve(rootDir, 'src', 'tsconfig.jest.json'),
+			tsconfig: path.resolve(rootDir, 'src', 'tsconfig.jest.json'),
 		},
 	},
 	// For browser global variables (console, window...)
