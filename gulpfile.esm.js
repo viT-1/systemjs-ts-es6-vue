@@ -111,26 +111,13 @@ task('postdeploy.dev:fixImportsFromMap',
 			`from '${esmImportmapPaths['vue-property-decorator']}'`))
 		.pipe(dest('./')));
 
-task('postdeploy.dev:fixImportsInIndex',
+task('postdeploy.dev:fixImports',
 	() => src([
-		`${absDest}/**/index.js`,
+		`${absDest}/**/*.js`,
 	])
 		// my export with singlequoted paths
 		// TODO: create common regexp for resolving modules
-		.pipe(gReplace(/^(?!.*(\.js|=))(.*)(";)/gm, '$2.js$3'))
-		.pipe(dest(absDest)));
-
-task('postdeploy.dev:fixImportsNotInIndex',
-	() => src([
-		`${absDest}/**/!(index).js`,
-		// exclude file with separate fix-task
-		`!${absDest}/*.esm*.js`, // including .esm.min.js
-	])
-		.pipe(gReplace('.conf";', '.conf.js";'))
-		.pipe(gReplace('.html";', '.html.js";'))
-		// TODO: replace to foo/index.js, only if folder 'foo' exists, otherwise foo.js!
-		// typescript-transform-paths replaced alias with doublequoted paths
-		.pipe(gReplace(/(from "\.)((?:(?!\.js|\.conf|\.html).)*)(";)/g, '$1$2/index.js$3'))
+		.pipe(gReplace(/^(.* from )("|')(?!.*(\.js))(.*)("|')/gm, '$1$2$4.js$2'))
 		.pipe(dest(absDest)));
 
 // fix because of names of modules with src includes generated dist
@@ -145,7 +132,7 @@ task('fixBundle',
 		// for module resolving instead of bugs with systemjs-importmap
 		.pipe(gReplace('../dist/', ''))
 		.pipe(gReplace('.esm', ''))
-		// .pipe(uglifyES())
+		.pipe(uglifyES())
 		.pipe(dest(absDest)));
 
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
@@ -193,9 +180,6 @@ task('postdeploy.dev',
 		series(
 			'copyEsmAssets', // before fixing
 			'postdeploy.dev:fixImportsFromMap', // can't modify same files in parallel
-			parallel(
-				'postdeploy.dev:fixImportsInIndex',
-				'postdeploy.dev:fixImportsNotInIndex',
-			),
+			'postdeploy.dev:fixImports',
 		),
 	));
