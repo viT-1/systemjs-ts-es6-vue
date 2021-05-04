@@ -143,8 +143,9 @@ task('fixBundle',
 		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
 		// fix transpiled node_modules names to included SystemJS module
 		// for module resolving instead of bugs with systemjs-importmap
-		.pipe(gReplace(/("src\/)([a-z|-]*)(\.esm)?(")/g, '"$2"'))
-		.pipe(uglifyES())
+		.pipe(gReplace('../dist/', ''))
+		.pipe(gReplace('.esm', ''))
+		// .pipe(uglifyES())
 		.pipe(dest(absDest)));
 
 task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest

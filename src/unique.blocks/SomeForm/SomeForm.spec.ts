@@ -25,6 +25,8 @@ const getNewStore = (): Store<any> => {
 			modSomeForm,
 		},
 	});
+
+	// failed test: https://github.com/paroi-tech/direct-vuex/issues/69
 	return store.original;
 };
 
