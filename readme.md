@@ -16,7 +16,9 @@ It is very simple tool and it's used in our legacy project, which isn't hurry fo
 ES-modules reduced SystemJS popularity, therefore web is full of articles about SystemJS 0.xx configuration
 and almost nothing about actual 5.0 version! If you want to use older one, just use 0.19 because of [typescript issue](https://github.com/systemjs/systemjs/issues/1587#issuecomment-287013920).
 
-SystemJS 6.x have upgrade blocked [error](https://github.com/systemjs/systemjs/issues/2016), so 5.0
+SystemJS 6.x have upgrade blocked [error](https://github.com/systemjs/systemjs/issues/2016) and [related](https://github.com/systemjs/systemjs/issues/2185#issuecomment-626889523), so 5.0
+
+vue-property-decorator have upgrade fom v8 to v9 blocked by issue [#285](https://github.com/kaorun343/vue-property-decorator/issues/285#issuecomment-832659866)
 
 ## Why Typescript & vue-class-component?
 Because I want to write code which will be easy to migrate to Vue 3.0
