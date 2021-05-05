@@ -86,7 +86,7 @@ task('deleteEsmAssets',
 	() => del([
 		path.resolve(absDest, 'direct-vuex.esm.min.js'),
 		path.resolve(absDest, 'vue-property-decorator.esm.js'),
-		path.resolve(absDest, 'vue-class-component.esm.js')
+		path.resolve(absDest, 'vue-class-component.esm.js'),
 	]));
 
 task('postdeploy.dev:fixImportsFromMap',

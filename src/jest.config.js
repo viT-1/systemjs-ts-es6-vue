@@ -14,8 +14,6 @@ const conf = {
 			tsconfig: path.resolve(rootDir, 'src', 'tsconfig.jest.json'),
 		},
 	},
-	// For browser global variables (console, window...)
-	browser: true,
 	// Cache directory should be set for git ignoring
 	cacheDirectory: path.resolve(rootDir, '.test', 'cache'),
 	// Tests cover (percent & lines of logic)

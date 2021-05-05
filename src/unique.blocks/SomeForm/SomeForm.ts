@@ -2,7 +2,7 @@ import { debounceFn as Debounce } from 'debounce-decorator-ts';
 import { Component, Mixins } from 'vue-property-decorator';
 
 import { BemComponent } from '@common/BemComponent';
-import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
+import { IOption } from '@common/IamSelect/IamSelect.option.i';
 
 import { conf } from './SomeForm.conf';
 
@@ -33,16 +33,17 @@ export class SomeForm extends Mixins(BemComponent) {
 		this.$store.direct.dispatch.modSomeForm.getSomeValues({ label: 'Rome' });
 	}
 
-	get iamSelectData(): { options: Array<ISomeValue> } {
+	get iamSelectData(): { options: ReadonlyArray<IOption> } {
 		const options = this.$store.direct.getters.modSomeForm.someValues;
+		// return { options: this.$store.direct.getters.modSomeForm.someValues };
 		return { options };
 	}
 
-	get iamSelectValue(): ISomeValue | null {
+	get iamSelectValue(): IOption | null {
 		return this.$store.direct.getters.modSomeForm.someValue;
 	}
 
-	set iamSelectValue(val: ISomeValue | null) {
+	set iamSelectValue(val: IOption | null) {
 		this.$store.direct.dispatch.modSomeForm.selectSomeValue(val);
 	}
 
