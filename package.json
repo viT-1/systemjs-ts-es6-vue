@@ -1,6 +1,6 @@
 {
     "name": "systemjs-ts-es6-vue",
-    "version": "0.9.2",
+    "version": "0.9.3",
     "repository": {
         "type": "git",
         "url": "https://github.com/viT-1/systemjs-ts-es6-vue.git"
@@ -74,7 +74,6 @@
         "eslint-plugin-jest": "24.3.6",
         "eslint-plugin-jest-formatting": "2.0.1",
         "eslint-plugin-json": "3.0.0",
-        "eslint-plugin-markdown": "2.1.0",
         "esm": "3.2.25",
         "gulp": "4.0.2",
         "gulp-clean-css": "4.3.0",

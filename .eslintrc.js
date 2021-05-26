@@ -5,7 +5,6 @@ const baseExtends = [
 
 const fullExtends = [
 	'eslint:recommended',
-	'plugin:markdown/recommended',
 	'plugin:@typescript-eslint/recommended',
 	'airbnb-typescript/base',
 	'./common.eslintrc.js',
@@ -19,7 +18,7 @@ const conf = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		createDefaultProgram: true,
-		extraFileExtensions: ['.json', '.md'],
+		extraFileExtensions: ['.json'],
 		project: 'tsconfig.lint.json',
 	},
 	plugins: [
@@ -28,7 +27,6 @@ const conf = {
 		'jest',
 		'jest-formatting',
 		'json',
-		'markdown',
 	],
 	root: true,
 	settings: {
@@ -40,12 +38,6 @@ const conf = {
 	},
 	overrides: [
 		{
-            // Enable the Markdown processor for all .md files.
-            // Still doesn't work https://github.com/eslint/eslint-plugin-markdown/issues/114#issuecomment-620970670
-            files: ['**/*.md'],
-            processor:'markdown/markdown'
-        },
-		{
 			files: ['**/*.json', '*.json'],
 			extends: [...fullExtends, 'plugin:json/recommended-with-comments'],
 		},
@@ -55,7 +47,7 @@ const conf = {
 				'**/*.jest.config.js',
 				'*.eslintrc.js',
 			],
-			env: { 'commonjs': true, },
+			env: { 'commonjs': true },
 			extends: baseExtends,
 		},
 		{
