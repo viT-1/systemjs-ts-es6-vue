@@ -42,8 +42,8 @@ No.
 - 2018/11/01 [Modern Javascript Without a Bundler](https://mattallan.me/posts/modern-javascript-without-a-bundler/) by [Matt Allan](https://mattallan.me/about/)
 
 ## Tsc esm resolving
-- [Using](https://github.com/viT-1/systemjs-ts-es6-vue/blob/74b80269849b82f77285ab7fdaf7c4f937e7d7e6/src/tsconfig.dev.json#L7) ttypescript-[transformers](https://github.com/cevek/ttypescript#transformers)
-Ttypescript last updated to [1.5.10](https://www.npmjs.com/package/ttypescript/v/1.5.10): 2020/01/08
+- [Using](https://github.com/viT-1/systemjs-ts-es6-vue/blob/e90f5a2a410a7980b2d48ed18d5e3c571660fcba/src/tsconfig.dev.json#L7) ttypescript-[transformers](https://github.com/cevek/ttypescript#transformers)
+ttypescript last [updated](https://github.com/viT-1/systemjs-ts-es6-vue/commit/e90f5a2a410a7980b2d48ed18d5e3c571660fcba#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519R96) to [1.5.12](https://www.npmjs.com/package/ttypescript/v/1.5.12): 2021/04/30
 
 ### Microsoft Typescript on Github
 - [Way to add](https://github.com/microsoft/TypeScript/issues/16577#issuecomment-578729954) the '.js' file extension
