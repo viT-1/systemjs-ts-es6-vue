@@ -19,6 +19,7 @@
 		"**/*.node.ts",
 		"**/node_modules/*",
 		"**/__mocks__/*",
+		"jest.setup.ts",
 		"**/*.spec.*ts"
 	]
 }

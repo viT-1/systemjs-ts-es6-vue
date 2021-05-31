@@ -45,7 +45,7 @@ const conf = {
 		// 'vue': 'vue/dist/vue.js',
 	},
 	// https://jestjs.io/docs/en/configuration#testenvironment-string
-	// testEnvironment: 'node', // 'jsdom',
+	testEnvironment: 'jsdom',
 	// Ignore some tests from testMatch
 	testPathIgnorePatterns: [
 	],

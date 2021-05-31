@@ -126,11 +126,14 @@ task('fixBundle',
 		// TODO: hJson from tsconfig outFile name
 		path.resolve(absDest, 'bundle.system.js'),
 	])
-		// fix templates as string
-		.pipe(gReplace(`register("${appConf.destFolderName}`, `register("${appConf.srcFolderName}`))
 		// fix transpiled node_modules names to included SystemJS module
 		// for module resolving instead of bugs with systemjs-importmap
-		.pipe(gReplace('../dist/', ''))
+		.pipe(gReplace(`${appConf.destFolderName}/`, ''))
+		.pipe(gReplace(`${appConf.srcFolderName}/`, ''))
+		// fix all src or dest folder name artefacts of named modules SystemJS registering to void string
+		// Why this two regexp replace 4 dependencies to 2 (search in bunfle SomeForm/SomeForm)?!
+		// .pipe(gReplace(/('|")(.*?)(src|dist)(\/)(.*?)('|")/g, '$1$5$6'))
+		// .pipe(gReplace(/(['"])(.*?)(src|dist)(\/)(.*?)([^\\]\1)/g, '$1$5$6'))
 		.pipe(gReplace('.esm', ''))
 		.pipe(uglifyES())
 		.pipe(dest(absDest)));
