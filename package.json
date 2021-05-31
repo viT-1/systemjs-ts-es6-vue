@@ -1,6 +1,6 @@
 {
     "name": "systemjs-ts-es6-vue",
-    "version": "0.9.6",
+    "version": "0.9.7",
     "repository": {
         "type": "git",
         "url": "https://github.com/viT-1/systemjs-ts-es6-vue.git"
@@ -30,7 +30,7 @@
     "scripts": {
         "clean": "rm -rf ./dist",
         "lint": "tsc --project ./src/tsconfig.dev.json --noEmit && eslint --ext ts,js,json ./src",
-        "predeploy": "npm run lint && npm run clean && gulp predeploy",
+        "predeploy": "npm run clean && gulp predeploy",
         "deploy": "ttsc --project ./src/tsconfig.json",
         "postdeploy": "gulp postdeploy && npm run wwwdeploy",
         "deploy.dev": "ttsc --project ./src/tsconfig.dev.json",
@@ -52,8 +52,9 @@
         "express": "4.17.1",
         "systemjs": "5.0.0",
         "vue": "2.6.12",
+        "vue-class-component": "7.2.6",
         "vue-multiselect": "2.1.6",
-        "vue-property-decorator": "8.4.2",
+        "vue-property-decorator": "9.0.2",
         "vuex": "3.6.2",
         "whatwg-fetch": "3.6.2"
     },

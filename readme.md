@@ -53,7 +53,8 @@ Ttypescript last updated to [1.5.10](https://www.npmjs.com/package/ttypescript/v
 - [.js removed](https://github.com/microsoft/TypeScript/issues/13422#issuecomment-275845062) since SystemJS v0.20 & TSC is outputting invalid ES module code (that's why I need to [fix imports manually](https://github.com/viT-1/systemjs-ts-es6-vue/blob/5a6904ae20a99b684e2540a5a99872c5cd43608a/gulpfile.esm.js#L122))
 
 # Outdated packages
-- eslint-config-airbnb-typescript due to 7.0 is using poor performance [typescript-eslint 2.0](https://github.com/typescript-eslint/typescript-eslint/releases/tag/v2.0.0)
+- typescript since 4.0 has error with bundling for SystemJS about generated files included in tsconfig
+but which aren't present when tsc starts checking files in "include" tsconfig array
 - systemjs since 6.0 has various errors:
     - [#2016](https://github.com/systemjs/systemjs/issues/2016) and single bundle by tsc
 is [not supported](https://github.com/systemjs/systemjs/issues/2185#issuecomment-626889523) (error System is not defined).
