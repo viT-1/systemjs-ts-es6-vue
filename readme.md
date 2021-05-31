@@ -21,9 +21,6 @@ SystemJS 6.x have upgrade blocked [error](https://github.com/systemjs/systemjs/i
 ## Why Typescript & vue-class-component?
 Because I want to write code which will be easy to migrate to Vue 3.0
 
-vue-property-decorator have upgrade from v8 to v9 blocked by issue [#285](https://github.com/kaorun343/vue-property-decorator/issues/285#issuecomment-832659866)
-
-
 ## Aliases problem solved
 Relative paths are like a hell!
 
