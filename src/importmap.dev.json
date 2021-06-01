@@ -4,7 +4,7 @@
 		"direct-vuex": [ "/direct-vuex.esm.min.js" ],
 		"vue": [ "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js" ],
 		"vuex": [ "https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.esm.browser.min.js" ],
-		"vue-class-component": [ "/vue-class-component.esm.js" ],
-		"vue-property-decorator": [ "/vue-property-decorator.esm.js" ]
+		"vue-class-component": [ "/vue-class-component.js" ],
+		"vue-property-decorator": [ "/vue-property-decorator.js" ]
 	}
 }

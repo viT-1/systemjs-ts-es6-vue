@@ -60,19 +60,20 @@ task('copyEsmAssets',
 		])
 			.pipe(dest(absDest));
 
-		// TODO: only if not exists on dest folder
+		// TODO: only if not exists in my absDest folder
 		const vueClass = src([
 			path.resolve('node_modules', 'vue-class-component', 'dist', 'vue-class-component.esm.js'),
 		])
 			.pipe(gReplace('process.env.NODE_ENV', 'JSON.stringify(\'production\')'))
+			// renaming to avoid replacing '.esm' suffixes in named modules bundling by SystemJs
+			.pipe(gRename({ basename: 'vue-class-component', extname: '.js' }))
 			.pipe(dest(absDest));
 
-		// TODO: only if not exists on dest folder
+		// TODO: only if not exists in my absDest folder
 		const vueProp = src([
 			path.resolve('node_modules', 'vue-property-decorator', 'lib', 'vue-property-decorator.js'),
 		])
 			.pipe(gReplace('/// <reference types=\'reflect-metadata\'/>', ''))
-			.pipe(gRename({ extname: '.esm.js' }))
 			.pipe(dest(absDest));
 
 		return gMerge(
@@ -82,11 +83,12 @@ task('copyEsmAssets',
 		);
 	});
 
-task('deleteEsmAssets',
+task('deleteAssets',
 	() => del([
+		path.resolve(absDest, 'tsconfig.html-esm.json'),
 		path.resolve(absDest, 'direct-vuex.esm.min.js'),
-		path.resolve(absDest, 'vue-property-decorator.esm.js'),
-		path.resolve(absDest, 'vue-class-component.esm.js'),
+		path.resolve(absDest, 'vue-property-decorator.js'),
+		path.resolve(absDest, 'vue-class-component.js'),
 	]));
 
 task('postdeploy.dev:fixImportsFromMap',
@@ -121,20 +123,12 @@ task('postdeploy.dev:fixImports',
 		.pipe(dest(absDest)));
 
 // fix because of names of modules with src includes generated dist
-task('fixBundle',
+task('uglifyBundles',
 	() => src([
 		// TODO: hJson from tsconfig outFile name
 		path.resolve(absDest, 'bundle.system.js'),
+		path.resolve(absDest, 'html-esm.system.js'),
 	])
-		// fix transpiled node_modules names to included SystemJS module
-		// for module resolving instead of bugs with systemjs-importmap
-		.pipe(gReplace(`${appConf.destFolderName}/`, ''))
-		.pipe(gReplace(`${appConf.srcFolderName}/`, ''))
-		// fix all src or dest folder name artefacts of named modules SystemJS registering to void string
-		// Why this two regexp replace 4 dependencies to 2 (search in bunfle SomeForm/SomeForm)?!
-		// .pipe(gReplace(/('|")(.*?)(src|dist)(\/)(.*?)('|")/g, '$1$5$6'))
-		// .pipe(gReplace(/(['"])(.*?)(src|dist)(\/)(.*?)([^\\]\1)/g, '$1$5$6'))
-		.pipe(gReplace('.esm', ''))
 		.pipe(uglifyES())
 		.pipe(dest(absDest)));
 
@@ -150,6 +144,7 @@ task('copyNonTranspiledFiles',
 	() => src([
 		path.resolve(absSrc, appConf.entryFileName),
 		path.resolve(absSrc, 'importmap.system.json'),
+		path.resolve(absSrc, 'tsconfig.html-esm.json'),
 		path.resolve('node_modules', 'promise-polyfill', 'dist', 'polyfill.min.js'),
 		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
 	])
@@ -158,28 +153,26 @@ task('copyNonTranspiledFiles',
 task('predeploy',
 	parallel(
 		'cssbundle',
+		'tmpl2js',
 		'copyRenameFetchResp',
 		'copyNonTranspiledFiles',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
-		series(
-			'tmpl2js', // before fixing, html as ES modules
-			'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
-		),
+		'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
 	));
 
 task('postdeploy',
 	parallel(
-		'deleteEsmAssets', // they are not need, because of bundle including
-		'fixBundle', // in bundle.js fix SystemJs template names to be consistent with imports
+		'deleteAssets', // they are not need, because of bundles including
+		'uglifyBundles',
 	),
 );
 
 task('postdeploy.dev',
 	parallel(
 		'cssbundle',
+		'tmpl2js', // will not fixed in bundle, that's why in parallel
 		'copyRenameFetchResp',
 		'postdeploy.dev:copyNonTranspiledFiles',
-		'tmpl2js', // will not fixed in bundle, that's why in parallel
 		series(
 			'copyEsmAssets', // before fixing
 			'postdeploy.dev:fixImportsFromMap', // can't modify same files in parallel

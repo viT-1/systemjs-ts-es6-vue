@@ -1,0 +1,15 @@
+{
+	"extends": "../src/tsconfig.paths.json",
+	"compilerOptions": {
+		"module": "system",
+		"target": "es5",
+		"outFile": "html-esm.system.js"
+	},
+	"files": [
+		"vue-class-component.js",
+		"vue-property-decorator.js"
+	],
+	"include": [
+		"**/*.html.js"
+	]
+}

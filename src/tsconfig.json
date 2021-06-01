@@ -6,12 +6,7 @@
 		"rootDir": ".",
 		"outFile": "../dist/bundle.system.js"
 	},
-	"files": [
-		"../dist/vue-class-component.esm.js",
-		"../dist/vue-property-decorator.esm.js"
-	],
 	"include": [
-		"../dist/**/*.html.js",
 		"**/*.ts"
 	],
 	"exclude": [
