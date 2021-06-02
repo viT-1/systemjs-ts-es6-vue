@@ -1,11 +1,10 @@
 import del from 'del';
-import fs from 'fs';
 import gMinifyCss from 'gulp-clean-css';
 import gConcat from 'gulp-concat';
 import gHtml2Js from 'gulp-html-to-js';
 import gRename from 'gulp-rename';
 import gReplace from 'gulp-replace';
-import hJson from 'hjson';
+import gReplacePatterns from 'gulp-replace-task';
 import gMerge from 'merge-stream';
 import path from 'path';
 import {
@@ -18,14 +17,13 @@ import {
 import uglifyES from 'gulp-uglify-es';
 
 import { conf as appConf } from './app.conf';
+import { dependencies } from './package.json';
+import { compilerOptions as tsOptionsSystemJs } from './src/tsconfig.json';
+import { compilerOptions as tsOptionsHtmlEsm } from './src/tsconfig.html-esm.json';
 
 const root = appConf.rootFolderPath;
 const absSrc = path.resolve(root, appConf.srcFolderName);
 const absDest = path.resolve(root, appConf.destFolderName);
-
-const esmImportmap = hJson.parse(
-	fs.readFileSync(path.resolve(absSrc, 'importmap.dev.json'), 'utf8'));
-const esmImportmapPaths = esmImportmap.imports;
 
 task('cssbundle',
 	() => src([`${absSrc}/**/*.css`])
@@ -37,12 +35,6 @@ task('tmpl2js',
 	() => src([`${absSrc}/**/*.html`])
 		.pipe(gHtml2Js())
 		.pipe(gReplace('module.exports =', 'export default'))
-		.pipe(dest(absDest)));
-
-task('postdeploy.dev:copyNonTranspiledFiles',
-	() => src([
-		path.resolve(absSrc, appConf.entryDevFileName),
-	])
 		.pipe(dest(absDest)));
 
 task('copyRenameFetchResp',
@@ -83,51 +75,46 @@ task('copyEsmAssets',
 		);
 	});
 
-task('deleteAssets',
+task('copyFixNmVersions',
+	() => src([
+		`${absSrc}/importmap.*.json`,
+		path.resolve(absSrc, appConf.entryDevFileName),
+		path.resolve(absSrc, appConf.entryFileName),
+	])
+		.pipe(gReplacePatterns({
+			patterns: [{
+				json: dependencies,
+			}],
+		}))
+		.pipe(dest(absDest)));
+
+task('systemjs:deleteAssets',
 	() => del([
+		`${absDest}/**/*.html.js`,
 		path.resolve(absDest, 'tsconfig.html-esm.json'),
 		path.resolve(absDest, 'direct-vuex.esm.min.js'),
 		path.resolve(absDest, 'vue-property-decorator.js'),
 		path.resolve(absDest, 'vue-class-component.js'),
 	]));
 
-task('postdeploy.dev:fixImportsFromMap',
-	() => src([
-		`${absDest}/**/*.js`, // resolve node_modules in all files, esm too
-	], {base: './'})
-		// vue path transformed to cdn (vue doesn'have another dependencies) but local paths not!
-		// should be replaced by typescript-transform-paths not gulp-replace!
-		// https://github.com/LeDDGroup/typescript-transform-paths/issues/34
-		// TODO: need loop on importmap.
-		.pipe(gReplace(/from[\s]?['|"]debounce-decorator-ts['|"]/g,
-			`from '${esmImportmapPaths['debounce-decorator-ts']}'`))
-		.pipe(gReplace(/from[\s]?['|"]direct-vuex['|"]/g,
-			`from '${esmImportmapPaths['direct-vuex']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vue['|"]/g,
-			`from '${esmImportmapPaths['vue']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vuex['|"]/g,
-			`from '${esmImportmapPaths['vuex']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vue-class-component['|"]/g,
-			`from '${esmImportmapPaths['vue-class-component']}'`))
-		.pipe(gReplace(/from[\s]?['|"]vue-property-decorator['|"]/g,
-			`from '${esmImportmapPaths['vue-property-decorator']}'`))
-		.pipe(dest('./')));
-
-task('postdeploy.dev:fixImports',
+task('esm:fixImportsAddJsSuffix',
 	() => src([
 		`${absDest}/**/*.js`,
 	])
 		// my export with singlequoted paths
 		// TODO: create common regexp for resolving modules
-		.pipe(gReplace(/^(.* from )("|')(?!.*(\.js))(.*)("|')/gm, '$1$2$4.js$2'))
+		// typescript-transform-paths uses doublequotes
+		// but node module names such as vue-class-component still use singlequotes import
+		// singlequotes resolving by html <script type="importmap">
+		.pipe(gReplace(/^(.* from )(")(?!.*(\.js))(.*)(")/gm, '$1$2$4.js$2'))
+		// import *.html not transpled to doublequotes - second replace
+		.pipe(gReplace(/(.* from ')(.*)(\.html)(')/gm, '$1$2$3.js$4'))
 		.pipe(dest(absDest)));
 
-// fix because of names of modules with src includes generated dist
-task('uglifyBundles',
+task('systemjs:uglifyBundles',
 	() => src([
-		// TODO: hJson from tsconfig outFile name
-		path.resolve(absDest, 'bundle.system.js'),
-		path.resolve(absDest, 'html-esm.system.js'),
+		path.resolve(absDest, path.basename(tsOptionsSystemJs.outFile)),
+		path.resolve(absDest, path.basename(tsOptionsHtmlEsm.outFile)),
 	])
 		.pipe(uglifyES())
 		.pipe(dest(absDest)));
@@ -140,10 +127,8 @@ task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 	])
 		.pipe(dest(path.resolve(absDest, 'systemjs'))));
 
-task('copyNonTranspiledFiles',
+task('systemjs:copyNonTranspiledFiles',
 	() => src([
-		path.resolve(absSrc, appConf.entryFileName),
-		path.resolve(absSrc, 'importmap.system.json'),
 		path.resolve(absSrc, 'tsconfig.html-esm.json'),
 		path.resolve('node_modules', 'promise-polyfill', 'dist', 'polyfill.min.js'),
 		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
@@ -155,27 +140,30 @@ task('predeploy',
 		'cssbundle',
 		'tmpl2js',
 		'copyRenameFetchResp',
-		'copyNonTranspiledFiles',
 		'copySystemJs', // not in 'copyNonTranspiledFiles' because of dest subfolding
 		'copyEsmAssets', // copy & fix es6 node modules for transpiling to SystemJs
+		'systemjs:copyNonTranspiledFiles',
+		'copyFixNmVersions', // separate from 'copyNonTranspiledFiles' task because of version replacing
 	));
 
 task('postdeploy',
 	parallel(
-		'deleteAssets', // they are not need, because of bundles including
-		'uglifyBundles',
+		'systemjs:deleteAssets', // they are not need, because of bundles including
+		'systemjs:uglifyBundles',
 	),
 );
 
-task('postdeploy.dev',
+task('predeploy.dev',
 	parallel(
 		'cssbundle',
 		'tmpl2js', // will not fixed in bundle, that's why in parallel
 		'copyRenameFetchResp',
-		'postdeploy.dev:copyNonTranspiledFiles',
-		series(
-			'copyEsmAssets', // before fixing
-			'postdeploy.dev:fixImportsFromMap', // can't modify same files in parallel
-			'postdeploy.dev:fixImports',
-		),
+		// importmap now! no need fixing paths! no need series!
+		'copyEsmAssets', // before fixing by transform plugin, all files listed in importmap should be copied
+		'copyFixNmVersions', // before fixing imports in my modules - importmap should be fixed
+	));
+
+task('postdeploy.dev',
+	parallel(
+		'esm:fixImportsAddJsSuffix',
 	));

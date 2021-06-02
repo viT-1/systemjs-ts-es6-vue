@@ -40,6 +40,8 @@ No.
 - 2017/06/06 [Vue + TypeScript Without a Module Bundler](https://wildermuth.com/2017/06/06/Vue-TypeScript-Without-a-Module-Bundler) by [Shawn Wildermuth](https://wildermuth.com/about)
 - 2018/09/10 [Building VueJS Applications with TypeScript](https://dev.to/georgehanson/building-vuejs-applications-with-typescript-1j2n) by [George Hanson](https://dev.to/georgehanson)
 - 2018/11/01 [Modern Javascript Without a Bundler](https://mattallan.me/posts/modern-javascript-without-a-bundler/) by [Matt Allan](https://mattallan.me/about/)
+- 2018/03/28 [ES modules: A cartoon deep-dive](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/) by [Lin Clark](https://twitter.com/linclark)
+- [Importmaps](https://github.com/wicg/import-maps) supported by [es-module-shims](https://github.com/guybedford/es-module-shims/blob/main/README.md)
 
 ## Tsc esm resolving
 - [Using](https://github.com/viT-1/systemjs-ts-es6-vue/blob/e90f5a2a410a7980b2d48ed18d5e3c571660fcba/src/tsconfig.dev.json#L7) ttypescript-[transformers](https://github.com/cevek/ttypescript#transformers)

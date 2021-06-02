@@ -10,7 +10,7 @@
 		"**/*.ts"
 	],
 	"exclude": [
-		"**/*.i.ts", // interfaces
+		"**/*.i.ts",
 		"**/*.node.ts",
 		"**/node_modules/*",
 		"**/__mocks__/*",

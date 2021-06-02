@@ -1,7 +1,7 @@
 const path = require('path');
 const rootDir = require('app-root-path').path;
 
-// TODO: if comments falling on json reading =( hJson
+// TODO: if comments falling on json reading =( hJson 3.2.2
 const tsconfigPaths = require('./tsconfig.paths.json');
 const moduleNameMapper = require('tsconfig-paths-jest')(tsconfigPaths);
 

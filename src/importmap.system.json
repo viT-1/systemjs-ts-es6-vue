@@ -2,9 +2,10 @@
 	"imports": {
 		"bundle": "/bundle.system.js",
 		"html-esm": "/html-esm.system.js",
-		"debounce-decorator-ts": "https://cdn.jsdelivr.net/npm/debounce-decorator-ts@1.0.4/dist/debounce-decorator-ts.umd.js",
-		"direct-vuex": "https://cdn.jsdelivr.net/npm/direct-vuex@0.12.1/dist/direct-vuex.umd.js",
-		"vue": "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js",
-		"vuex": "https://cdn.jsdelivr.net/npm/vuex@3.6.2/dist/vuex.min.js"
+		"debounce-decorator-ts":
+			"https://cdn.jsdelivr.net/npm/debounce-decorator-ts@@@debounce-decorator-ts/dist/debounce-decorator-ts.umd.js",
+		"direct-vuex": "https://cdn.jsdelivr.net/npm/direct-vuex@@@direct-vuex/dist/direct-vuex.umd.js",
+		"vue": "https://cdn.jsdelivr.net/npm/vue@@@vue/dist/vue.min.js",
+		"vuex": "https://cdn.jsdelivr.net/npm/vuex@@@vuex/dist/vuex.min.js"
 	}
 }
