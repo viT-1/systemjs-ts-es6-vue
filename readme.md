@@ -62,7 +62,7 @@ ttypescript last [updated](https://github.com/viT-1/systemjs-ts-es6-vue/commit/e
 - [Way to add](https://github.com/microsoft/TypeScript/issues/16577#issuecomment-578729954) the '.js' file extension
 	- Another way: Zoltu ttypescript-transformer [plugin](https://github.com/Zoltu/typescript-transformer-append-js-extension) but imports such as `from "./Greeter.conf"` or even
 	`from './IamHeader.html'` are [not supported](https://github.com/Zoltu/typescript-transformer-append-js-extension/issues/9). You shouldn't use dots in ts-files naming convention =(
-- [.js removed](https://github.com/microsoft/TypeScript/issues/13422#issuecomment-275845062) since SystemJS v0.20 & TSC is outputting invalid ES module code (that's why I need to [fix imports manually](https://github.com/viT-1/systemjs-ts-es6-vue/blob/5a6904ae20a99b684e2540a5a99872c5cd43608a/gulpfile.esm.js#L122))
+- [.js removed](https://github.com/microsoft/TypeScript/issues/13422#issuecomment-275845062) since SystemJS v0.20 & TSC is outputting invalid ES module code (that's why earlier I need to [fix imports manually](https://github.com/viT-1/systemjs-ts-es6-vue/blob/038c302d760e225590fff34b80403eca6549fb5e/gulpfile.esm.js#L109))
 
 # Outdated packages
 - systemjs since 6.0 has various errors:
