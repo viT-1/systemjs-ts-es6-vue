@@ -3,6 +3,6 @@
 // TODO: make gulp working with store/index.js (simple vuex-modules)
 import { modSomeForm } from '@unique/SomeForm/store';
 
-export const modulesConf = {
+export const conf = {
 	modSomeForm,
 };

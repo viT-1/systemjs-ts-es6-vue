@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import * as confMutations from './mutations.conf';
+import { conf as confMutations } from './mutations-conf';
 
 jest.mock('@services/SomeSvc/SomeSvc.ts');
 
@@ -26,7 +26,7 @@ describe('vuex SomeForm IamSelect actions', () => {
 		const someValues = [{ label: 'yabadabadoo!' }];
 		actions.setSomeValues({ commit }, someValues);
 
-		expect(commit).toHaveBeenCalledWith(confMutations.SOME_VALUES_SET, someValues);
+		expect(commit).toHaveBeenCalledWith(confMutations.IamSelect.SOME_VALUES_SET, someValues);
 	});
 
 	it('selectSomeValue raise appropriate mutation', () => {
@@ -36,7 +36,7 @@ describe('vuex SomeForm IamSelect actions', () => {
 		const someValue = { label: 'yabadabadoo!' };
 		actions.selectSomeValue({ commit }, someValue);
 
-		expect(commit).toHaveBeenCalledWith(confMutations.SOME_VALUE_SELECT, someValue);
+		expect(commit).toHaveBeenCalledWith(confMutations.IamSelect.SOME_VALUE_SELECT, someValue);
 	});
 });
 // #endregion

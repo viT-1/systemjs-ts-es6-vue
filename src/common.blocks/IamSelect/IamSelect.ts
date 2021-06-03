@@ -8,7 +8,7 @@ import {
 
 import { IOption } from './IamSelect.option.i';
 import { IData } from './IamSelect.data.i';
-import { conf } from './IamSelect.conf';
+import { conf } from './IamSelect-conf';
 
 const { name, template } = conf;
 

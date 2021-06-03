@@ -1,0 +1,9 @@
+{
+	"conf": {
+		"port": 3000,
+		"log": {
+			"onListen": "Example app listening on port",
+			"onSigterm": "Process terminated"
+		}
+	}
+}

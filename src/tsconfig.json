@@ -1,6 +1,7 @@
 {
 	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
+		"resolveJsonModule": false,
 		"module": "system",
 		"target": "es5",
 		"rootDir": ".",

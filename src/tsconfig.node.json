@@ -1,6 +1,7 @@
 {
 	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
+		"resolveJsonModule": true,
 		"module": "commonjs",
 		"baseUrl": ".",
 		"outDir": "../distnode",

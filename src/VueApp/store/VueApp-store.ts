@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { createDirectStore } from 'direct-vuex';
 
-import { modulesConf } from './modules.conf';
+import { conf as modulesConf } from './modules-conf';
 
 export const storeConf = {
 	state: {},

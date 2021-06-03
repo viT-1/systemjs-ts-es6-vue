@@ -4,7 +4,7 @@ import { Component, Mixins } from 'vue-property-decorator';
 import { BemComponent } from '@common/BemComponent';
 import { IOption } from '@common/IamSelect/IamSelect.option.i';
 
-import { conf } from './SomeForm.conf';
+import { conf } from './SomeForm-conf';
 
 const {
 	bem,

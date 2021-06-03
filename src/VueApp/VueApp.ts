@@ -5,7 +5,7 @@ import {
 	components,
 	el,
 	warnings,
-} from './VueApp.conf';
+} from './VueApp-conf';
 import { store as _store } from './store';
 
 // https://github.com/paleo/direct-vuex#create-the-store

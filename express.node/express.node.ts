@@ -1,12 +1,11 @@
 import express from 'express';
 import path from 'path';
 
-import { conf } from './express.node.conf';
+import { conf } from './express-conf.node.json';
 
 // Не выдаёт ошибок, если в tsconfig указано, что соберём commonjs
 import { conf as appConf } from '../app.conf';
 
-const { port } = conf;
 const app = express();
 app.use(express.static(
 	path.resolve(appConf.rootFolderPath, appConf.destFolderName),
@@ -28,13 +27,13 @@ app.get('/', (req, res): void => {
 	// res.send(absEntry);
 });
 
-const server = app.listen(port, (): void => {
-	console.log(`Example app listening on port ${port}!`);
+const server = app.listen(conf.port, (): void => {
+	console.log(conf.log.onListen, conf.port);
 });
 
 // @link: https://flaviocopes.com/node-terminate-program/
 process.on('SIGTERM', (): void => {
 	server.close((): void => {
-		console.log('Process terminated');
+		console.log(conf.log.onSigterm);
 	});
 });

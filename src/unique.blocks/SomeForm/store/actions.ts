@@ -6,13 +6,14 @@ import { IOption as ISomeValue } from '@common/IamSelect/IamSelect.option.i';
 import { SomeSvc } from '@services/SomeSvc';
 
 import { IState } from './state.i';
-import * as confMutations from './mutations.conf';
+import { conf as confMutations } from './mutations-conf';
 /* eslint-disable import/no-cycle */
 import { modSomeForm } from '.';
 
 const getTypedContext = (ctx: any):
 DirectActionContext<never, typeof modSomeForm> => localActionContext(ctx, modSomeForm);
 
+// #region iamSelect actions
 export const getSomeValues = (
 	// commit полученных данных выполняется другим (синхронным) action, потому dispatch
 	// TODO: How to write tests with ActionContext & jest.fn() for dispatch & commit?
@@ -31,7 +32,7 @@ export const setSomeValues = (
 	values: Array<ISomeValue>,
 ): void => {
 	const { commit } = getTypedContext(context);
-	commit[confMutations.SOME_VALUES_SET](values);
+	commit[confMutations.IamSelect.SOME_VALUES_SET](values);
 };
 
 export const selectSomeValue = (
@@ -39,5 +40,6 @@ export const selectSomeValue = (
 	value: ISomeValue | null,
 ): void => {
 	const { commit } = getTypedContext(context);
-	commit[confMutations.SOME_VALUE_SELECT](value);
+	commit[confMutations.IamSelect.SOME_VALUE_SELECT](value);
 };
+// #endregion

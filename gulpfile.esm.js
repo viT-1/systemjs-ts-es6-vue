@@ -12,7 +12,6 @@ import {
 	dest,
 	task,
 	parallel,
-	series,
 } from 'gulp';
 import uglifyES from 'gulp-uglify-es';
 
@@ -97,16 +96,20 @@ task('systemjs:deleteAssets',
 		path.resolve(absDest, 'vue-class-component.js'),
 	]));
 
+// native typescript rejected idea https://github.com/microsoft/TypeScript/pull/35148
+// for importing local paths without dots used @zoltu/typescript-transformer-append-js-extension
+// this replace still needs only for templates importing in conf files
 task('esm:fixImportsAddJsSuffix',
 	() => src([
-		`${absDest}/**/*.js`,
+		`${absDest}/**/*-conf.js`,
 	])
 		// my export with singlequoted paths
 		// TODO: create common regexp for resolving modules
 		// typescript-transform-paths uses doublequotes
 		// but node module names such as vue-class-component still use singlequotes import
 		// singlequotes resolving by html <script type="importmap">
-		.pipe(gReplace(/^(.* from )(")(?!.*(\.js))(.*)(")/gm, '$1$2$4.js$2'))
+		// deprecated by using @zoltu/typescript-transformer-append-js-extension
+		// .pipe(gReplace(/^(.* from )(")(?!.*(\.js))(.*)(")/gm, '$1$2$4.js$2'))
 		// import *.html not transpled to doublequotes - second replace
 		.pipe(gReplace(/(.* from ')(.*)(\.html)(')/gm, '$1$2$3.js$4'))
 		.pipe(dest(absDest)));

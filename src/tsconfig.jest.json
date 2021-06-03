@@ -1,7 +1,8 @@
 {
 	"extends": "./tsconfig.paths.json",
 	"compilerOptions": {
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
 	},
 	"exclude": [
 		"**/node_modules/*"

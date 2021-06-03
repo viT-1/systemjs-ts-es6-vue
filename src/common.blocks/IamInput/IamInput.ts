@@ -6,7 +6,7 @@ import {
 
 import { BemComponent } from '@common/BemComponent';
 
-import { conf } from './IamInput.conf';
+import { conf } from './IamInput-conf';
 
 const { name, template } = conf;
 

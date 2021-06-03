@@ -1,2 +1,2 @@
-export { conf } from './Greeter.conf';
+export { conf } from './Greeter-conf';
 export { Greeter } from './Greeter';
