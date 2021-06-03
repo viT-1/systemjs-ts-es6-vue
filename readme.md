@@ -48,7 +48,7 @@ No.
 - [Importmaps](https://github.com/wicg/import-maps) supported by [es-module-shims](https://github.com/guybedford/es-module-shims/blob/main/README.md)
 - Today natively esm imports json files are supported [only in nodejs](https://github.com/nodejs/node/issues/37141) ([unflag](https://github.com/nodejs/node/pull/37375)) but [not in browser](https://github.com/tc39/proposal-json-modules/issues/3) (only [in Blink](https://github.com/whatwg/html/issues/4315#issuecomment-489799200) & [Chrome 91](https://marian-caikovski.medium.com/how-to-import-json-into-javascript-module-json-modules-e6721e19a314#f322)) =(
 	[Another ways](https://stackoverflow.com/questions/34944099/how-to-import-a-json-file-in-ecmascript-6#answer-34946395) to read json in browser (not simple workarounds).
-	So we can use json configs only for nodejs processes, such as Express server with [express-conf.node.json](tree/master/express.node). Also tsconfig option '--resolveJsonModule' isn't supported in SystemJs modules.
+	So we can use json configs only for nodejs processes, such as Express server with [express-conf.node.json](https://github.com/viT-1/systemjs-ts-es6-vue/blob/8a4ec81b502203f7e8a9b6aadc0b13367e8a6765/express.node/express-conf.node.json). Also tsconfig option '--resolveJsonModule' isn't supported in SystemJs modules.
 	- 2021/06/02 [How to import JSON into JavaScript module](https://marian-caikovski.medium.com/how-to-import-json-into-javascript-module-json-modules-e6721e19a314) by [Marian Čaikovski](https://marian-caikovski.medium.com/)
 
 ## Tsc esm resolving
