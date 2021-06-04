@@ -30,10 +30,7 @@
 
 			Promise.all([htmlEsmReady, vuexReady])
 				.then(function () {
-					System.import('bundle').then(function () {
-						console.log('SystemJs bundle is loaded!');
-						System.import('main');
-					});
+					System.import('bundle');
 				});
 		}
 
