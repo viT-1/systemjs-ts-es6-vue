@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 
 <head>
-	<!-- If you need polyfill.io use v3 with 'always,gated' excluding Symbol, v2 breaks the code -->
-	<!-- <script src="https://cdn.polyfill.io/v3/polyfill.min.js?flags=always,gated&excludes=Symbol,Symbol.iterator,Symbol.species"></script> -->
-
-	<!-- IE 7-11 Promise polyfill -->
-	<script src="polyfill.min.js"></script>
-	<!-- IE 10+ Fetch polyfill -->
-	<script src="fetch.umd.js"></script>
-
+	<script>
+		if (typeof Promise === 'undefined')
+			document.write('<script src="https://unpkg.com/bluebird@3.7.2/js/browser/bluebird.core.min.js"><\/script>');
+		if (typeof fetch === 'undefined')
+			document.write('<script src="https://unpkg.com/whatwg-fetch@3.6.2/dist/fetch.umd.js"><\/script>');
+	</script>
 	<script src="systemjs/system.min.js"></script>
 	<script src="systemjs/named-exports.min.js"></script>
 	<script src="systemjs/named-register.min.js"></script>
@@ -27,17 +25,16 @@
 	<script type="systemjs-importmap" src="importmap.system.json"></script>
 	<script>
 		function bundleLoad () {
-			// dependencies: main use bundle that using html-esm (vue-class-component)
-			System.import('html-esm')
-			.then(function () {
-				var bundleReady = System.import('bundle');
-				var vuexReady = System.import('vuex');
-				Promise.all([bundleReady, vuexReady])
+			var htmlEsmReady = System.import('html-esm');
+			var vuexReady = System.import('vuex');
+
+			Promise.all([htmlEsmReady, vuexReady])
 				.then(function () {
-					console.log('SystemJs bundle is loaded!');
-					System.import('main');
+					System.import('bundle').then(function () {
+						console.log('SystemJs bundle is loaded!');
+						System.import('main');
+					});
 				});
-			});
 		}
 
 		function waitForSystem () {

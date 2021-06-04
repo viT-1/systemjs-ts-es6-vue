@@ -12,6 +12,7 @@ import {
 	dest,
 	task,
 	parallel,
+	series,
 } from 'gulp';
 import uglifyES from 'gulp-uglify-es';
 
@@ -90,7 +91,6 @@ task('systemjs:deleteAssets',
 	() => del([
 		`${absDest}/**/*.html.js`,
 		path.resolve(absDest, 'tsconfig.html-esm.json'),
-		path.resolve(absDest, 'direct-vuex.esm.min.js'),
 		path.resolve(absDest, 'vue-property-decorator.js'),
 		path.resolve(absDest, 'vue-class-component.js'),
 	]));
@@ -113,6 +113,16 @@ task('esm:fixImportsAddJsSuffix',
 		.pipe(gReplace(/(.* from ')(.*)(\.html)(')/gm, '$1$2$3.js$4'))
 		.pipe(dest(absDest)));
 
+task('systemjs:fixRelativeHtml',
+	() => src([
+		path.resolve(absDest, path.basename(tsOptionsSystemJs.outFile)),
+	])
+		.pipe(gReplace(
+			/(\.register\(")(.*)(\/)(.*)(",\s\[")(\.\/)(.*)(\.html"\])/gm,
+			'$1$2$3$4$5$2/$7$8',
+		))
+		.pipe(dest(absDest)));
+
 task('systemjs:uglifyBundles',
 	() => src([
 		path.resolve(absDest, path.basename(tsOptionsSystemJs.outFile)),
@@ -132,8 +142,6 @@ task('copySystemJs', // not in 'copyNonTranspiledFiles' because of dest
 task('systemjs:copyNonTranspiledFiles',
 	() => src([
 		path.resolve(absSrc, 'tsconfig.html-esm.json'),
-		path.resolve('node_modules', 'promise-polyfill', 'dist', 'polyfill.min.js'),
-		path.resolve('node_modules', 'whatwg-fetch', 'dist', 'fetch.umd.js'),
 	])
 		.pipe(dest(absDest)));
 
@@ -151,7 +159,10 @@ task('predeploy',
 task('postdeploy',
 	parallel(
 		'systemjs:deleteAssets', // they are not need, because of bundles including
-		'systemjs:uglifyBundles',
+		series(
+			'systemjs:fixRelativeHtml', // workaround for upgrading to SystemJS v6
+			'systemjs:uglifyBundles',
+		),
 	),
 );
 
