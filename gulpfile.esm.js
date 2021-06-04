@@ -43,13 +43,13 @@ task('copyRenameFetchResp',
 		.pipe(gRename('fetch-resp.json'))
 		.pipe(dest(absDest)));
 
+// only vue-class-component doesn't have separate umd bundle from distributor
+// thats why manual tsconfig bundling with dist/**/html.js templates to outFile
+// instead of using importmap.system.json. Also dependency in vue-property-decorator not resolved
+// Can't use SystemJS v6 cause of named modules html.js errors
+// esm deploy has vue-class-component as distributed esm-bundle and not need this copying to dist
 task('copyEsmAssets',
 	() => {
-		// simple copying
-		const directVuex = src([
-			path.resolve('node_modules', 'direct-vuex', 'dist', 'direct-vuex.esm.min.js'),
-		])
-			.pipe(dest(absDest));
 
 		// TODO: only if not exists in my absDest folder
 		const vueClass = src([
@@ -68,7 +68,6 @@ task('copyEsmAssets',
 			.pipe(dest(absDest));
 
 		return gMerge(
-			directVuex,
 			vueClass,
 			vueProp,
 		);
@@ -162,11 +161,12 @@ task('predeploy.dev',
 		'tmpl2js', // will not fixed in bundle, that's why in parallel
 		'copyRenameFetchResp',
 		// importmap now! no need fixing paths! no need series!
-		'copyEsmAssets', // before fixing by transform plugin, all files listed in importmap should be copied
+		// no need copying 2 vue decorators cause of importmap
+		// 'copyEsmAssets',
 		'copyFixNmVersions', // before fixing imports in my modules - importmap should be fixed
 	));
 
 task('postdeploy.dev',
 	parallel(
-		'esm:fixImportsAddJsSuffix',
+		'esm:fixImportsAddJsSuffix', // @zoltu ttsc plugin don't transform paths with dots (*.html.js)
 	));

@@ -27,15 +27,17 @@
 	<script type="systemjs-importmap" src="importmap.system.json"></script>
 	<script>
 		function bundleLoad () {
-			var htmlEsmReady = System.import('html-esm');
-			var bundleReady = System.import('bundle');
-			var vuexReady = System.import('vuex');
-
-			Promise.all([htmlEsmReady, bundleReady, vuexReady])
+			// dependencies: main use bundle that using html-esm (vue-class-component)
+			System.import('html-esm')
+			.then(function () {
+				var bundleReady = System.import('bundle');
+				var vuexReady = System.import('vuex');
+				Promise.all([bundleReady, vuexReady])
 				.then(function () {
 					console.log('SystemJs bundle is loaded!');
 					System.import('main');
 				});
+			});
 		}
 
 		function waitForSystem () {

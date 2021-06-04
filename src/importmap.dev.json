@@ -2,10 +2,10 @@
 	"imports": {
 		"debounce-decorator-ts":
 			"https://cdn.jsdelivr.net/npm/debounce-decorator-ts@@@debounce-decorator-ts/dist/debounce-decorator-ts.es5.js",
-		"direct-vuex": "/direct-vuex.esm.min.js",
+		"direct-vuex": "https://cdn.jsdelivr.net/npm/direct-vuex@@@direct-vuex/dist/direct-vuex.esm.min.js",
 		"vue": "https://cdn.jsdelivr.net/npm/vue@@@vue/dist/vue.esm.browser.js",
 		"vuex": "https://cdn.jsdelivr.net/npm/vuex@@@vuex/dist/vuex.esm.browser.min.js",
-		"vue-class-component": "/vue-class-component.js",
-		"vue-property-decorator": "/vue-property-decorator.js"
+		"vue-class-component": "https://cdn.jsdelivr.net/npm/vue-class-component@@@vue-class-component/dist/vue-class-component.esm.browser.min.js",
+		"vue-property-decorator": "https://cdn.jsdelivr.net/npm/vue-property-decorator@@@vue-property-decorator/lib/vue-property-decorator.js"
 	}
 }

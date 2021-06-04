@@ -70,3 +70,6 @@ ttypescript last [updated](https://github.com/viT-1/systemjs-ts-es6-vue/commit/e
 is [not supported](https://github.com/systemjs/systemjs/issues/2185#issuecomment-626889523) (error System is not defined).
     - since (?) >= v6.2.6 has [named modules errors](https://github.com/systemjs/systemjs/issues/2192#issuecomment-630276107) in case of using `outfile` (single bundle) instead of `outdir` option in `tsconfig.json`.
 - es-module-shims since 0.10.2 to 0.10.5 not working
+
+# External vue components
+- [vue-multiselect](https://github.com/shentao/vue-multiselect) used as script in `index.htm` & `index.dev.htm` not in importmaps because imported only in tests.
